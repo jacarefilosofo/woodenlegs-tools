@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Woodenlegs — Ranking dos Jogadores</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f0f5;color:#222;padding:0;max-width:500px;margin:0 auto;height:100vh;display:flex;flex-direction:column}
+.header{text-align:center;padding:8px 8px 4px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.08)}
+.header h1{font-size:14px;font-weight:900;margin-bottom:1px}
+.header p{font-size:10px;color:#888;line-height:1.2}
+.name-bar{display:flex;gap:6px;padding:4px 10px;background:#fff;border-bottom:1px solid #eee}
+.name-bar input{flex:1;height:32px;border:2px solid #ddd;border-radius:8px;padding:0 10px;font-size:13px;font-weight:600}
+.name-bar input:focus{border-color:#e94560;outline:none}
+.tabs{display:flex;gap:0;background:#fff;border-bottom:2px solid #eee}
+.tab{flex:1;padding:7px 4px;text-align:center;font-size:11px;font-weight:700;cursor:pointer;border-bottom:3px solid transparent;color:#888;transition:all .2s}
+.tab.active{color:#e94560;border-bottom-color:#e94560}
+.tab .tab-check{font-size:10px;display:block;margin-top:1px}
+.tab .tab-check.done{color:#2d7d2d}
+.content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:8px}
+.section-title{font-size:10px;font-weight:800;color:#888;text-transform:uppercase;letter-spacing:1px;padding:4px 0 2px}
+.ranked-list{margin-bottom:8px}
+.ranked-item{display:flex;align-items:center;gap:6px;padding:5px 8px;background:#e8f5e9;border-radius:6px;margin-bottom:2px;cursor:pointer;transition:all .15s}
+.ranked-item:active{transform:scale(0.98)}
+.ranked-pos{width:20px;height:20px;border-radius:50%;background:#2d7d2d;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;flex-shrink:0}
+.ranked-name{flex:1;font-size:12px;font-weight:600}
+.ranked-remove{font-size:14px;color:#cc3300;padding:4px}
+.pool{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px}
+.pool-chip{padding:6px 10px;border-radius:16px;font-size:11px;font-weight:600;cursor:pointer;border:2px solid #ddd;background:#fff;transition:all .15s}
+.pool-chip:active{transform:scale(0.95)}
+.pool-chip:hover{border-color:#e94560;background:#ffe8ec}
+.btn-bar{padding:8px 10px 16px;background:#fff;border-top:1px solid #eee;display:flex;gap:6px}
+.btn{flex:1;padding:13px;border:none;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer}
+.btn-copy{background:#2d7d2d;color:#fff}
+.btn-clear{background:#ffcccc;color:#cc0000}
+.btn-copy:disabled{background:#ccc;color:#888}
+.progress{text-align:center;padding:4px;font-size:10px;color:#888;background:#f8f8f8}
+.toast{position:fixed;bottom:60px;left:50%;transform:translateX(-50%);background:#2d7d2d;color:#fff;padding:10px 24px;border-radius:20px;font-weight:700;font-size:13px;opacity:0;transition:opacity .3s;z-index:100;pointer-events:none}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<div class="header">
+<h1>Woodenlegs — Ranking</h1>
+<p>Coloque os jogadores em ordem: do MELHOR pro PIOR.<br>Toque no nome pra adicionar. Toque no ranking pra remover.</p>
+</div>
+
+<div class="name-bar">
+<input type="text" id="voter-name" placeholder="Seu nome (obrigatório)" autocomplete="off">
+</div>
+
+<div class="tabs" id="tabs">
+<div class="tab active" data-tab="0" onclick="switchTab(0)">
+    Impacto<span class="tab-check" id="check-0">0/23</span>
+</div>
+<div class="tab" data-tab="1" onclick="switchTab(1)">
+    Velocidade<span class="tab-check" id="check-1">0/23</span>
+</div>
+<div class="tab" data-tab="2" onclick="switchTab(2)">
+    Resistência<span class="tab-check" id="check-2">0/23</span>
+</div>
+</div>
+
+<div class="progress" id="progress">Toque nos jogadores na ordem do melhor pro pior</div>
+
+<div class="content" id="content"></div>
+
+<div class="btn-bar">
+<button class="btn btn-clear" onclick="clearCurrent()">Limpar Lista</button>
+<button class="btn btn-copy" id="btn-copy" onclick="copyResult()" disabled>Copiar Resultado</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const PLAYERS=[
+    "Anderson Aiziro","Arthur Mendes","Rodrigo Barba","Rodrigo Rocha",
+    "Bruno Stuani","Paulinho de Souza","Donizete Pereira","Eric Van Thorre",
+    "Leonardo Facci","Glaydston Brito","Guilherme Souza","Joel Pereira",
+    "Leeman Abdulai","Lucas Maia","Luigi","Eduardo Fernandes",
+    "Marcone Oliveira","Fabricio Voznika","Carlos Moro","Roger Stanev",
+    "Jose Saraiva","Vini Cristenson","Wesley da Silva"
+];
+const TOTAL=PLAYERS.length;
+const TABS=["Impacto","Velocidade","Resistência"];
+const DESCS=[
+    "Quem você escolheria primeiro no par ou ímpar?",
+    "Do mais rápido pro mais lento.",
+    "Quem aguenta a pelada inteira sem parar?"
+];
+
+let rankings=[[],[],[]]; // 3 lists of ordered names
+let currentTab=0;
+
+function switchTab(idx){
+    currentTab=idx;
+    document.querySelectorAll(".tab").forEach((t,i)=>t.className=i===idx?"tab active":"tab");
+    renderContent();
+}
+
+function renderContent(){
+    const c=document.getElementById("content");
+    const ranked=rankings[currentTab];
+    const pool=PLAYERS.filter(p=>!ranked.includes(p)).sort();
+
+    document.getElementById("progress").textContent=DESCS[currentTab];
+
+    let html="";
+
+    // Ranked list
+    if(ranked.length>0){
+        html+=`<div class="section-title">Seu ranking (${ranked.length}/${TOTAL})</div>`;
+        html+=`<div class="ranked-list">`;
+        ranked.forEach((name,i)=>{
+            html+=`<div class="ranked-item" data-idx="${i}">
+                <div class="ranked-pos">${i+1}</div>
+                <div class="ranked-name">${name}</div>
+                <div class="ranked-remove">✕</div>
+            </div>`;
+        });
+        html+=`</div>`;
+    }
+
+    // Pool
+    if(pool.length>0){
+        html+=`<div class="section-title">${ranked.length===0?"Toque no melhor jogador primeiro":"Próximo: #"+(ranked.length+1)} (${pool.length} restantes)</div>`;
+        html+=`<div class="pool">`;
+        pool.forEach((name,idx)=>{
+            html+=`<div class="pool-chip" data-name="${name.replace(/"/g,'&quot;')}">${name}</div>`;
+        });
+        html+=`</div>`;
+    }
+
+    c.innerHTML=html;
+
+    // Attach click handlers via event delegation
+    c.querySelectorAll(".pool-chip").forEach(chip=>{
+        chip.addEventListener("click",()=>{
+            addToRanking(chip.dataset.name);
+        });
+    });
+    c.querySelectorAll(".ranked-item").forEach(item=>{
+        item.addEventListener("click",()=>{
+            removeFromRanking(parseInt(item.dataset.idx));
+        });
+    });
+
+    updateChecks();
+    saveState();
+}
+
+function addToRanking(name){
+    if(!rankings[currentTab].includes(name)){
+        rankings[currentTab].push(name);
+    }
+    renderContent();
+}
+
+function removeFromRanking(idx){
+    rankings[currentTab].splice(idx,1);
+    renderContent();
+}
+
+function updateChecks(){
+    for(let i=0;i<3;i++){
+        const el=document.getElementById(`check-${i}`);
+        const n=rankings[i].length;
+        el.textContent=`${n}/${TOTAL}`;
+        el.className=n===TOTAL?"tab-check done":"tab-check";
+    }
+    // Enable copy if at least one list has entries
+    const anyDone=rankings.some(r=>r.length>0);
+    document.getElementById("btn-copy").disabled=!anyDone;
+}
+
+function clearCurrent(){
+    if(!confirm(`Limpar a lista de ${TABS[currentTab]}?`))return;
+    rankings[currentTab]=[];
+    renderContent();
+}
+
+function copyResult(){
+    const voterName=document.getElementById("voter-name").value.trim();
+    if(!voterName){
+        showToast("Preencha seu nome!");
+        document.getElementById("voter-name").focus();
+        return;
+    }
+    const allDone=rankings.every(r=>r.length===TOTAL);
+    if(!allDone){
+        if(!confirm("Algumas listas estão incompletas. Copiar mesmo assim?"))return;
+    }
+
+    let text=`Ranking do ${voterName}\n`;
+    text+=`Woodenlegs — Temporada da Primavera\n\n`;
+
+    for(let i=0;i<3;i++){
+        text+=`${TABS[i].toUpperCase()}:\n`;
+        rankings[i].forEach((name,j)=>{
+            text+=`${j+1}. ${name}\n`;
+        });
+        text+=`\n`;
+    }
+
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(()=>showToast("Copiado! Cola no WhatsApp do Amador.")).catch(()=>{fallbackCopy(text);showToast("Copiado!");});
+    }else{
+        fallbackCopy(text);
+        showToast("Copiado!");
+    }
+}
+
+function fallbackCopy(text){
+    const ta=document.createElement("textarea");
+    ta.value=text;ta.style.position="fixed";ta.style.left="-9999px";
+    document.body.appendChild(ta);ta.select();document.execCommand("copy");
+    document.body.removeChild(ta);
+}
+
+function showToast(msg){
+    const t=document.getElementById("toast");
+    t.textContent=msg;t.classList.add("show");
+    setTimeout(()=>t.classList.remove("show"),2000);
+}
+
+// localStorage persistence
+const SAVE_KEY="woodenlegs_ranking_survey";
+function saveState(){
+    try{
+        const voterName=document.getElementById("voter-name").value;
+        localStorage.setItem(SAVE_KEY,JSON.stringify({rankings,voterName}));
+    }catch(e){}
+}
+function restoreState(){
+    try{
+        const raw=localStorage.getItem(SAVE_KEY);
+        if(!raw)return;
+        const state=JSON.parse(raw);
+        if(state.rankings)rankings=state.rankings;
+        if(state.voterName)document.getElementById("voter-name").value=state.voterName;
+    }catch(e){}
+}
+
+// Save name on change
+document.getElementById("voter-name").addEventListener("input",saveState);
+
+// Init
+restoreState();
+renderContent();
+</script>
+</body>
+</html>
