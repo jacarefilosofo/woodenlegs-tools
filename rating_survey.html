@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Woodenlegs — Avaliação dos Jogadores</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f0f5;color:#222;padding:0;max-width:500px;margin:0 auto;height:100vh;display:flex;flex-direction:column}
+.header{text-align:center;padding:10px 8px 6px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.08)}
+.header h1{font-size:15px;font-weight:900;margin-bottom:2px}
+.header p{font-size:10px;color:#888;line-height:1.3}
+.name-bar{display:flex;gap:6px;padding:6px 10px;background:#fff;border-bottom:1px solid #eee}
+.name-bar input{flex:1;height:34px;border:2px solid #ddd;border-radius:8px;padding:0 10px;font-size:13px;font-weight:600}
+.name-bar input:focus{border-color:#e94560;outline:none}
+.tabs{display:flex;gap:0;background:#fff;border-bottom:2px solid #eee}
+.tab{flex:1;padding:8px 4px;text-align:center;font-size:11px;font-weight:700;cursor:pointer;border-bottom:3px solid transparent;color:#888;transition:all .2s}
+.tab.active{color:#e94560;border-bottom-color:#e94560}
+.tab .tab-status{font-size:9px;display:block;margin-top:1px}
+.tab .tab-status.done{color:#2d7d2d}
+.desc{text-align:center;padding:6px;font-size:10px;color:#888;background:#f8f8f8;border-bottom:1px solid #eee}
+.content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:8px 10px}
+.player-row{display:flex;align-items:center;gap:6px;padding:7px 8px;background:#fff;border-radius:8px;margin-bottom:4px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.player-name{flex:1;font-size:12px;font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rating-group{display:flex;gap:2px;flex-shrink:0}
+.rating-btn{width:26px;height:28px;border:2px solid #ddd;border-radius:5px;background:#fff;color:#666;font-size:11px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;padding:0}
+.rating-btn:active{transform:scale(0.92)}
+.rating-btn.selected{border-color:#e94560;background:#e94560;color:#fff}
+.rating-btn.s1{border-color:#d33;}.rating-btn.s1.selected{background:#d33;border-color:#d33}
+.rating-btn.s2{border-color:#e55;}.rating-btn.s2.selected{background:#e55;border-color:#e55}
+.rating-btn.s3{border-color:#e87;}.rating-btn.s3.selected{background:#e87;border-color:#e87}
+.rating-btn.s4{border-color:#ea4;}.rating-btn.s4.selected{background:#ea4;border-color:#ea4}
+.rating-btn.s5{border-color:#cc3;}.rating-btn.s5.selected{background:#cc3;border-color:#cc3}
+.rating-btn.s6{border-color:#9b4;}.rating-btn.s6.selected{background:#9b4;border-color:#9b4}
+.rating-btn.s7{border-color:#6a5;}.rating-btn.s7.selected{background:#6a5;border-color:#6a5}
+.rating-btn.s8{border-color:#4a7;}.rating-btn.s8.selected{background:#4a7;border-color:#4a7}
+.rating-btn.s9{border-color:#389;}.rating-btn.s9.selected{background:#389;border-color:#389}
+.rating-btn.s10{border-color:#268;}.rating-btn.s10.selected{background:#268;border-color:#268}
+.btn-bar{padding:8px 10px 16px;background:#fff;border-top:1px solid #eee;display:flex;gap:6px}
+.btn{flex:1;padding:13px;border:none;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer}
+.btn-copy{background:#2d7d2d;color:#fff}
+.btn-clear{background:#ffcccc;color:#cc0000}
+.btn-copy:disabled{background:#ccc;color:#888}
+.toast{position:fixed;bottom:60px;left:50%;transform:translateX(-50%);background:#2d7d2d;color:#fff;padding:10px 24px;border-radius:20px;font-weight:700;font-size:13px;opacity:0;transition:opacity .3s;z-index:100;pointer-events:none}
+.toast.show{opacity:1}
+.legend{display:flex;justify-content:space-between;padding:4px 12px;font-size:9px;color:#aaa;background:#f8f8f8}
+.legend span:first-child{color:#d33}
+.legend span:last-child{color:#268}
+</style>
+</head>
+<body>
+
+<div class="header">
+<h1>Woodenlegs — Avaliação</h1>
+<p>Dê uma nota de 1 a 10 para cada jogador em cada categoria.</p>
+</div>
+
+<div class="name-bar">
+<input type="text" id="voter-name" placeholder="Seu nome (obrigatório)" autocomplete="off">
+</div>
+
+<div class="tabs" id="tabs">
+<div class="tab active" data-tab="0" onclick="switchTab(0)">
+    Impacto<span class="tab-status" id="status-0">0/28</span>
+</div>
+<div class="tab" data-tab="1" onclick="switchTab(1)">
+    Velocidade<span class="tab-status" id="status-1">0/28</span>
+</div>
+<div class="tab" data-tab="2" onclick="switchTab(2)">
+    Resistência<span class="tab-status" id="status-2">0/28</span>
+</div>
+</div>
+
+<div class="desc" id="desc">Quem você escolheria primeiro no par ou ímpar?</div>
+<div class="legend"><span>1 = Fraquinho</span><span>10 = Craque</span></div>
+
+<div class="content" id="content"></div>
+
+<div class="btn-bar">
+<button class="btn btn-clear" onclick="clearCurrent()">Limpar</button>
+<button class="btn btn-copy" id="btn-copy" onclick="copyResult()" disabled>Copiar Resultado</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const PLAYERS=[
+    "Anderson Aiziro","Angelo Ribeiro","Arthur Mendes","Bruno Stuani",
+    "Carlos Moro","Eduardo Fernandes","Eric Van Thorre","Fabricio Voznika",
+    "Fernando Nogueira","Glaydston Brito","Guilherme Souza","Joel Pereira",
+    "Jose Donizete Pereira","Jose Saraiva","Leeman Abdulai","Leonardo Facci",
+    "Lucas Maia","Luigi","Mac McClain","Marcio Contrigiani","Marcone Oliveira",
+    "Paulinho de Souza","Rodrigo Estrada Barba","Rodrigo Rocha","Roger Stanev",
+    "Vini Cristenson","Welington Campos","Wesley da Silva"
+];
+const TOTAL=PLAYERS.length;
+const TABS=["Impacto","Velocidade","Resistência"];
+const DESCS=[
+    "Quem você escolheria primeiro no par ou ímpar?",
+    "Do mais rápido pro mais lento.",
+    "Quem aguenta a pelada inteira sem parar?"
+];
+
+// ratings[tab][playerName] = 1-7 or undefined
+let ratings=[{},{},{}];
+let currentTab=0;
+
+function switchTab(idx){
+    currentTab=idx;
+    document.querySelectorAll(".tab").forEach((t,i)=>t.className=i===idx?"tab active":"tab");
+    document.getElementById("desc").textContent=DESCS[idx];
+    renderContent();
+}
+
+function renderContent(){
+    const c=document.getElementById("content");
+    const r=ratings[currentTab];
+
+    let html="";
+    PLAYERS.forEach(name=>{
+        const val=r[name]||0;
+        html+=`<div class="player-row">`;
+        html+=`<div class="player-name">${name}</div>`;
+        html+=`<div class="rating-group">`;
+        for(let v=1;v<=10;v++){
+            const sel=val===v?"selected":"";
+            html+=`<button class="rating-btn s${v} ${sel}" data-name="${name}" data-val="${v}">${v}</button>`;
+        }
+        html+=`</div></div>`;
+    });
+
+    c.innerHTML=html;
+
+    // Attach click handlers
+    c.querySelectorAll(".rating-btn").forEach(btn=>{
+        btn.addEventListener("click",()=>{
+            const name=btn.dataset.name;
+            const val=parseInt(btn.dataset.val);
+            // Toggle: if already selected, deselect
+            if(ratings[currentTab][name]===val){
+                delete ratings[currentTab][name];
+            }else{
+                ratings[currentTab][name]=val;
+            }
+            renderContent();
+        });
+    });
+
+    updateStatus();
+    saveState();
+}
+
+function updateStatus(){
+    let allDone=true;
+    for(let i=0;i<3;i++){
+        const n=Object.keys(ratings[i]).length;
+        const el=document.getElementById(`status-${i}`);
+        el.textContent=`${n}/${TOTAL}`;
+        el.className=n===TOTAL?"tab-status done":"tab-status";
+        if(n<TOTAL) allDone=false;
+    }
+    // Enable copy if at least one player rated in any tab
+    const anyRated=ratings.some(r=>Object.keys(r).length>0);
+    document.getElementById("btn-copy").disabled=!anyRated;
+}
+
+function clearCurrent(){
+    if(!confirm(`Limpar as notas de ${TABS[currentTab]}?`))return;
+    ratings[currentTab]={};
+    renderContent();
+}
+
+function copyResult(){
+    const voterName=document.getElementById("voter-name").value.trim();
+    if(!voterName){
+        showToast("Preencha seu nome!");
+        document.getElementById("voter-name").focus();
+        return;
+    }
+    const allDone=ratings.every(r=>Object.keys(r).length===TOTAL);
+    if(!allDone){
+        if(!confirm("Algumas avaliações estão incompletas. Copiar mesmo assim?"))return;
+    }
+
+    let text=`Avaliação de ${voterName}\n`;
+    text+=`Woodenlegs — Temporada da Primavera\n\n`;
+
+    for(let i=0;i<3;i++){
+        text+=`${TABS[i].toUpperCase()}:\n`;
+        // Sort by rating desc, then name
+        const entries=Object.entries(ratings[i]).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
+        if(entries.length===0){
+            text+=`(sem avaliação)\n`;
+        }else{
+            entries.forEach(([name,val])=>{
+                text+=`${name}: ${val}\n`;
+            });
+            // List unrated players
+            const rated=new Set(entries.map(e=>e[0]));
+            const unrated=PLAYERS.filter(p=>!rated.has(p));
+            if(unrated.length>0){
+                text+=`Sem nota: ${unrated.join(", ")}\n`;
+            }
+        }
+        text+=`\n`;
+    }
+
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(()=>showToast("Copiado! Cola no WhatsApp do Amador.")).catch(()=>{fallbackCopy(text);showToast("Copiado!");});
+    }else{
+        fallbackCopy(text);
+        showToast("Copiado!");
+    }
+}
+
+function fallbackCopy(text){
+    const ta=document.createElement("textarea");
+    ta.value=text;ta.style.position="fixed";ta.style.left="-9999px";
+    document.body.appendChild(ta);ta.select();document.execCommand("copy");
+    document.body.removeChild(ta);
+}
+
+function showToast(msg){
+    const t=document.getElementById("toast");
+    t.textContent=msg;t.classList.add("show");
+    setTimeout(()=>t.classList.remove("show"),2000);
+}
+
+// localStorage persistence
+const SAVE_KEY="woodenlegs_rating_survey";
+function saveState(){
+    try{
+        const voterName=document.getElementById("voter-name").value;
+        localStorage.setItem(SAVE_KEY,JSON.stringify({ratings,voterName}));
+    }catch(e){}
+}
+function restoreState(){
+    try{
+        const raw=localStorage.getItem(SAVE_KEY);
+        if(!raw)return;
+        const state=JSON.parse(raw);
+        if(state.ratings)ratings=state.ratings;
+        if(state.voterName)document.getElementById("voter-name").value=state.voterName;
+    }catch(e){}
+}
+
+// Save name on change
+document.getElementById("voter-name").addEventListener("input",saveState);
+
+// Init
+restoreState();
+renderContent();
+</script>
+</body>
+</html>
