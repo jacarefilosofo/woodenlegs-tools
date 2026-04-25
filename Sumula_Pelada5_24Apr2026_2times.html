@@ -1,0 +1,886 @@
+<!--
+╔══════════════════════════════════════════════════════════════════╗
+║  SÚMULA — WOODENLEGS MATCH TRACKER                             ║
+║  Config is loaded from pelada_config.js (edit that file)       ║
+║  Formatos: "single" | "12x7" | "rodizio"                      ║
+║  Rodízio: goleiro alterna com o time da casa cada rodada.      ║
+╚══════════════════════════════════════════════════════════════════╝
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Súmula ⚽</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f0f5;color:#222;height:100vh;overflow:hidden;display:flex;flex-direction:column;padding:0;-webkit-user-select:none;user-select:none}
+.top-fixed{flex-shrink:0;padding:6px 6px 0 6px}
+.bottom-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 6px 6px 6px}
+.aggregate-bar{background:#222;color:#fff;border-radius:10px;padding:6px 12px;margin-bottom:6px;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:900;font-size:18px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+.aggregate-bar .agg-emoji{font-size:16px}.aggregate-bar .agg-x{color:#888;font-size:14px}
+.standings{background:#fff;border-radius:12px;padding:8px;margin-bottom:6px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.standings-title{font-size:11px;font-weight:800;text-align:center;color:#888;margin-bottom:4px}
+.standings-row{display:flex;align-items:center;padding:3px 8px;font-size:12px;font-weight:600;border-radius:4px;margin:1px 0}
+.standings-row.first{background:#fff8e1}
+.standings-pos{width:16px;font-weight:900;color:#888}.standings-emoji{width:20px}.standings-name{flex:1}
+.standings-stat{width:28px;text-align:center;font-size:11px;color:#666}.standings-pts{width:32px;text-align:center;font-weight:900;font-size:14px}
+.jogo-bar{display:flex;align-items:center;gap:4px;margin-bottom:4px;background:#fff;border-radius:12px;padding:8px;box-shadow:0 2px 6px rgba(0,0,0,0.06)}
+.jogo-arrow{width:38px;height:38px;border:none;border-radius:10px;background:#e8e8ec;font-size:20px;font-weight:900;cursor:pointer;color:#555}
+.jogo-arrow:active{background:#ddd}.jogo-arrow:disabled{opacity:0.3}
+.jogo-info{flex:1;text-align:center}
+.jogo-num{font-size:12px;font-weight:800;color:#e94560}
+.jogo-matchup{font-size:14px;font-weight:700;margin-top:1px}
+.jogo-score{font-size:28px;font-weight:900;margin-top:1px}
+.jogo-list{display:flex;gap:2px;justify-content:center;margin-bottom:4px;flex-wrap:wrap}
+.jogo-pip{width:24px;height:24px;border-radius:6px;border:none;font-size:9px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.jogo-pip.current{background:#e94560;color:#fff}.jogo-pip.played{background:#2d7d2d;color:#fff}.jogo-pip.empty{background:#ddd;color:#888}
+.keeper-bar{text-align:center;padding:3px;font-size:10px;color:#999;margin-bottom:3px}
+.mode-bar{display:flex;gap:3px;margin-bottom:4px}
+.mode-btn{flex:1;padding:10px 2px;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer}
+.mode-btn.active-goal{background:#2d7d2d;color:#fff}
+.mode-btn.active-og{background:#cc3300;color:#fff}
+.mode-btn.active-sub{background:#6633cc;color:#fff}
+.mode-btn:not([class*="active-"]){background:#ddd;color:#888}
+.mode-desc{text-align:center;font-size:10px;color:#888;margin-bottom:2px;padding:3px;background:#e8e8ec;border-radius:4px}
+.player-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:8px}
+.section-label{grid-column:1/-1;text-align:center;font-size:12px;font-weight:700;padding:6px;border-radius:7px;color:#fff;margin-top:4px}
+.bg-brasil{background:#b8860b}.bg-italia{background:#1e56a0}.bg-portugal{background:#cc0000}.bg-sub{background:#6633cc}
+.player-btn{display:flex;justify-content:space-between;align-items:center;padding:13px 10px;border:none;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.15s;position:relative;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.player-btn:active{transform:scale(0.95)}
+.player-btn.removing{background:#ffcccc!important;border-color:#ff0000!important}
+.btn-brasil{background:#fff8e1;color:#8b6914;border:2px solid #ddc060}
+.btn-italia{background:#e3f0ff;color:#1a4d80;border:2px solid #80b3e0}
+.btn-portugal{background:#ffe5e5;color:#990000;border:2px solid #e08080}
+.btn-keeper{background:#f0fff0;color:#2d7d2d;border:2px solid #8bc88b}
+.btn-sub{background:#f3e8ff;color:#4a1a80;border:2px solid #b080e0}
+.player-btn .badge-row{display:flex;gap:2px;align-items:center}
+.player-btn .goals{background:#2d7d2d;color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900}
+.player-btn .goals.zero{background:#ccc;color:#888}
+.player-btn .og-badge{background:#cc3300;color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900}
+.player-btn .pos{font-size:9px;color:#aaa;position:absolute;top:2px;right:5px}
+.player-btn .total-badge{font-size:9px;color:#888;position:absolute;bottom:2px;right:5px}
+.action-bar{display:flex;gap:4px;margin-top:6px;padding-bottom:12px;flex-wrap:wrap}
+.action-btn{flex:1;padding:13px;border:none;border-radius:10px;font-size:11px;font-weight:700;cursor:pointer;min-width:70px}
+.btn-undo{background:#ddd;color:#555}.btn-copy{background:#1e56a0;color:#fff}.btn-export{background:#2d7d2d;color:#fff}.btn-reset{background:#ffcccc;color:#cc0000}
+.history{margin-top:4px;padding:6px;background:#fff;border-radius:7px;max-height:120px;overflow-y:auto;font-size:11px;color:#888;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
+.history-item{padding:2px 0;border-bottom:1px solid #eee}
+.toast{position:fixed;bottom:60px;left:50%;transform:translateX(-50%);background:#2d7d2d;color:#fff;padding:10px 20px;border-radius:20px;font-weight:700;font-size:13px;opacity:0;transition:opacity 0.3s;z-index:100}
+.toast.show{opacity:1}.toast.remove{background:#cc3300}
+.checkin-grid{display:flex;flex-direction:column;gap:3px;margin-bottom:8px}
+.checkin-row{display:flex;align-items:center;gap:8px;padding:10px;background:#fff;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.06);cursor:pointer;transition:all .15s}
+.checkin-row:active{transform:scale(0.98)}
+.checkin-row.present{background:#e8f5e9;border-left:3px solid #2d7d2d}
+.checkin-row.late{background:#fff8e1;border-left:3px solid #ff9800}
+.checkin-name{flex:1;font-size:13px;font-weight:600}
+.checkin-time{font-size:11px;color:#888;font-weight:700}
+.checkin-badge{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px}
+.checkin-badge.here{background:#2d7d2d;color:#fff}
+.checkin-badge.absent{background:#ddd;color:#888}
+.checkin-section{font-size:11px;font-weight:800;color:#888;padding:6px 0 2px;text-transform:uppercase;letter-spacing:1px}
+.checkin-add{display:flex;gap:4px;margin-bottom:8px}
+.checkin-add input{flex:1;height:34px;border:2px solid #ddd;border-radius:8px;padding:0 8px;font-size:13px}
+.checkin-add button{padding:0 12px;border:none;border-radius:8px;background:#2d7d2d;color:#fff;font-weight:700;font-size:13px;cursor:pointer}
+.mode-btn.active-checkin{background:#555;color:#fff}
+</style>
+</head>
+<body>
+<div class="top-fixed">
+<div style="text-align:center;font-size:12px;font-weight:800;color:#555;padding:4px 0 2px 0" id="header-title">Súmula</div>
+<div class="aggregate-bar" id="aggregate-bar" style="display:none"></div>
+<div class="standings" id="standings"></div>
+<div class="jogo-bar">
+    <button class="jogo-arrow" id="prev-jogo" onclick="changeJogo(-1)">‹</button>
+    <div class="jogo-info"><div class="jogo-num" id="jogo-num"></div><div class="jogo-matchup" id="jogo-matchup"></div><div class="jogo-score" id="jogo-score"></div></div>
+    <button class="jogo-arrow" id="next-jogo" onclick="changeJogo(1)">›</button>
+</div>
+<div class="jogo-list" id="jogo-list"></div>
+<div class="keeper-bar" id="keeper-bar"></div>
+<div class="mode-bar">
+    <button class="mode-btn active-goal" id="mode-goal" onclick="setMode('goal')">⚽ Gol</button>
+    <button class="mode-btn" id="mode-og" onclick="setMode('og')">🔴 GC</button>
+    <button class="mode-btn" id="mode-sub" onclick="setMode('sub')">🔄 Sub</button>
+    <button class="mode-btn" id="mode-checkin" onclick="setMode('checkin')">📋 Presença</button>
+</div>
+<div class="mode-desc" id="mode-desc">⚽ Toque = +1 | Segure = -1</div>
+</div>
+<div class="bottom-scroll">
+<div class="player-grid" id="player-grid"></div>
+<div class="action-bar">
+    <button class="action-btn btn-undo" onclick="undoLast()">↩️ Desfazer</button>
+    <button class="action-btn btn-copy" onclick="copyResults()">📋 Copiar</button>
+    <button class="action-btn btn-export" onclick="exportMD()">📄 Súmula</button>
+    <button class="action-btn" style="background:#ff9800;color:#fff" onclick="fimDeJogo()">📢 Fim</button>
+    <button class="action-btn" style="background:#4a0080;color:#fff" onclick="fimDaPelada()">🏁 Pelada</button>
+    <button class="action-btn" style="background:#8b0000;color:#fff" onclick="copyNarrative()">📖 Ao Vivo</button>
+    <button class="action-btn btn-reset" onclick="resetScores()">🔄 Zerar</button>
+</div>
+<div class="history" id="history-log"><em>—</em></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ╔════════════════════════════════════════════════════════════════╗
+// ║  CONFIGURAÇÃO DA PELADA — edite este arquivo a cada semana   ║
+// ╠════════════════════════════════════════════════════════════════╣
+// ║  Copy this file for each pelada:                             ║
+// ║    pelada_config.js  (active — loaded by sumula.html)        ║
+// ║  Archive after game as:                                      ║
+// ║    configs/pelada_P#_DDMonYYYY.js                            ║
+// ╚════════════════════════════════════════════════════════════════╝
+const CONFIG = {
+    pelada: 5,
+    pelada_total: 12,
+    date: "24 Apr 2026",
+    saveKey: "2026-04-24",
+    format: "12x7",
+    rounds: 12,
+    keepers: ["Adilson","Welington Campos"],
+    subs: [],
+    teams: {
+        brasil:   { name:"Brasil",   emoji:"🟡", prep:"do", players:[
+            {name:"Rodrigo Estrada Barba",pos:"ATK"},{name:"Jose Saraiva",pos:"ATK"},
+            {name:"Paulinho de Souza",pos:"MID"},{name:"Lucas Maia",pos:"MID"},{name:"Eric Van Thorre",pos:"MID"},
+            {name:"Anderson Aiziro",pos:"DEF"},{name:"Robert",pos:"DEF"},{name:"Sergio",pos:"DEF"},
+        ]},
+        italia:   { name:"Italia",   emoji:"🔵", prep:"da", players:[
+            {name:"Luigi Tedesco",pos:"ATK"},{name:"Vini Cristenson",pos:"ATK"},
+            {name:"Arthur Mendes",pos:"MID"},{name:"Fabricio Voznika",pos:"MID"},{name:"Marcone Oliveira",pos:"MID"},
+            {name:"Roberto",pos:"DEF"},{name:"Rodrigo Rocha",pos:"DEF"},
+        ]},
+    },
+};
+
+</script>
+<script>
+// ╔════════════════════════════════════════════════════════════════╗
+// ║  ENGINE — do not edit below. Config is in pelada_config.js   ║
+// ╚════════════════════════════════════════════════════════════════╝
+
+const TK=Object.keys(CONFIG.teams);
+const S3=[["brasil","italia"],["brasil","portugal"],["italia","portugal"],["italia","brasil"],["portugal","brasil"],["portugal","italia"],["brasil","italia"],["brasil","portugal"],["italia","portugal"],["italia","brasil"],["portugal","brasil"],["portugal","italia"]];
+const S2=[];for(let i=0;i<(CONFIG.rounds||12);i++)S2.push(i%2===0?[TK[0],TK[1]]:[TK[1],TK[0]]);
+const schedule=CONFIG.format==="2times"?[[TK[0],TK[1]||TK[0]]]:TK.length===3?S3:S2;
+
+const isRodizio=CONFIG.format==="2times-rodizio";
+
+// ALL STATE IS EVENT-BASED — no dicts to get out of sync
+let events=[];
+let cancelledJogos=new Set();
+let finishedJogos=new Set();
+let currentJogo=0, currentMode="goal", longPressTimer=null, isLongPress=false;
+let touchStartX=0, touchStartY=0, isTouchMoved=false;
+
+const MODE_DESC={goal:"⚽ Toque = +1 gol | Segure = -1",og:"🔴 Gol contra → crédito pro adversário",sub:"🔄 Jogadores de fora aparecem embaixo",checkin:"📋 Toque no nome = presente. Toque de novo = desfazer."};
+
+// ── COMPUTE FROM EVENTS ──
+function jogoScore(idx){
+    const[h,a]=schedule[idx]; let hg=0,ag=0;
+    for(const e of events){
+        if(e.ji!==idx)continue;
+        const d=e.type.startsWith("remove-")?-1:1;
+        const baseType=e.type.replace("remove-","");
+        if(baseType==="goal"||baseType==="sub"){if(e.team===h)hg+=d;else if(e.team===a)ag+=d;}
+        else if(baseType==="og"){if(e.ct===h)hg+=d;else if(e.ct===a)ag+=d;}
+    }
+    return[Math.max(0,hg),Math.max(0,ag)];
+}
+function aggregateScore(){
+    const totals={};for(const tk of TK)totals[tk]=0;
+    for(let i=0;i<schedule.length;i++){
+        if(cancelledJogos.has(i))continue;
+        const[h,a]=schedule[i];const[hg,ag]=jogoScore(i);
+        if(hg===0&&ag===0&&!events.some(e=>e.ji===i))continue;
+        totals[h]+=hg;totals[a]+=ag;
+    }
+    return totals;
+}
+function playerGoalsInJogo(name,tk,idx){
+    let g=0;for(const e of events){
+        if(e.ji!==idx||e.player!==name)continue;
+        if((e.type==="goal"||e.type==="sub")&&e.team===tk)g++;
+        if((e.type==="remove-goal"||e.type==="remove-sub")&&e.team===tk)g--;
+    }return Math.max(0,g);
+}
+function playerOGInJogo(name,tk,idx){
+    let g=0;for(const e of events){if(e.ji!==idx||e.player!==name)continue;
+        if(e.type==="og"&&e.team===tk)g++;if(e.type==="remove-og"&&e.team===tk)g--;
+    }return Math.max(0,g);
+}
+function playerTotalGoals(name){
+    let g=0;for(const e of events){if(e.player!==name)continue;
+        if(e.type==="goal"||e.type==="sub")g++;if(e.type==="remove-goal"||e.type==="remove-sub")g--;
+    }return Math.max(0,g);
+}
+function computeStandings(){
+    const st={};for(const tk of TK)st[tk]={w:0,d:0,l:0,pts:0,gf:0,ga:0,played:0};
+    for(let i=0;i<schedule.length;i++){
+        if(cancelledJogos.has(i))continue;
+        const[h,a]=schedule[i];const[hg,ag]=jogoScore(i);
+        if(hg===0&&ag===0){
+            const hasEvents=events.some(e=>e.ji===i);
+            if(!hasEvents&&!finishedJogos.has(i))continue;
+        }
+        st[h].played++;st[a].played++;st[h].gf+=hg;st[h].ga+=ag;st[a].gf+=ag;st[a].ga+=hg;
+        if(hg>ag){st[h].w++;st[h].pts+=3;st[a].l++;}
+        else if(ag>hg){st[a].w++;st[a].pts+=3;st[h].l++;}
+        else{st[h].d++;st[h].pts+=1;st[a].d++;st[a].pts+=1;}
+    }
+    return st;
+}
+
+// ── LIVE UPDATE ──
+let lastLiveJogo=-1;
+let firstGoalSent=false;
+let narrative=[];  // Running log of all live updates
+function liveUpdate(eventType, player, scoringTeam, fromTeamKey){
+    const t=CONFIG.teams[scoringTeam];
+    const prep=t.prep||'do';
+    const[h,a]=schedule[currentJogo];const[hg,ag]=jogoScore(currentJogo);
+    const ht=CONFIG.teams[h],at=CONFIG.teams[a];
+    let msg="";
+    const isNewMatch=(lastLiveJogo<0||lastLiveJogo!==currentJogo);
+    // First goal of the pelada — big announcement
+    if(!firstGoalSent){
+        const dateObj=CONFIG.saveKey?new Date(CONFIG.saveKey+'T12:00:00'):new Date();
+        const dia=dateObj.getDate();
+        const meses=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+        const mes=meses[dateObj.getMonth()];
+        const ano=dateObj.getFullYear();
+        const dow=['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
+        const diaSemana=dow[dateObj.getDay()];
+        msg+=`Atenção, Nação Woodenlegs!\nComeça agora a pelada ${CONFIG.pelada||''} de 12, nesta ${diaSemana}, ${dia} de ${mes} de ${ano}.\n\n`;
+        msg+=`Jogo ${currentJogo+1}, ${ht.name} x ${at.name}, já começou — e já temos gol!! É bola no fundo da rede!\n\n`;
+        firstGoalSent=true;
+    } else if(isNewMatch){
+        if(lastLiveJogo>=0){
+            const[ph,pa]=schedule[lastLiveJogo];const[phg,pag]=jogoScore(lastLiveJogo);
+            const pht=CONFIG.teams[ph],pat=CONFIG.teams[pa];
+            msg+=`Fim de papo no jogo ${lastLiveJogo+1}! ${pht.name} ${phg} x ${pag} ${pat.name}!\n\n`;
+        }
+        msg+=`**\n\n`;
+        msg+=`Jogo ${currentJogo+1}, ${ht.name} x ${at.name}, já começou — e já temos gol!! É bola no fundo da rede!\n\n`;
+    }
+    // Goal line with timestamp
+    const now=new Date();
+    const hora=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+    if(eventType==='og'){
+        const artigo=(prep==='da')?'a':'o';
+        msg+=`Gol contra para ${artigo} ${t.name}!! ${player} faz de bandeja aos ${hora}!\n${ht.name} ${hg} x ${ag} ${at.name}.`;
+    } else if(eventType==='sub'){
+        const fromName=fromTeamKey&&CONFIG.teams[fromTeamKey]?CONFIG.teams[fromTeamKey].name:'?';
+        const fromPrep=fromTeamKey&&CONFIG.teams[fromTeamKey]?CONFIG.teams[fromTeamKey].prep||'do':'do';
+        msg+=`Gol ${prep} ${t.name}!! ${player} jogando emprestado ${fromPrep} ${fromName} aos ${hora}!\n${ht.name} ${hg} x ${ag} ${at.name}.`;
+    } else {
+        msg+=`Gol ${prep} ${t.name}!! ${player} aos ${hora}!\n${ht.name} ${hg} x ${ag} ${at.name}.`;
+    }
+    lastLiveJogo=currentJogo;
+    narrative.push(msg);
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(msg).catch(()=>{fallbackCopy(msg);});
+    }else{fallbackCopy(msg);
+    }
+}
+function fallbackCopy(text){const ta=document.createElement("textarea");ta.value=text;ta.style.position="fixed";ta.style.left="-9999px";document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);}
+
+let lastFimJogo=-1;
+function fimDeJogo(){
+    const[h,a]=schedule[currentJogo];const[hg,ag]=jogoScore(currentJogo);
+    const ht=CONFIG.teams[h],at=CONFIG.teams[a];
+    let msg="";
+    // If first action of the pelada, include opening announcement
+    if(!firstGoalSent){
+        const dateObj=CONFIG.saveKey?new Date(CONFIG.saveKey+'T12:00:00'):new Date();
+        const dia=dateObj.getDate();
+        const meses=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+        const mes=meses[dateObj.getMonth()];
+        const ano=dateObj.getFullYear();
+        const dow=['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
+        const diaSemana=dow[dateObj.getDay()];
+        msg+=`Atenção, Nação Woodenlegs!\nComeça agora a pelada ${CONFIG.pelada||''} de 12, nesta ${diaSemana}, ${dia} de ${mes} de ${ano}.\n\n`;
+        firstGoalSent=true;
+    }
+    // If previous match wasn't wrapped up yet
+    if(lastLiveJogo>=0&&lastLiveJogo!==currentJogo){
+        const[ph,pa]=schedule[lastLiveJogo];const[phg,pag]=jogoScore(lastLiveJogo);
+        const pht=CONFIG.teams[ph],pat=CONFIG.teams[pa];
+        msg+=`Fim de papo no jogo ${lastLiveJogo+1}! ${pht.name} ${phg} x ${pag} ${pat.name}!\n\n`;
+    }
+    if(hg===0&&ag===0){
+        msg+=`**\n\nJogo ${currentJogo+1}, ${ht.name} x ${at.name} acaba no zero a zero.`;
+    }else{
+        msg+=`Fim de papo no jogo ${currentJogo+1}! ${ht.name} ${hg} x ${ag} ${at.name}!`;
+    }
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(msg).catch(()=>{fallbackCopy(msg);});
+    }else{fallbackCopy(msg);}
+    narrative.push(msg);
+    finishedJogos.add(currentJogo);
+    lastFimJogo=currentJogo;
+    lastLiveJogo=currentJogo;
+    showToast(`📢 Fim J${currentJogo+1}`);
+}
+function copyNarrative(){
+    if(narrative.length===0){showToast("Nada ainda!",true);return;}
+    let full=narrative.join("\n\n");
+    // Add standings table at the bottom
+    const st=computeStandings();
+    const sorted=TK.map(tk=>({tk,...st[tk],gd:st[tk].gf-st[tk].ga})).sort((a,b)=>b.pts-a.pts||b.gd-a.gd);
+    full+=`\n\n**\n\nTabela do Campeonato\n`;
+    sorted.forEach(s=>{const t=CONFIG.teams[s.tk];
+        full+=`${t.emoji} ${t.name}  ${s.played}J  ${s.pts}pts  ${s.w}V ${s.d}E ${s.l}D  ${s.gf}GP ${s.ga}GC\n`;
+    });
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(full).catch(()=>{fallbackCopy(full);});
+    }else{fallbackCopy(full);}
+    showToast("📖 Narrativa copiada!");
+}
+function undoFim(){
+    finishedJogos.delete(lastFimJogo);
+    lastFimJogo=-1;
+    showToast('↩️ Fim desfeito');
+}
+
+// ── ACTIONS ──
+function addGoal(p,tk){const now=new Date();const _t=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');events.push({player:p,type:"goal",ji:currentJogo,team:tk,time:_t,label:`⚽ J${currentJogo+1} ${p} → ${CONFIG.teams[tk].emoji}`});liveUpdate('goal',p,tk,null);showToast(`⚽ +1 ${p}`);vibrate();render();}
+function addOG(p,fromTk){
+    const[h,a]=schedule[currentJogo];const ct=(fromTk===h)?a:h;
+    const now=new Date();const _t=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+    events.push({player:p,type:"og",ji:currentJogo,team:fromTk,ct,time:_t,label:`🔴 J${currentJogo+1} GC ${p} → ${CONFIG.teams[ct].emoji}`});
+    liveUpdate('og',p,ct,fromTk);showToast(`🔴 GC → ${CONFIG.teams[ct].emoji}`);vibrate();render();
+}
+function addSub(p,forTeam){
+    const home=Object.entries(CONFIG.teams).find(([k,t])=>t.players.find(pl=>pl.name===p));
+    const fromTk=home?home[0]:null;
+    const from=home?CONFIG.teams[home[0]].emoji:"?";
+    const now=new Date();const _t=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+    events.push({player:p,type:"sub",ji:currentJogo,team:forTeam,time:_t,label:`🔄 J${currentJogo+1} ${p} (${from}→${CONFIG.teams[forTeam].emoji})`});
+    liveUpdate('sub',p,forTeam,fromTk);showToast(`🔄 ${p} → ${CONFIG.teams[forTeam].emoji}`);vibrate();render();
+}
+function removeFrom(p,tk,btn){
+    let ok=false;
+    const now=new Date();const _t=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+    if(currentMode==="goal"&&playerGoalsInJogo(p,tk,currentJogo)>0){events.push({player:p,type:"remove-goal",ji:currentJogo,team:tk,time:_t,label:`➖ J${currentJogo+1} ${p}`});ok=true;}
+    else if(currentMode==="og"&&playerOGInJogo(p,tk,currentJogo)>0){
+        const last=[...events].reverse().find(e=>e.type==="og"&&e.player===p&&e.ji===currentJogo);
+        events.push({player:p,type:"remove-og",ji:currentJogo,team:tk,ct:last?last.ct:tk,time:_t,label:`➖ J${currentJogo+1} GC ${p}`});ok=true;
+    }else if(currentMode==="sub"&&playerGoalsInJogo(p,tk,currentJogo)>0){events.push({player:p,type:"remove-sub",ji:currentJogo,team:tk,time:_t,label:`➖ J${currentJogo+1} sub ${p}`});ok=true;}
+    if(ok){showToast("➖",true);vibrate([50,50,50]);btn.classList.add("removing");setTimeout(()=>btn.classList.remove("removing"),300);render();}
+}
+function handleDown(p,tk,btn){isLongPress=false;longPressTimer=setTimeout(()=>{isLongPress=true;removeFrom(p,tk,btn);},600);}
+function handleUp(p,tk){clearTimeout(longPressTimer);if(!isLongPress){if(currentMode==="goal")addGoal(p,tk);else if(currentMode==="og")addOG(p,tk);else if(currentMode==="sub")addSub(p,tk);}isLongPress=false;}
+function changeJogo(d){const n=currentJogo+d;if(n>=0&&n<schedule.length){currentJogo=n;render();}}
+
+// ── RENDER ──
+function render(){
+    saveState();
+    const[home,away]=schedule[currentJogo];const[hg,ag]=jogoScore(currentJogo);
+    const ht=CONFIG.teams[home],at=CONFIG.teams[away];
+
+    // Header
+    const pTotal=CONFIG.pelada_total||12;
+    const label=CONFIG.pelada?`Súmula — Pelada ${CONFIG.pelada}/${pTotal}`:"Súmula";
+    document.getElementById("header-title").textContent=label+(CONFIG.date?` — ${CONFIG.date}`:"");
+
+    // Aggregate score bar (rodízio / multi-match 2-team)
+    const aggBar=document.getElementById("aggregate-bar");
+    if(TK.length===2&&schedule.length>1){
+        const agg=aggregateScore();
+        const t0=CONFIG.teams[TK[0]],t1=CONFIG.teams[TK[1]];
+        aggBar.innerHTML=`<span class="agg-emoji">${t0.emoji}</span> ${t0.name} <strong>${agg[TK[0]]}</strong> <span class="agg-x">✕</span> <strong>${agg[TK[1]]}</strong> ${t1.name} <span class="agg-emoji">${t1.emoji}</span>`;
+        aggBar.style.display="flex";
+    }else{aggBar.style.display="none";}
+
+    // Standings
+    const st=computeStandings();
+    const sorted=TK.map(tk=>({tk,...st[tk],gd:st[tk].gf-st[tk].ga})).sort((a,b)=>b.pts-a.pts||b.gd-a.gd);
+    let shtml=`<div class="standings-title">🏆 CLASSIFICAÇÃO</div>`;
+    sorted.forEach((s,i)=>{const t=CONFIG.teams[s.tk];
+        shtml+=`<div class="standings-row ${i===0?'first':''}">
+            <span class="standings-pos">${i+1}</span><span class="standings-emoji">${t.emoji}</span>
+            <span class="standings-name">${t.name}</span>
+            <span class="standings-stat">${s.w}V</span><span class="standings-stat">${s.d}E</span><span class="standings-stat">${s.l}D</span>
+            <span class="standings-stat">${s.gf}-${s.ga}</span>
+            <span class="standings-pts">${s.pts}</span></div>`;
+    });
+    document.getElementById("standings").innerHTML=shtml;
+
+    // Jogo bar
+    const roundLabel=isRodizio?`Rodada ${currentJogo+1} de ${schedule.length}`:CONFIG.format==="2times"?"Jogo Único":`Jogo ${currentJogo+1} de ${schedule.length}`;
+    document.getElementById("jogo-num").textContent=roundLabel;
+    const keeperNote=isRodizio?` 🧤${CONFIG.keepers[0]||""}`:"";
+    document.getElementById("jogo-matchup").textContent=`${ht.emoji} ${ht.name}${keeperNote} vs ${at.name} ${at.emoji}`;
+    document.getElementById("jogo-score").textContent=`${hg}  ✕  ${ag}`;
+    document.getElementById("prev-jogo").disabled=currentJogo===0;
+    document.getElementById("next-jogo").disabled=currentJogo===schedule.length-1;
+
+    // Pips
+    if(schedule.length>1){const pips=document.getElementById("jogo-list");pips.innerHTML="";
+        for(let i=0;i<schedule.length;i++){const b=document.createElement("button");const[s1,s2]=jogoScore(i);
+            const has=events.some(e=>e.ji===i)||finishedJogos.has(i);
+            const cancelled=cancelledJogos.has(i);
+            b.className=`jogo-pip ${cancelled?'empty':i===currentJogo?'current':has?'played':'empty'}`;
+            if(cancelled)b.style.cssText="text-decoration:line-through;opacity:0.4";
+            b.textContent=i+1;
+            b.onclick=()=>{currentJogo=i;render();};
+            let pipTimer=null,pipLong=false;
+            b.addEventListener("touchstart",()=>{pipLong=false;pipTimer=setTimeout(()=>{
+                pipLong=true;
+                if(cancelledJogos.has(i)){cancelledJogos.delete(i);showToast(`✅ Rodada ${i+1} restaurada`);}
+                else{cancelledJogos.add(i);showToast(`❌ Rodada ${i+1} cancelada`,true);}
+                render();
+            },800);},{passive:true});
+            b.addEventListener("touchend",(ev)=>{clearTimeout(pipTimer);if(pipLong)ev.preventDefault();},{passive:false});
+            b.addEventListener("touchcancel",()=>clearTimeout(pipTimer));
+            pips.appendChild(b);}}
+
+    // Player grid
+    const grid=document.getElementById("player-grid");grid.innerHTML="";
+    const restingTeams=TK.filter(tk=>tk!==home&&tk!==away);
+
+    // In rodízio, keeper only shows on home team
+    const homeKeepers=isRodizio?CONFIG.keepers:CONFIG.keepers;
+    const awayKeepers=isRodizio?[]:CONFIG.keepers;
+
+    // Home team
+    const homeElems=[];
+    const hl=addLabel(grid,`${ht.emoji} ${ht.name}`,`bg-${home}`);homeElems.push(hl);
+    ht.players.forEach(p=>{const b=mkBtn(p.name,p.pos,home,`btn-${home}`);grid.appendChild(b);homeElems.push(b);});
+    homeKeepers.forEach(k=>{const b=mkBtn(k,"GK",home,"btn-keeper");grid.appendChild(b);homeElems.push(b);});
+
+    // Away team
+    const awayElems=[];
+    const al=addLabel(grid,`${at.emoji} ${at.name}`,`bg-${away}`);awayElems.push(al);
+    at.players.forEach(p=>{const b=mkBtn(p.name,p.pos,away,`btn-${away}`);grid.appendChild(b);awayElems.push(b);});
+    awayKeepers.forEach(k=>{const b=mkBtn(k,"GK",away,"btn-keeper");grid.appendChild(b);awayElems.push(b);});
+
+    // Hide team sections in sub mode
+    if(currentMode==="sub"){homeElems.forEach(e=>e.style.display="none");awayElems.forEach(e=>e.style.display="none");}
+
+    // Substitutes
+    const allSubs=[];
+    at.players.forEach(p=>allSubs.push({name:p.name,pos:p.pos,forTeam:home,css:`btn-sub`}));
+    ht.players.forEach(p=>allSubs.push({name:p.name,pos:p.pos,forTeam:away,css:`btn-sub`}));
+    restingTeams.forEach(rtk=>{CONFIG.teams[rtk].players.forEach(p=>{
+        allSubs.push({name:p.name,pos:p.pos,forTeam:home,css:`btn-sub`});
+        allSubs.push({name:p.name,pos:p.pos,forTeam:away,css:`btn-sub`});
+    });});
+    (CONFIG.subs||[]).forEach(p=>{
+        allSubs.push({name:p.name,pos:p.pos,forTeam:home,css:`btn-sub`});
+        allSubs.push({name:p.name,pos:p.pos,forTeam:away,css:`btn-sub`});
+    });
+    // In rodízio, keeper can also sub for away team
+    if(isRodizio){CONFIG.keepers.forEach(k=>{allSubs.push({name:k,pos:"GK",forTeam:away,css:`btn-sub`});});}
+
+    const showSub=currentMode==="sub"||allSubs.some(s=>playerGoalsInJogo(s.name,s.forTeam,currentJogo)>0);
+    if(showSub){
+        addLabel(grid,`🔄 Substitutos`,`bg-sub`);
+        [home,away].forEach(ftk=>{
+            const subs=allSubs.filter(s=>s.forTeam===ftk);
+            if(subs.length===0)return;
+            const subLabel=document.createElement("div");subLabel.className="section-label";
+            subLabel.style.cssText="background:#8855cc;font-size:10px;padding:3px;margin-top:2px";
+            subLabel.textContent=`Jogando pelo ${CONFIG.teams[ftk].emoji} ${CONFIG.teams[ftk].name}`;
+            grid.appendChild(subLabel);
+            subs.forEach(s=>{
+                if(currentMode==="sub"||playerGoalsInJogo(s.name,s.forTeam,currentJogo)>0)
+                    grid.appendChild(mkBtn(s.name,s.pos,s.forTeam,s.css));
+            });
+        });
+    }
+
+    // History (current jogo only)
+    const h=document.getElementById("history-log");
+    const je=events.filter(e=>e.ji===currentJogo);
+    h.innerHTML=je.length===0?`<em>${isRodizio?"Rodada":"J"}${currentJogo+1} —</em>`:je.slice().reverse().map(e=>`<div class="history-item">${e.label}</div>`).join("");
+}
+
+function addLabel(grid,text,cls){const d=document.createElement("div");d.className=`section-label ${cls}`;d.textContent=text;grid.appendChild(d);return d;}
+
+function mkBtn(name,pos,tk,css){
+    const btn=document.createElement("button");btn.className=`player-btn ${css}`;
+    const dn=name.length>11?name.substring(0,10)+"…":name;
+    const g=playerGoalsInJogo(name,tk,currentJogo);
+    const og=playerOGInJogo(name,tk,currentJogo);
+    const total=playerTotalGoals(name);
+    let badges=`<span class="goals ${g===0?'zero':''}">${g}</span>`;
+    if(og>0)badges+=`<span class="og-badge">${og}gc</span>`;
+    btn.innerHTML=`<span>${dn}</span><span class="pos">${pos}</span><div class="badge-row">${badges}</div>`;
+    if(total>0&&schedule.length>1)btn.innerHTML+=`<span class="total-badge">Σ${total}</span>`;
+    btn.addEventListener("touchstart",e=>{
+        touchStartX=e.touches[0].clientX;touchStartY=e.touches[0].clientY;isTouchMoved=false;
+        handleDown(name,tk,btn);
+    },{passive:true});
+    btn.addEventListener("touchmove",e=>{
+        const dx=Math.abs(e.touches[0].clientX-touchStartX),dy=Math.abs(e.touches[0].clientY-touchStartY);
+        if(dx>10||dy>10){isTouchMoved=true;clearTimeout(longPressTimer);isLongPress=false;}
+    },{passive:true});
+    btn.addEventListener("touchend",e=>{if(!isTouchMoved){e.preventDefault();handleUp(name,tk);}else{clearTimeout(longPressTimer);isLongPress=false;}});
+    btn.addEventListener("touchcancel",()=>{clearTimeout(longPressTimer);isLongPress=false;});
+    btn.addEventListener("mousedown",()=>handleDown(name,tk,btn));
+    btn.addEventListener("mouseup",()=>handleUp(name,tk));
+    btn.addEventListener("mouseleave",()=>{clearTimeout(longPressTimer);isLongPress=false;});
+    return btn;
+}
+
+// ── UI ──
+function setMode(m){currentMode=m;document.querySelectorAll(".mode-btn").forEach(b=>b.className="mode-btn");
+    document.getElementById(`mode-${m}`).className=`mode-btn active-${m}`;
+    document.getElementById("mode-desc").textContent=MODE_DESC[m];
+    if(m==="checkin"){renderCheckin();}else{document.getElementById("player-grid").style.display="grid";render();}}
+function undoLast(){if(lastFimJogo>=0){undoFim();return;}if(events.length===0)return;events.pop();if(narrative.length>0)narrative.pop();render();showToast("↩️");}
+function resetScores(){if(!confirm("Zerar todos os gols? (Jogadores continuam)"))return;events=[];cancelledJogos.clear();finishedJogos.clear();firstGoalSent=false;lastLiveJogo=-1;lastFimJogo=-1;currentJogo=0;narrative=[];checkins={};extraPlayers=[];clearSavedState();render();showToast("🔄 Zerado!");}
+
+// ── COPY (WhatsApp) ──
+function copyResults(){
+    const st=computeStandings();const sorted=TK.map(tk=>({tk,...st[tk],gd:st[tk].gf-st[tk].ga})).sort((a,b)=>b.pts-a.pts||b.gd-a.gd);
+    const dateStr=CONFIG.date||new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric'});
+    const pNum=CONFIG.pelada?` - Pelada ${CONFIG.pelada}`:"";
+    const lines=[`WOODENLEGS${pNum} - ${dateStr}`,``];
+
+    // Aggregate score for 2-team formats
+    if(TK.length===2&&schedule.length>1){
+        const agg=aggregateScore();
+        const t0=CONFIG.teams[TK[0]],t1=CONFIG.teams[TK[1]];
+        lines.push(`${t0.name} ${agg[TK[0]]} x ${agg[TK[1]]} ${t1.name}`,``);
+    }
+
+    lines.push(`Classificacao:`);
+    sorted.forEach((s,i)=>{const t=CONFIG.teams[s.tk];lines.push(`  ${i+1}. ${t.name}  ${s.pts}pts (${s.w}V ${s.d}E ${s.l}D) ${s.gf}-${s.ga}`);});
+    lines.push(``);
+    if(schedule.length>1){lines.push(`${isRodizio?"Rodadas":"Jogos"}:`);
+        for(let i=0;i<schedule.length;i++){
+            if(cancelledJogos.has(i))continue;
+            const[h,a]=schedule[i];const[hg,ag]=jogoScore(i);
+            if(hg>0||ag>0||events.some(e=>e.ji===i))lines.push(`  ${i+1}. ${CONFIG.teams[h].name} ${hg}x${ag} ${CONFIG.teams[a].name}`);}
+        lines.push(``);}
+    for(const tk of TK){const t=CONFIG.teams[tk];
+        const goalEvents=events.filter(e=>(e.type==="goal"||e.type==="sub")&&e.team===tk);
+        const removeEvents=events.filter(e=>(e.type==="remove-goal"||e.type==="remove-sub")&&e.team===tk);
+        const sc={};const times={};
+        goalEvents.forEach(e=>{sc[e.player]=(sc[e.player]||0)+1;if(!times[e.player])times[e.player]=[];if(e.time)times[e.player].push(e.time);});
+        removeEvents.forEach(e=>{sc[e.player]=(sc[e.player]||0)-1;if(times[e.player]&&times[e.player].length)times[e.player].pop();});
+        const list=Object.entries(sc).filter(([_,g])=>g>0).sort((a,b)=>b[1]-a[1]);
+        if(list.length)lines.push(`${t.name}:`,...list.map(([n,g])=>{const ts=times[n]&&times[n].length?` (${times[n].join(', ')})`:'';return `  ${n}: ${g}${ts}`;}),``);}
+    const ogCounts={};
+    events.filter(e=>e.type==="og").forEach(e=>{const k=`${e.player}|${e.ji}|${e.ct}`;ogCounts[k]=(ogCounts[k]||0)+1;});
+    events.filter(e=>e.type==="remove-og").forEach(e=>{const k=`${e.player}|${e.ji}|${e.ct}`;ogCounts[k]=(ogCounts[k]||0)-1;});
+    const netOGs=Object.entries(ogCounts).filter(([_,c])=>c>0).map(([k,c])=>{const[player,ji,ct]=k.split("|");return{player,ji:parseInt(ji),ct,count:c};});
+    if(netOGs.length){
+        lines.push(`Gols Contra:`);
+        netOGs.forEach(e=>{const prep=CONFIG.teams[e.ct].prep||'do';const artigo=(prep==='da')?'a':'o';lines.push(`  ${e.player} J${e.ji+1} - gol contra para ${artigo} ${CONFIG.teams[e.ct].name}`);});
+        lines.push(``);
+    }
+    // Attendance
+    const allNames=getAllRosterNames();
+    const present=allNames.filter(n=>checkins[n]&&checkins[n].present);
+    const absent=allNames.filter(n=>!checkins[n]||!checkins[n].present);
+    if(present.length>0){
+        present.sort((a,b)=>(checkins[a].time||"").localeCompare(checkins[b].time||""));
+        lines.push(`Presenca (${present.length}):`);
+        present.forEach(n=>lines.push(`  ${n} - ${checkins[n].time}`));
+        lines.push(``);
+        if(absent.length>0){
+            lines.push(`Ausentes (${absent.length}):`);
+            absent.forEach(n=>lines.push(`  ${n}`));
+            lines.push(``);
+        }
+    }
+    const text=lines.join("\n");
+    navigator.clipboard.writeText(text).then(()=>showToast("Copiado!")).catch(()=>{const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);showToast("Copiado!");});
+}
+
+// ── EXPORT MARKDOWN (Súmula) ──
+function exportMD(){
+    const dateStr=CONFIG.date||new Date().toISOString().slice(0,10);
+    const pNum=CONFIG.pelada||"?";
+    const lines=[];
+
+    // Header
+    lines.push(`# Pelada ${pNum} — ${dateStr}`,``);
+    lines.push(`## Config`);
+    lines.push(`- Format: ${CONFIG.format}`);
+    lines.push(`- Keepers: ${CONFIG.keepers.join(", ")}`);
+    if(CONFIG.subs&&CONFIG.subs.length)lines.push(`- Subs: ${CONFIG.subs.map(s=>s.name).join(", ")}`);
+    lines.push(``);
+
+    // Teams
+    lines.push(`## Teams`);
+    for(const tk of TK){
+        const t=CONFIG.teams[tk];
+        lines.push(`### ${t.name}`);
+        lines.push(t.players.map(p=>`${p.name} (${p.pos})`).join(", "));
+        lines.push(``);
+    }
+
+    // Aggregate score
+    if(TK.length===2&&schedule.length>1){
+        const agg=aggregateScore();
+        const t0=CONFIG.teams[TK[0]],t1=CONFIG.teams[TK[1]];
+        lines.push(`## Final Score`);
+        lines.push(`**${t0.name} ${agg[TK[0]]} x ${agg[TK[1]]} ${t1.name}**`,``);
+    }
+
+    // Standings
+    const st=computeStandings();
+    const sorted=TK.map(tk=>({tk,...st[tk],gd:st[tk].gf-st[tk].ga})).sort((a,b)=>b.pts-a.pts||b.gd-a.gd);
+    lines.push(`## Standings`);
+    lines.push(`| # | Team | W | D | L | GF | GA | Pts |`);
+    lines.push(`|---|------|---|---|---|----|----|-----|`);
+    sorted.forEach((s,i)=>{const t=CONFIG.teams[s.tk];
+        lines.push(`| ${i+1} | ${t.name} | ${s.w} | ${s.d} | ${s.l} | ${s.gf} | ${s.ga} | ${s.pts} |`);
+    });
+    lines.push(``);
+
+    // Games with goal detail
+    lines.push(`## Games`);
+    for(let i=0;i<schedule.length;i++){
+        if(cancelledJogos.has(i)){lines.push(`### ${isRodizio?"R":"J"}${i+1}: CANCELLED`,``);continue;}
+        const[h,a]=schedule[i];const[hg,ag]=jogoScore(i);
+        const hasEvents=events.some(e=>e.ji===i);
+        if(hg===0&&ag===0&&!hasEvents&&!finishedJogos.has(i))continue;
+        const ht=CONFIG.teams[h],at=CONFIG.teams[a];
+        lines.push(`### ${isRodizio?"R":"J"}${i+1}: ${ht.name} ${hg} x ${ag} ${at.name}`);
+        // List goals in chronological order for this match
+        const matchEvents=events.filter(e=>e.ji===i&&!e.type.startsWith("remove-"));
+        const netGoals=[];
+        for(const e of matchEvents){
+            if(e.type==="goal"||e.type==="sub"){netGoals.push(`- ${e.player} (${CONFIG.teams[e.team].name})${e.time?' aos '+e.time:''}`);
+            }else if(e.type==="og"){netGoals.push(`- ${e.player} GC -> ${CONFIG.teams[e.ct].name}${e.time?' aos '+e.time:''}`);}
+        }
+        if(netGoals.length)lines.push(...netGoals);
+        lines.push(``);
+    }
+
+    // Artilharia
+    lines.push(`## Artilharia`);
+    const scorers={};
+    events.filter(e=>e.type==="goal"||e.type==="sub").forEach(e=>scorers[e.player]=(scorers[e.player]||0)+1);
+    events.filter(e=>e.type==="remove-goal"||e.type==="remove-sub").forEach(e=>scorers[e.player]=(scorers[e.player]||0)-1);
+    const artList=Object.entries(scorers).filter(([_,g])=>g>0).sort((a,b)=>b[1]-a[1]);
+    artList.forEach(([name,goals])=>lines.push(`- ${name}: ${goals}`));
+    lines.push(``);
+
+    // Full Event Log
+    lines.push(`## Event Log`);
+    lines.push(`| # | Type | Match | Player | Team | Time | Label |`);
+    lines.push(`|---|------|-------|--------|------|------|-------|`);
+    events.forEach((e,i)=>{
+        const teamName=e.team?CONFIG.teams[e.team]?.name||e.team:"";
+        lines.push(`| ${i+1} | ${e.type} | ${isRodizio?"R":"J"}${e.ji+1} | ${e.player||""} | ${teamName} | ${e.time||""} | ${e.label} |`);
+    });
+    lines.push(``);
+
+    // Attendance
+    const allNames=getAllRosterNames();
+    const present=allNames.filter(n=>checkins[n]&&checkins[n].present);
+    const absent=allNames.filter(n=>!checkins[n]||!checkins[n].present);
+    if(present.length>0){
+        present.sort((a,b)=>(checkins[a].time||"").localeCompare(checkins[b].time||""));
+        lines.push(`## Presenca`);
+        lines.push(`| # | Jogador | Chegada |`);
+        lines.push(`|---|---------|---------|`);
+        present.forEach((n,i)=>lines.push(`| ${i+1} | ${n} | ${checkins[n].time} |`));
+        lines.push(``);
+        if(absent.length>0){
+            lines.push(`## Ausentes`);
+            absent.forEach(n=>lines.push(`- ${n}`));
+            lines.push(``);
+        }
+    }
+
+    const md=lines.join("\n");
+    navigator.clipboard.writeText(md).then(()=>showToast("📄 Súmula copiada!")).catch(()=>{
+        const ta=document.createElement("textarea");ta.value=md;document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);showToast("📄 Súmula copiada!");
+    });
+}
+
+function showToast(msg,isRm=false){const t=document.getElementById("toast");t.textContent=msg;t.className=isRm?"toast show remove":"toast show";setTimeout(()=>t.className="toast",1500);}
+function vibrate(p){if(navigator.vibrate)navigator.vibrate(p||50);}
+
+// ── ATTENDANCE / CHECK-IN ──
+let checkins={}; // {name: {time: "HH:MM", present: true}}
+let extraPlayers=[]; // walk-ins added via text input
+
+function getAllRosterNames(){
+    const names=[];
+    for(const tk of TK){CONFIG.teams[tk].players.forEach(p=>names.push(p.name));}
+    CONFIG.keepers.forEach(k=>names.push(k));
+    (CONFIG.subs||[]).forEach(s=>names.push(s.name));
+    extraPlayers.forEach(n=>names.push(n));
+    return [...new Set(names)];
+}
+
+function toggleCheckin(name){
+    if(checkins[name]&&checkins[name].present){
+        delete checkins[name];
+    }else{
+        const now=new Date();
+        const time=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+        checkins[name]={time,present:true};
+    }
+    saveState();
+    renderCheckin();
+}
+
+function addExtraPlayer(){
+    const input=document.getElementById("extra-player-input");
+    const name=input.value.trim();
+    if(!name)return;
+    if(!extraPlayers.includes(name)){extraPlayers.push(name);}
+    input.value="";
+    saveState();
+    renderCheckin();
+}
+
+function renderCheckin(){
+    const grid=document.getElementById("player-grid");
+    grid.innerHTML="";
+    grid.style.display="flex";
+    grid.style.flexDirection="column";
+
+    // Add player input
+    const addDiv=document.createElement("div");
+    addDiv.className="checkin-add";
+    addDiv.innerHTML=`<input type="text" id="extra-player-input" placeholder="Adicionar jogador..." onkeydown="if(event.key==='Enter')addExtraPlayer()"><button onclick="addExtraPlayer()">+</button>`;
+    grid.appendChild(addDiv);
+
+    const allNames=getAllRosterNames();
+    const present=allNames.filter(n=>checkins[n]&&checkins[n].present);
+    const absent=allNames.filter(n=>!checkins[n]||!checkins[n].present);
+
+    // Sort present by check-in time
+    present.sort((a,b)=>(checkins[a].time||"").localeCompare(checkins[b].time||""));
+
+    if(present.length>0){
+        const sec=document.createElement("div");
+        sec.className="checkin-section";
+        sec.textContent=`✅ Presentes (${present.length})`;
+        grid.appendChild(sec);
+        present.forEach(name=>{
+            const row=document.createElement("div");
+            const ci=checkins[name];
+            // Determine if late (checked in after first goal)
+            const isLate=firstGoalSent&&ci.time>=(events.length>0?events[0].time||"00:00":"99:99");
+            row.className=`checkin-row present${isLate?' late':''}`;
+            row.innerHTML=`<div class="checkin-badge here">✓</div><div class="checkin-name">${name}</div><div class="checkin-time">${ci.time}</div>`;
+            row.onclick=()=>toggleCheckin(name);
+            grid.appendChild(row);
+        });
+    }
+
+    if(absent.length>0){
+        const sec=document.createElement("div");
+        sec.className="checkin-section";
+        sec.textContent=`⏳ Aguardando (${absent.length})`;
+        grid.appendChild(sec);
+        absent.forEach(name=>{
+            const row=document.createElement("div");
+            row.className="checkin-row";
+            row.innerHTML=`<div class="checkin-badge absent">—</div><div class="checkin-name">${name}</div><div class="checkin-time"></div>`;
+            row.onclick=()=>toggleCheckin(name);
+            grid.appendChild(row);
+        });
+    }
+}
+
+// ── FIM DA PELADA ──
+function fimDaPelada(){
+    if(!confirm("Encerrar a pelada? Isso vai copiar o resumo final."))return;
+    // Finish last game if not already
+    if(!finishedJogos.has(currentJogo)){
+        finishedJogos.add(currentJogo);
+    }
+    // Build final summary
+    const st=computeStandings();
+    const sorted=TK.map(tk=>({tk,...st[tk],gd:st[tk].gf-st[tk].ga})).sort((a,b)=>b.pts-a.pts||b.gd-a.gd);
+    const champ=sorted[0];
+    const champT=CONFIG.teams[champ.tk];
+    const pNum=CONFIG.pelada||"?";
+    const pTotal=CONFIG.pelada_total||12;
+    const dateStr=CONFIG.date||"";
+
+    let msg=`Fim da Pelada ${pNum}/${pTotal} - ${dateStr}\n\n`;
+    msg+=`${champT.emoji} ${champT.name} Campeao - ${champ.pts} pontos\n\n`;
+
+    // Standings - WhatsApp friendly vertical format
+    sorted.forEach((s,i)=>{
+        const t=CONFIG.teams[s.tk];
+        msg+=`${i+1} - ${t.emoji} ${t.name}\n`;
+        msg+=`      Pts: ${s.pts}\n`;
+        msg+=`      Vitorias: ${s.w}\n`;
+        msg+=`      Empates: ${s.d}\n`;
+        msg+=`      Derrotas: ${s.l}\n`;
+        msg+=`      Gols Pro: ${s.gf}\n`;
+        msg+=`      Gols Contra: ${s.ga}\n\n`;
+    });
+
+    // Top scorers
+    const scorers={};
+    events.filter(e=>e.type==="goal"||e.type==="sub").forEach(e=>scorers[e.player]=(scorers[e.player]||0)+1);
+    events.filter(e=>e.type==="remove-goal"||e.type==="remove-sub").forEach(e=>scorers[e.player]=(scorers[e.player]||0)-1);
+    const artList=Object.entries(scorers).filter(([_,g])=>g>0).sort((a,b)=>b[1]-a[1]);
+    if(artList.length){
+        msg+=`\nArtilharia:\n`;
+        artList.forEach(([n,g])=>msg+=`- ${n}: ${g}\n`);
+    }
+
+    // Attendance summary
+    const presentNames=Object.keys(checkins).filter(n=>checkins[n].present);
+    if(presentNames.length>0){
+        msg+=`\n${presentNames.length} jogadores presentes.`;
+    }
+
+    narrative.push(msg);
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(msg).catch(()=>fallbackCopy(msg));
+    }else{fallbackCopy(msg);}
+    showToast("Pelada encerrada!");
+    saveState();
+    render();
+}
+
+// ── LOCALSTORAGE PERSISTENCE ──
+const SAVE_KEY=`sumula_p${CONFIG.pelada||0}_${CONFIG.saveKey||CONFIG.date||""}`;
+function saveState(){
+    try{
+        const state={events,cancelledJogos:[...cancelledJogos],finishedJogos:[...finishedJogos],currentJogo,lastLiveJogo,lastFimJogo,firstGoalSent,narrative,checkins,extraPlayers};
+        localStorage.setItem(SAVE_KEY,JSON.stringify(state));
+    }catch(e){}
+}
+function restoreState(){
+    try{
+        const raw=localStorage.getItem(SAVE_KEY);
+        if(!raw)return false;
+        const state=JSON.parse(raw);
+        if(state.events&&state.events.length>0){
+            events=state.events;
+            cancelledJogos=new Set(state.cancelledJogos||[]);
+            finishedJogos=new Set(state.finishedJogos||[]);
+            currentJogo=state.currentJogo||0;
+            lastLiveJogo=state.lastLiveJogo||-1;
+            lastFimJogo=state.lastFimJogo||-1;
+            firstGoalSent=state.firstGoalSent||false;
+            narrative=state.narrative||[];
+            checkins=state.checkins||{};
+            extraPlayers=state.extraPlayers||[];
+            return true;
+        }
+    }catch(e){}
+    return false;
+}
+function clearSavedState(){localStorage.removeItem(SAVE_KEY);}
+
+// INIT
+const restored=restoreState();
+if(restored){showToast("Dados restaurados!");}
+document.getElementById("keeper-bar").textContent=isRodizio?`🧤 ${CONFIG.keepers.join(", ")} (rodízio — alterna a cada rodada)`:`🧤 ${CONFIG.keepers.join(", ")}`;
+document.getElementById("jogo-list").style.display=schedule.length>1?"flex":"none";
+setMode("goal");
+document.addEventListener("dblclick",e=>e.preventDefault());
+document.addEventListener("contextmenu",e=>e.preventDefault());
+</script>
+</body>
+</html>
+
