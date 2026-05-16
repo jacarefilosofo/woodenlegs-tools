@@ -365,7 +365,7 @@ function startGame(){
     const teamNames=teamKeys.map(k=>CONFIG.teams[k].name);
     let corpo;
     if(nTeams>=3){
-        corpo=`Os ${nTeams} times em campo hoje pra um campeonato de grandes emoções e risadas.\n${teamNames.join(' x ')}.`;
+        corpo=`Hoje temos ${nTeams} times num campeonato de grandes emoções e risadas.\n${teamNames.join(' x ')}.`;
     }else{
         corpo=`Dois times fazem a grande final hoje. ${teamNames.join(' x ')} o que promete um jogo com grandes emoções e grandes risadas.`;
     }
