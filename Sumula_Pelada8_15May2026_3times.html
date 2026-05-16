@@ -360,9 +360,16 @@ function startGame(){
     const ano=dateObj.getFullYear();
     const dow=['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
     const diaSemana=dow[dateObj.getDay()];
-    const[h,a]=schedule[currentJogo];
-    const ht=CONFIG.teams[h],at=CONFIG.teams[a];
-    const msg=`Atenção, Nação Woodenlegs.\nDamos início agora (${hora}) a pelada ${CONFIG.pelada||''} de ${CONFIG.pelada_total||12} nessa ${diaSemana}, ${dia} de ${mes} de ${ano}.\nDois times fazem a grande final hoje. ${ht.name} x ${at.name} o que promete um jogo com grandes emoções e grandes risadas.`;
+    const teamKeys=Object.keys(CONFIG.teams);
+    const nTeams=teamKeys.length;
+    const teamNames=teamKeys.map(k=>CONFIG.teams[k].name);
+    let corpo;
+    if(nTeams>=3){
+        corpo=`Os ${nTeams} times em campo hoje pra um campeonato de grandes emoções e risadas.\n${teamNames.join(' x ')}.`;
+    }else{
+        corpo=`Dois times fazem a grande final hoje. ${teamNames.join(' x ')} o que promete um jogo com grandes emoções e grandes risadas.`;
+    }
+    const msg=`Atenção, Nação Woodenlegs.\nDamos início agora (${hora}) a pelada ${CONFIG.pelada||''} de ${CONFIG.pelada_total||12} nessa ${diaSemana}, ${dia} de ${mes} de ${ano}.\n${corpo}`;
     firstGoalSent=true;
     narrative.push(msg);
     if(navigator.clipboard&&navigator.clipboard.writeText){
