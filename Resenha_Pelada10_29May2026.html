@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resenha Pelada 10 — 29 Mai 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0d1117;color:#e6edf3;max-width:600px;margin:0 auto;padding:16px}
+h1{text-align:center;font-size:18px;margin-bottom:4px;color:#f0f6fc}
+.subtitle{text-align:center;font-size:12px;color:#8b949e;margin-bottom:16px}
+
+.score-box{background:#161b22;border-radius:16px;padding:20px;text-align:center;margin-bottom:20px;border:1px solid #30363d}
+.standings{width:100%;border-collapse:collapse;margin:8px 0}
+.standings th{font-size:10px;color:#8b949e;text-align:center;padding:4px 6px;border-bottom:1px solid #30363d}
+.standings td{font-size:13px;text-align:center;padding:5px 6px}
+.standings td:first-child{text-align:left;font-weight:700}
+.standings tr:first-child td{color:#ff6b6b}
+.standings tr:nth-child(2) td{color:#f0c040}
+.standings tr:nth-child(3) td{color:#58a6ff}
+.winner-badge{display:inline-block;background:#ff6b6b;color:#0d1117;font-size:11px;font-weight:800;padding:3px 12px;border-radius:20px;margin-top:8px}
+.score-label{font-size:11px;color:#8b949e;margin-top:4px}
+
+.section{margin-bottom:20px}
+.section-title{font-size:13px;font-weight:800;color:#8b949e;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;padding-left:4px}
+
+.resenha{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:16px;font-size:13px;line-height:1.8;color:#c9d1d9}
+.resenha p{margin-top:12px}
+.resenha p:first-child{margin-top:0}
+.resenha .chapter{font-size:14px;font-weight:800;color:#f0f6fc;margin-top:20px;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px}
+
+.quote{background:#161b22;border-left:3px solid #f78166;padding:8px 12px;margin-bottom:6px;border-radius:0 8px 8px 0;font-size:12px;color:#c9d1d9}
+.quote .author{color:#8b949e;font-size:10px;margin-top:2px}
+
+.halftime{background:#161b22;border:2px solid #ff6b6b;border-radius:16px;padding:16px;margin:20px 0;text-align:center}
+.halftime-title{font-size:16px;font-weight:900;color:#ff6b6b;margin-bottom:8px;letter-spacing:1px}
+.halftime-desc{font-size:12px;color:#c9d1d9;line-height:1.6}
+.halftime img{max-width:100%;border-radius:12px;margin-top:12px}
+
+.art-row{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;margin-bottom:3px}
+.art-row:nth-child(1){background:#1a1f2b}
+.art-pos{width:20px;font-size:11px;font-weight:900;color:#484f58}
+.art-name{flex:1;font-size:13px;font-weight:600}
+.art-bar-bg{width:120px;height:14px;background:#21262d;border-radius:7px;overflow:hidden;flex-shrink:0}
+.art-bar{height:100%;border-radius:7px}
+.art-bar.portugal{background:#ff6b6b}
+.art-bar.brasil{background:#f0c040}
+.art-bar.italia{background:#58a6ff}
+.art-goals{width:28px;text-align:right;font-size:14px;font-weight:900}
+.art-crown{font-size:14px;width:20px}
+
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat-card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:12px;text-align:center}
+.stat-value{font-size:28px;font-weight:900;color:#f0f6fc}
+.stat-label{font-size:10px;color:#8b949e;margin-top:2px}
+
+.timeline{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:12px;margin-bottom:20px}
+.tl-row{display:flex;align-items:center;font-size:11px;padding:3px 0;border-bottom:1px solid #21262d}
+.tl-row:last-child{border-bottom:none}
+.tl-time{width:45px;color:#8b949e;font-weight:600;flex-shrink:0}
+.tl-score{width:55px;text-align:center;font-weight:900;font-size:12px;flex-shrink:0}
+.tl-player{flex:1;color:#c9d1d9}
+.tl-icon{width:20px;text-align:center;flex-shrink:0}
+.tl-brasil{color:#f0c040}.tl-italia{color:#58a6ff}.tl-portugal{color:#ff6b6b}
+.tl-drama{background:#1c1208;border:1px solid #f78166;border-radius:8px;padding:6px 10px;margin:6px 0;font-size:11px;color:#f78166;text-align:center;font-weight:700}
+.tl-break{background:#1a0a0a;border:1px solid #ff6b6b;border-radius:8px;padding:6px 10px;margin:6px 0;font-size:11px;color:#ff6b6b;text-align:center;font-weight:700}
+
+.game-header{font-size:10px;color:#484f58;font-weight:800;letter-spacing:1px;padding:6px 0 2px 0;text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<h1>A NOITE QUE O MANO VENDEU FIGURINHAS, O FERRARI ENTROU NA PISTA E O FREDDIE MERCURY FEZ O SHOW DO INTERVALO</h1>
+<div class="subtitle">Pelada 10/12 — Temporada da Primavera — 29 Mai 2026 — LAX Field</div>
+
+<!-- SCORE -->
+<div class="score-box">
+    <table class="standings">
+        <tr><th></th><th>J</th><th>V</th><th>E</th><th>D</th><th>GP</th><th>GC</th><th>Pts</th></tr>
+        <tr><td>🔴 Portugal</td><td>8</td><td>4</td><td>2</td><td>2</td><td>9</td><td>7</td><td style="font-weight:900;font-size:16px">14</td></tr>
+        <tr><td>🟡 Brasil</td><td>8</td><td>4</td><td>1</td><td>3</td><td>5</td><td>4</td><td style="font-weight:900;font-size:16px">13</td></tr>
+        <tr><td>🔵 Italia</td><td>8</td><td>2</td><td>1</td><td>5</td><td>6</td><td>9</td><td style="font-weight:900;font-size:16px">7</td></tr>
+    </table>
+    <div class="score-label">12 jogos · 3 times · 20 gols · 17 jogadores · 1 tryout · 1 show do intervalo · 1 corrida em câmera lenta · 1 homem invisível</div>
+    <div class="winner-badge">🏆 Portugal Campeão — 14 pontos — Guilherme & Mac & Arthur artilheiros (3 gols)</div>
+</div>
+
+<!-- RESENHA -->
+<div class="section">
+    <div class="section-title">Resenha</div>
+    <div class="resenha">
+
+        <div class="chapter">Capítulo 1 — O Olheiro de Figurinhas</div>
+
+        <p>A Pelada 10 começou bem antes da pelada. Começou na quinta-feira. O Mano Marcha Lenta nos contactou animado: <i>"Arrumei um boleiro de primeira pra fazer tryout com a gente. Falei pra ele da pelada e o cara empolgou bastante."</i></p>
+
+        <p>Mas aí, Mano, conta mais. Quem é esse cara? Como você conheceu? Os olheiros do Woodenlegs gostariam de saber pelo menos um pouco. Depois de várias mensagens, o Mano se abriu.</p>
+
+        <div class="quote">
+            "Seguinte, eu tava querendo vender figurinhas do álbum da Copa pra ele, mas ele tava fazendo jogo duro. Daí eu ofereci que se ele comprasse 3 pacotinhos a um preço especial, eu o convidaria pra uma pelada legal."
+            <div class="author">— Mano (Eduardo Fernandes), olheiro e vendedor ambulante de figurinhas</div>
+        </div>
+
+        <p>Putz, Mano. Você pelo menos sabe o nome do cara? <i>"Ish... Ahh. Sim sim. Paulo Fitipaldi."</i></p>
+
+        <p>Sexta-feira chega e a pelada desmorona. O Marcone Hemorroida foi desistido de última hora pela esposa. O Vovô Doni não conseguiu bater a meta de estimativas da semana e cancelou em cima da hora. O único jeito era chamar o tal Paulo Fitipaldi. Mano, pergunta pro cara se ele corre muito, a idade dele, que posição joga. <i>"Eu não, meu. Nem conheço o cara. Ele nem comprou os 3 pacotinhos porque já tinha completado o álbum. Mas se quiser, aqui vai o contato."</i></p>
+
+        <p>Ao ler o contato, em letras claras sobre fundo escuro, estava o nome do caboclo. <b>Pedro Ferrari.</b> Não Paulo Fitipaldi. Pedro Ferrari. E com o histórico perfeito do Mano em trazer jogadores para tryout, a animação tomou conta. Pô, o cara estava nas notícias em todos os jornais da semana. A Ferrari acabou de lançar o Nissan mais lindo do mundo.</p>
+
+        <p>Ligamos pro Ferrari, que foi muito legal. O cara era gente boa de verdade. Falou de como tem tentado achar um lugar pra jogar bola, que tinha um brother chamado Mad Max que também procurava uma oportunidade. Ficou grato, feliz. Disse que tinha algo com a filha mas que não queria perder essa chance de conhecer uma galera legal. Jogador frequente de peladas, apaixonado por futebol.</p>
+
+        <div class="chapter">Capítulo 2 — MonoOvo vs Ferrari: A Entrevista de Emprego Mais Cruel do Mundo</div>
+
+        <p>Ferrari impressionou na entrevista por telefone. Ganhou uma nota similar à do Fabricio no WR. Os times foram divididos e o Ferrari caiu no time do MonoOvo.</p>
+
+        <p>Arthur, como um menino cheio de energia, rápido e habilidoso, ficou completamente transtornado ao ver o novato aquecendo.</p>
+
+        <div class="quote">
+            "Esse menino não sabe nem chutar a bola!! Olha lá! Tira ele do meu time!"
+            <div class="author">— Arthur (MonoOvo), técnico, jogador, e destruidor de sonhos</div>
+        </div>
+
+        <p>Calma, MonoOvo. Nem começou o jogo e você já tá chorando. Vamos nos divertir. Estamos aqui pra isso. Fica na paz que tudo vai dar certo.</p>
+
+        <div class="quote">
+            "Não! Não! Olha lá, ele não sabe nem chutar!! Como eu vou fazer?? Como eu vou fazer?? Eu não vou ganhar nada! Minha vida não vai valer nada!!"
+            <div class="author">— Arthur (MonoOvo), agora em modo existencial</div>
+        </div>
+
+        <p>E isso tudo — por uma razão meio inexplicável — na frente do próprio Ferrari, que começou a ficar tímido e receoso.</p>
+
+        <p>Resultado: o Brasil do Arthur ganhou o primeiro jogo 1 a 0. Arthur fez o gol. Mas perdeu o respeito de uma pessoa legal que tinha ido ali pra tentar arrumar amigos, pertencer, se divertir. Perdeu um possível amigo.</p>
+
+        <div class="chapter">Capítulo 3 — 12 Jogos, 20 Gols, e o Caos de Sempre</div>
+
+        <p>Arthur abriu o placar no Jogo 1 aos 19:06. Brasil 1 x 0 Itália. O MonoOvo queria provar que poderia carregar o time mesmo com o Ferrari ao lado. E carregou. Três gols na noite. Artilheiro dividido com Guilherme e Mac — os três com 3 gols cada.</p>
+
+        <p>Portugal de Guilherme, Mac e Eduardo respondeu rápido. Jogo 2, Roger soltou o canhão — pela primeira vez na vida não foi um peido de velha, foi um peido de verdade, de macho — e no rebote, Mac marcou de cabeça. Após o jogo ele confessou que o gol tinha sido de nariz. Roger 1, Eduardo 1, Portugal 2 x 0 Brasil. O time vermelho começava a mostrar a cara.</p>
+
+        <p>Mas o grande show da primeira metade foi o Jogo 6. Portugal x Itália. Cinco gols em três minutos. 19:44 — Facci abre pra Itália. 19:45 — Mac empata. 19:45 — Guilherme vira. 19:46 — Paulinho empata de novo. 19:47 — Mac fecha. 3 x 2 Portugal. Uma loucura que ninguém conseguiu processar. A bola entrava e saía do gol como se estivesse num flipperama.</p>
+
+        <p>Luigi deu um voleio lindo. Perfeito na intenção. Majestoso na execução. Não acertou a bola.</p>
+
+        <p>E no meio disso tudo, o Mano deu uma arrancada saindo da própria área. Em câmera lenta. E de alguma maneira inexplicável, todo mundo em campo ficou em câmera lenta também. Levou cinco minutos pra chegar ao outro lado — marcha lenta e câmera lenta ao mesmo tempo, com freio de mão puxado, correndo na subida. O mais impressionante é que ele teve vários tempos durante essa corrida eterna pra olhar a torcida, que ia à loucura batendo nas paredes — em velocidade normal. Não foi gol, mas o fato dele conseguir controlar a velocidade de todos em campo para que o tempo quase parasse, mereceu o gol.</p>
+
+        <p>A Itália ganhou o Jogo 7 com Bruno — e aí veio o intervalo. E o intervalo veio com show.</p>
+    </div>
+</div>
+
+<!-- HALFTIME SHOW -->
+<div class="halftime">
+    <div class="halftime-title">🎤 HALFTIME SHOW — FREDDIE MERCURY</div>
+    <div class="halftime-desc">
+        Bruno Freddie Mercury se viu no espelho, viu a beleza da roupa, e decidiu ir pra casa assim. A torcida gritava: <i>"Marca o Freddie Mercury que ele quer Break Free!"</i> Todo mundo ficou parado vendo o cantor se apresentar no meio de campo. <i>"Freddie Mercury, vira o disco!"</i> E a torcida pedia pra Itália ganhar pra ver se o Fred Mercury cantava We Are The Champions. Fred não morreu. Assim como o Elvis. Ele estava lá.
+    </div>
+</div>
+
+<!-- RESENHA PARTE 2 -->
+<div class="section">
+    <div class="resenha">
+        <div class="chapter">Capítulo 4 — O Homem Invisível e Outras Lendas</div>
+
+        <p>Jogo 8 terminou 0 x 0. Brasil x Portugal numa batalha de nervos onde ninguém acertou nada.</p>
+
+        <p>No Jogo 9, a Itália acordou. Bruno e Paulinho marcaram no mesmo minuto — 20:10. 2 x 0 contra Portugal. A torcida gritou: <i>"Itália! O Brasil está com você!"</i> Porque a Itália é o famoso melhor time no papel. Mas não saiu do papel.</p>
+
+        <p>E aí veio a jogada ensaiada. Paulinho recebe no meio, sozinho. Só tinha o solitário Aiziro pra passar. Pensou alto: <i>"Agora eu si consagro!!"</i> Mas do nada foi calçado por trás pelo homem invisível. Paulinho caiu sozinho com o homem invisível. Um caiu em cima do outro. Foi uma bagunça, porque ninguém via o homem invisível, mas todo mundo sabia que estavam lá, embaraçados.</p>
+
+        <p>Quatro coisas que param no ar: helicóptero, beija-flor, Dadá Maravilha e Aiziro. No lançamento lindo do Fate em direção perfeita à cabeça do Paulinho, Aiziro salta mais alto e para no ar para cortar a bola do Cabelo ao Vento. E ficou lá parado. Tivemos que pedir pra ele descer.</p>
+
+        <p>O Fabricio começou a se preparar para levar cabeçada no céu da boca, porque levou uma bolada do Joel bem no queixo. Depois do jogo ele confessou que na semana anterior tinha ido num show do Headtrax no Tacoma Dome e também levou bolada no queixo lá. O homem tem um ímã no maxilar.</p>
+
+        <p>E numa das jogadas mais cinematográficas da noite, Guilherme pisou no pé do Wesley, que soltou um gritinho. Os dois caíram no chão juntos, olhos firmes um no outro. Foi lindo. A torcida aplaudiu de pé. Ninguém sabe se foi falta ou pedido de casamento.</p>
+
+        <p>Joel jogando com um joelho só foi o grande goleiro da partida. Se tivesse dois joelhos, ficaria de pé e tomaria mais gols.</p>
+
+        <p>E Freddie Mercury marcou o gol mais estranho da noite. Chutou com a perna direita, mas a bola bateu na perna esquerda, ficou tonta, e saiu devagarzinho passando debaixo das pernas do Joel, entrando no gol. A torcida pediu bis.</p>
+
+        <div class="chapter">Capítulo 5 — A Redenção e a Coroação</div>
+
+        <p>Jogos 10, 11 e 12. Brasil e Portugal dominaram. Minga fez o gol do Jogo 10. Arthur e Eric fecharam o 11. E Portugal encerrou com classe: Guilherme e Mac no Jogo 12, 2 x 0 contra Itália. Portugal campeão com 14 pontos.</p>
+
+        <p>No final, Fabricio resumiu a noite com a filosofia do veterano: <i>"O importante é competir."</i></p>
+
+        <div class="quote">
+            "Esse menino não sabe nem chutar a bola!!"
+            <div class="author">— Arthur (MonoOvo), antes do jogo, sobre o Ferrari</div>
+        </div>
+
+        <div class="quote">
+            "O importante é competir."
+            <div class="author">— Fabricio (Minga), filosofia de vida</div>
+        </div>
+
+        <div class="quote">
+            "Paulo Fitipaldi."
+            <div class="author">— Mano (Eduardo Fernandes), quando perguntado o nome do tryout que ele não conhecia</div>
+        </div>
+
+        <div class="quote">
+            "Itália! O Brasil está com você!"
+            <div class="author">— A torcida, com compaixão pelo time que não saiu do papel</div>
+        </div>
+    </div>
+</div>
+
+<!-- TIMELINE DOS GOLS -->
+<div class="section">
+    <div class="section-title">Timeline — 20 gols, 12 jogos, 1 flipperama</div>
+    <div class="timeline">
+        <div class="game-header">Jogo 1 — Brasil x Italia</div>
+        <div class="tl-row"><div class="tl-time">19:06</div><div class="tl-icon">⚽</div><div class="tl-player tl-brasil">Arthur Mendes (Brasil)</div><div class="tl-score">1-0</div></div>
+
+        <div class="game-header">Jogo 2 — Brasil x Portugal</div>
+        <div class="tl-row"><div class="tl-time">19:16</div><div class="tl-icon">⚽</div><div class="tl-player tl-portugal">Roger Stanev (Portugal)</div><div class="tl-score">0-1</div></div>
+        <div class="tl-row"><div class="tl-time">19:19</div><div class="tl-icon">⚽</div><div class="tl-player tl-portugal">Eduardo Fernandes (Portugal)</div><div class="tl-score">0-2</div></div>
+        <div class="tl-drama">Mano olheiro vende figurinhas, mas o pupilo marca gol! Eduardo 🔴</div>
+
+        <div class="game-header">Jogo 3 — Italia x Portugal</div>
+        <div class="tl-row"><div class="tl-time">19:23</div><div class="tl-icon">⚽</div><div class="tl-player tl-italia">Leonardo Facci (Italia)</div><div class="tl-score">1-0</div></div>
+        <div class="tl-row"><div class="tl-time">19:25</div><div class="tl-icon">⚽</div><div class="tl-player tl-portugal">Eduardo Fernandes (Portugal)</div><div class="tl-score">1-1</div></div>
+
+        <div class="game-header">Jogo 4 — Italia x Brasil</div>
+        <div class="tl-row"><div class="tl-time">19:32</div><div class="tl-icon">⚽</div><div class="tl-player tl-brasil">Arthur Mendes (Brasil)</div><div class="tl-score">0-1</div></div>
+
+        <div class="game-header">Jogo 5 — Portugal x Brasil</div>
+        <div class="tl-row"><div class="tl-time">19:39</div><div class="tl-icon">⚽</div><div class="tl-player tl-portugal">Guilherme Souza (Portugal)</div><div class="tl-score">1-0</div></div>
+
+        <div class="game-header">Jogo 6 — Portugal x Italia ⚡</div>
+        <div class="tl-row"><div class="tl-time">19:44</div><div class="tl-icon">⚽</div><div class="tl-player tl-italia">Leonardo Facci (Italia)</div><div class="tl-score">0-1</div></div>
+        <div class="tl-row"><div class="tl-time">19:45</div><div class="tl-icon">⚽</div><div class="tl-player tl-portugal">Mac McClain (Portugal)</div><div class="tl-score">1-1</div></div>
+        <div class="tl-row"><div class="tl-time">19:45</div><div class="tl-icon">⚽</div><div class="tl-player tl-portugal">Guilherme Souza (Portugal)</div><div class="tl-score">2-1</div></div>
+        <div class="tl-row"><div class="tl-time">19:46</div><div class="tl-icon">⚽</div><div class="tl-player tl-italia">Paulinho de Souza (Italia)</div><div class="tl-score">2-2</div></div>
+        <div class="tl-row"><div class="tl-time">19:47</div><div class="tl-icon">⚽</div><div class="tl-player tl-portugal">Mac McClain (Portugal)</div><div class="tl-score">3-2</div></div>
+        <div class="tl-drama">FLIPPERAMA! 5 gols em 3 minutos! A bola não parava!</div>
+
+        <div class="game-header">Jogo 7 — Brasil x Italia</div>
+        <div class="tl-row"><div class="tl-time">19:50</div><div class="tl-icon">⚽</div><div class="tl-player tl-italia">Bruno Stuani (Italia)</div><div class="tl-score">0-1</div></div>
+
+        <div class="tl-break">🎤 HALFTIME SHOW — FREDDIE MERCURY (Bruno Stuani)</div>
+
+        <div class="game-header">Jogo 8 — Brasil x Portugal</div>
+        <div class="tl-drama">0 x 0. Silêncio. Ninguém acertou nada.</div>
+
+        <div class="game-header">Jogo 9 — Italia x Portugal</div>
+        <div class="tl-row"><div class="tl-time">20:10</div><div class="tl-icon">⚽</div><div class="tl-player tl-italia">Bruno Stuani (Italia)</div><div class="tl-score">1-0</div></div>
+        <div class="tl-row"><div class="tl-time">20:10</div><div class="tl-icon">⚽</div><div class="tl-player tl-italia">Paulinho de Souza (Italia)</div><div class="tl-score">2-0</div></div>
+        <div class="tl-drama">Paulinho calçado pelo homem invisível! Aiziro para no ar!</div>
+
+        <div class="game-header">Jogo 10 — Italia x Brasil</div>
+        <div class="tl-row"><div class="tl-time">20:17</div><div class="tl-icon">⚽</div><div class="tl-player tl-brasil">Fabricio Voznika (Brasil)</div><div class="tl-score">0-1</div></div>
+
+        <div class="game-header">Jogo 11 — Portugal x Brasil</div>
+        <div class="tl-row"><div class="tl-time">20:19</div><div class="tl-icon">⚽</div><div class="tl-player tl-brasil">Arthur Mendes (Brasil)</div><div class="tl-score">0-1</div></div>
+        <div class="tl-row"><div class="tl-time">20:25</div><div class="tl-icon">⚽</div><div class="tl-player tl-brasil">Eric Van Thorre (Brasil)</div><div class="tl-score">0-2</div></div>
+
+        <div class="game-header">Jogo 12 — Portugal x Italia</div>
+        <div class="tl-row"><div class="tl-time">20:26</div><div class="tl-icon">⚽</div><div class="tl-player tl-portugal">Guilherme Souza (Portugal)</div><div class="tl-score">1-0</div></div>
+        <div class="tl-row"><div class="tl-time">20:31</div><div class="tl-icon">⚽</div><div class="tl-player tl-portugal">Mac McClain (Portugal)</div><div class="tl-score">2-0</div></div>
+        <div class="tl-drama">🏆 FIM! PORTUGAL CAMPEÃO! 14 pontos!</div>
+    </div>
+</div>
+
+<!-- STATS -->
+<div class="section">
+    <div class="section-title">Números</div>
+    <div class="stats-grid">
+        <div class="stat-card"><div class="stat-value">20</div><div class="stat-label">Gols totais</div></div>
+        <div class="stat-card"><div class="stat-value">17</div><div class="stat-label">Jogadores presentes</div></div>
+        <div class="stat-card"><div class="stat-value">5</div><div class="stat-label">Gols no J6 (3 minutos!)</div></div>
+        <div class="stat-card"><div class="stat-value">1</div><div class="stat-label">Tryout (Pedro Ferrari)</div></div>
+        <div class="stat-card"><div class="stat-value">1</div><div class="stat-label">Halftime Show (Freddie Mercury)</div></div>
+        <div class="stat-card"><div class="stat-value">1</div><div class="stat-label">Homem invisível (calçou Paulinho)</div></div>
+        <div class="stat-card"><div class="stat-value">1</div><div class="stat-label">Corrida em câmera lenta (Mano)</div></div>
+        <div class="stat-card"><div class="stat-value">0</div><div class="stat-label">Pacotinhos vendidos pelo Mano</div></div>
+    </div>
+</div>
+
+<!-- ARTILHARIA -->
+<div class="section">
+    <div class="section-title">Artilharia</div>
+    <div>
+        <div class="art-row"><div class="art-pos">1</div><div class="art-crown">🔥</div><div class="art-name" style="color:#f0c040">Arthur Mendes</div><div class="art-bar-bg"><div class="art-bar brasil" style="width:100%"></div></div><div class="art-goals">3</div></div>
+        <div class="art-row"><div class="art-pos">1</div><div class="art-crown">🎯</div><div class="art-name" style="color:#ff6b6b">Guilherme Souza</div><div class="art-bar-bg"><div class="art-bar portugal" style="width:100%"></div></div><div class="art-goals">3</div></div>
+        <div class="art-row"><div class="art-pos">1</div><div class="art-crown">💥</div><div class="art-name" style="color:#ff6b6b">Mac McClain</div><div class="art-bar-bg"><div class="art-bar portugal" style="width:100%"></div></div><div class="art-goals">3</div></div>
+        <div class="art-row"><div class="art-pos">4</div><div class="art-crown">🕺</div><div class="art-name" style="color:#ff6b6b">Eduardo Fernandes</div><div class="art-bar-bg"><div class="art-bar portugal" style="width:66%"></div></div><div class="art-goals">2</div></div>
+        <div class="art-row"><div class="art-pos">4</div><div class="art-crown">⚡</div><div class="art-name" style="color:#58a6ff">Leonardo Facci</div><div class="art-bar-bg"><div class="art-bar italia" style="width:66%"></div></div><div class="art-goals">2</div></div>
+        <div class="art-row"><div class="art-pos">4</div><div class="art-crown">👻</div><div class="art-name" style="color:#58a6ff">Paulinho de Souza</div><div class="art-bar-bg"><div class="art-bar italia" style="width:66%"></div></div><div class="art-goals">2</div></div>
+        <div class="art-row"><div class="art-pos">4</div><div class="art-crown">🎤</div><div class="art-name" style="color:#58a6ff">Bruno Stuani</div><div class="art-bar-bg"><div class="art-bar italia" style="width:66%"></div></div><div class="art-goals">2</div></div>
+        <div class="art-row"><div class="art-pos">8</div><div class="art-crown">💨</div><div class="art-name" style="color:#ff6b6b">Roger Stanev</div><div class="art-bar-bg"><div class="art-bar portugal" style="width:33%"></div></div><div class="art-goals">1</div></div>
+        <div class="art-row"><div class="art-pos">8</div><div class="art-crown"></div><div class="art-name" style="color:#f0c040">Fabricio Voznika</div><div class="art-bar-bg"><div class="art-bar brasil" style="width:33%"></div></div><div class="art-goals">1</div></div>
+        <div class="art-row"><div class="art-pos">8</div><div class="art-crown"></div><div class="art-name" style="color:#f0c040">Eric Van Thorre</div><div class="art-bar-bg"><div class="art-bar brasil" style="width:33%"></div></div><div class="art-goals">1</div></div>
+    </div>
+</div>
+
+<!-- JOGOS -->
+<div class="section">
+    <div class="section-title">Resultados</div>
+    <div class="timeline">
+        <div class="tl-row"><div class="tl-time">J1</div><div class="tl-player"><span class="tl-brasil">Brasil</span> 1 x 0 <span class="tl-italia">Italia</span></div></div>
+        <div class="tl-row"><div class="tl-time">J2</div><div class="tl-player"><span class="tl-brasil">Brasil</span> 0 x 2 <span class="tl-portugal">Portugal</span></div></div>
+        <div class="tl-row"><div class="tl-time">J3</div><div class="tl-player"><span class="tl-italia">Italia</span> 1 x 1 <span class="tl-portugal">Portugal</span></div></div>
+        <div class="tl-row"><div class="tl-time">J4</div><div class="tl-player"><span class="tl-italia">Italia</span> 0 x 1 <span class="tl-brasil">Brasil</span></div></div>
+        <div class="tl-row"><div class="tl-time">J5</div><div class="tl-player"><span class="tl-portugal">Portugal</span> 1 x 0 <span class="tl-brasil">Brasil</span></div></div>
+        <div class="tl-row"><div class="tl-time">J6</div><div class="tl-player"><span class="tl-portugal">Portugal</span> 3 x 2 <span class="tl-italia">Italia</span> ⚡</div></div>
+        <div class="tl-row"><div class="tl-time">J7</div><div class="tl-player"><span class="tl-brasil">Brasil</span> 0 x 1 <span class="tl-italia">Italia</span></div></div>
+        <div class="tl-row"><div class="tl-time">J8</div><div class="tl-player"><span class="tl-brasil">Brasil</span> 0 x 0 <span class="tl-portugal">Portugal</span></div></div>
+        <div class="tl-row"><div class="tl-time">J9</div><div class="tl-player"><span class="tl-italia">Italia</span> 2 x 0 <span class="tl-portugal">Portugal</span></div></div>
+        <div class="tl-row"><div class="tl-time">J10</div><div class="tl-player"><span class="tl-italia">Italia</span> 0 x 1 <span class="tl-brasil">Brasil</span></div></div>
+        <div class="tl-row"><div class="tl-time">J11</div><div class="tl-player"><span class="tl-portugal">Portugal</span> 0 x 2 <span class="tl-brasil">Brasil</span></div></div>
+        <div class="tl-row"><div class="tl-time">J12</div><div class="tl-player"><span class="tl-portugal">Portugal</span> 2 x 0 <span class="tl-italia">Italia</span></div></div>
+    </div>
+</div>
+
+<div style="text-align:center;margin-top:20px;font-size:10px;color:#484f58">Woodenlegs — Temporada da Primavera — Season 23 — Pelada 10/12</div>
+
+</body>
+</html>
