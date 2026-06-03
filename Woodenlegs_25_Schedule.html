@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Woodenlegs 25 Years — Schedule</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@600;700&display=swap');
+
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8d48b;
+    --gold-dark: #a07d2e;
+    --green-deep: #1a3a2a;
+    --green-dark: #0d1f17;
+    --green-mid: #2d5a3f;
+    --cream: #f5f0e8;
+    --cream-light: #faf7f2;
+    --warm-white: #fffdf8;
+    --text-dark: #1a1a1a;
+    --text-body: #3a3a3a;
+    --text-light: #e8e4dc;
+    --whatsapp: #25D366;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--green-dark);
+    color: var(--text-light);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(201,168,76,0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 80%, rgba(201,168,76,0.1) 0%, transparent 50%),
+      linear-gradient(180deg, var(--green-dark) 0%, var(--green-deep) 50%, var(--green-dark) 100%);
+    padding: 2rem 1.5rem;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+  }
+
+  .hero-number {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(6rem, 18vw, 12rem);
+    font-weight: 900;
+    line-height: 0.9;
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 40%, var(--gold-dark) 70%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 4px 20px rgba(201,168,76,0.3));
+    position: relative;
+    z-index: 1;
+    animation: shimmer 4s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { filter: drop-shadow(0 4px 20px rgba(201,168,76,0.3)); }
+    50% { filter: drop-shadow(0 4px 40px rgba(201,168,76,0.5)); }
+  }
+
+  .hero-subtitle {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(1.3rem, 3.5vw, 2.2rem);
+    color: var(--gold-light);
+    letter-spacing: 0.05em;
+    margin-top: -0.3rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    color: var(--cream);
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-tagline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--gold);
+    font-style: italic;
+    margin-top: 1.5rem;
+    position: relative;
+    z-index: 1;
+    max-width: 500px;
+    line-height: 1.5;
+  }
+
+  .hero-dates {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.85rem, 2vw, 1.1rem);
+    color: var(--cream);
+    margin-top: 1.5rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 300;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-updated {
+    position: relative;
+    z-index: 1;
+    margin-top: 2rem;
+    padding: 0.5rem 1.5rem;
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 50px;
+    font-size: 0.75rem;
+    color: var(--gold-light);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    animation: bounce 2s ease-in-out infinite;
+  }
+  .hero-scroll svg {
+    width: 28px;
+    height: 28px;
+    stroke: var(--gold);
+    opacity: 0.6;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ===== INTRO SECTION ===== */
+  .intro {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 3rem;
+    text-align: center;
+  }
+
+  .intro p {
+    font-size: clamp(0.95rem, 2vw, 1.05rem);
+    color: var(--cream);
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+  }
+
+  .intro .emphasis {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+    color: var(--gold-light);
+    font-style: italic;
+    line-height: 1.6;
+    padding: 1.5rem;
+    border-left: 3px solid var(--gold);
+    text-align: left;
+    margin: 2rem 0;
+    background: rgba(201,168,76,0.05);
+    border-radius: 0 8px 8px 0;
+  }
+
+  /* ===== QUICK OVERVIEW ===== */
+  .overview-section {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+  }
+
+  .overview-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .overview-day {
+    background: linear-gradient(135deg, rgba(45,90,63,0.4), rgba(26,58,42,0.6));
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    transition: border-color 0.3s ease;
+  }
+
+  .overview-day:hover {
+    border-color: rgba(201,168,76,0.4);
+  }
+
+  .overview-day-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .overview-day-emoji {
+    font-size: 1.5rem;
+    width: 2.2rem;
+    text-align: center;
+  }
+
+  .overview-day-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--gold-light);
+    font-weight: 700;
+  }
+
+  .overview-day-date {
+    font-size: 0.8rem;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-left: auto;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .overview-day-items {
+    list-style: none;
+    padding-left: 3rem;
+  }
+
+  .overview-day-items li {
+    font-size: 0.9rem;
+    color: var(--cream);
+    padding: 0.15rem 0;
+    position: relative;
+  }
+
+  .overview-day-items li::before {
+    content: '·';
+    position: absolute;
+    left: -1rem;
+    color: var(--gold);
+    font-weight: bold;
+  }
+
+  .overview-day-items .time {
+    color: var(--gold);
+    font-weight: 600;
+    font-size: 0.8rem;
+    margin-right: 0.3rem;
+  }
+
+  /* ===== SECTION DIVIDER ===== */
+  .divider {
+    text-align: center;
+    padding: 3rem 0;
+    position: relative;
+  }
+
+  .divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
+  }
+
+  .divider-label {
+    position: relative;
+    display: inline-block;
+    background: var(--green-dark);
+    padding: 0 1.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* ===== DAY SECTIONS ===== */
+  .day-section {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem 3rem;
+  }
+
+  .day-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .day-number {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+
+  .day-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    color: var(--cream);
+    font-weight: 700;
+  }
+
+  .day-date {
+    font-size: 0.85rem;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  /* ===== EVENT CARDS ===== */
+  .event-card {
+    background: linear-gradient(135deg, rgba(45,90,63,0.5), rgba(26,58,42,0.7));
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 16px;
+    padding: 1.8rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .event-card:hover {
+    border-color: rgba(201,168,76,0.35);
+    transform: translateY(-2px);
+  }
+
+  .event-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--gold-light), var(--gold-dark));
+    border-radius: 4px 0 0 4px;
+  }
+
+  .event-time {
+    display: inline-block;
+    background: rgba(201,168,76,0.15);
+    color: var(--gold-light);
+    padding: 0.25rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.8rem;
+  }
+
+  .event-emoji {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .event-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.15rem, 2.5vw, 1.4rem);
+    color: var(--cream);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .event-subtitle {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.1rem;
+    color: var(--gold-light);
+    margin-bottom: 0.8rem;
+  }
+
+  .event-desc {
+    font-size: 0.92rem;
+    color: var(--text-light);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+  }
+
+  .event-desc strong {
+    color: var(--cream);
+  }
+
+  .event-location {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    color: var(--cream);
+    opacity: 0.8;
+  }
+
+  .event-location svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--gold);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .event-location a {
+    color: var(--gold-light);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    transition: border-color 0.2s;
+  }
+
+  .event-location a:hover {
+    border-color: var(--gold);
+  }
+
+  .event-detail {
+    font-size: 0.85rem;
+    color: var(--cream);
+    opacity: 0.7;
+    font-style: italic;
+    margin-bottom: 0.8rem;
+  }
+
+  .event-bands {
+    margin: 0.8rem 0 1rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .event-bands li {
+    font-size: 0.9rem;
+    color: var(--cream);
+    padding: 0.2rem 0 0.2rem 1.2rem;
+    position: relative;
+  }
+
+  .event-bands li::before {
+    content: '♪';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+  }
+
+  .event-bands li span {
+    color: var(--gold);
+    opacity: 0.7;
+    font-size: 0.8rem;
+  }
+
+  .btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--whatsapp);
+    color: #fff;
+    padding: 0.65rem 1.4rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 15px rgba(37,211,102,0.25);
+  }
+
+  .btn-whatsapp:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37,211,102,0.4);
+  }
+
+  .btn-whatsapp svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .no-signup {
+    display: inline-block;
+    font-size: 0.82rem;
+    color: var(--gold);
+    opacity: 0.8;
+    font-style: italic;
+    margin-top: 0.5rem;
+  }
+
+  /* ===== MOTIVATIONAL BLOCKS ===== */
+  .motivational {
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .motivational p {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 2.2vw, 1.15rem);
+    color: var(--cream);
+    line-height: 1.8;
+    font-style: italic;
+  }
+
+  .motivational .gold {
+    color: var(--gold-light);
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    text-align: center;
+    padding: 4rem 1.5rem;
+    background: linear-gradient(180deg, var(--green-dark), #060e0a);
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    color: var(--cream);
+    text-transform: uppercase;
+    opacity: 0.4;
+  }
+
+  .footer-year {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.2rem;
+    color: var(--gold);
+    opacity: 0.4;
+    margin-top: 0.3rem;
+  }
+
+  .footer-updated {
+    margin-top: 2rem;
+    font-size: 0.75rem;
+    color: var(--gold);
+    opacity: 0.5;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .footer-live {
+    margin-top: 0.5rem;
+    font-size: 0.7rem;
+    color: var(--cream);
+    opacity: 0.35;
+    font-style: italic;
+  }
+
+  /* ===== FADE-IN ===== */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .fade-in-delay { transition-delay: 0.15s; }
+  .fade-in-delay-2 { transition-delay: 0.3s; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    .event-card { padding: 1.4rem; }
+    .overview-day-items { padding-left: 2.5rem; }
+    .overview-day-header { flex-wrap: wrap; }
+    .overview-day-date { margin-left: 3rem; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-number">25</div>
+    <div class="hero-subtitle">years of history</div>
+    <div class="hero-brand">WOODENLEGS</div>
+    <div class="hero-tagline">"Today is going to be the best day of my life."</div>
+    <div class="hero-dates">June 18 — 21, 2026</div>
+    <div class="hero-updated">Last updated: June 2, 2026</div>
+    <div class="hero-scroll">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 13l5 5 5-5"/><path d="M7 6l5 5 5-5"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ===== INTRO ===== -->
+  <div class="intro fade-in">
+    <p>Four days. Many activities. One community.</p>
+    <p>We've put together a celebration in the style of a <strong style="color: var(--gold-light);">Summer Olympics</strong> — with live music, games, sports, a barbecue, and a bike ride. Each day is a chance to live another <em>best day of your life</em>.</p>
+    <div class="emphasis">
+      "Best day of my life" isn't about the greatest day that ever was.<br>It's the day that's coming. It's today. And tomorrow will be another one.<br>And then another. Because when we're together, every day is the best.
+    </div>
+    <p style="font-size: 0.85rem; opacity: 0.7;">This is a living document — it will always have the latest information.<br>Activities are subject to last-minute changes.</p>
+  </div>
+
+  <!-- ===== QUICK OVERVIEW ===== -->
+  <div class="divider"><div class="divider-label">At a Glance</div></div>
+
+  <div class="overview-section">
+    <div class="overview-grid">
+
+      <div class="overview-day fade-in">
+        <div class="overview-day-header">
+          <div class="overview-day-emoji">🎸</div>
+          <div class="overview-day-label">Thursday</div>
+          <div class="overview-day-date">Jun 18</div>
+        </div>
+        <ul class="overview-day-items">
+          <li><span class="time">7 PM</span> Opening Show — WL Musicians</li>
+          <li><span class="time">8:30 PM</span> Game Night — Cards &amp; Poker</li>
+        </ul>
+      </div>
+
+      <div class="overview-day fade-in fade-in-delay">
+        <div class="overview-day-header">
+          <div class="overview-day-emoji">🏆</div>
+          <div class="overview-day-label">Friday</div>
+          <div class="overview-day-date">Jun 19</div>
+        </div>
+        <ul class="overview-day-items">
+          <li><span class="time">3 PM</span> Tennis Tournament</li>
+          <li><span class="time">5 PM</span> World Cup — Brazil vs Haiti</li>
+          <li><span class="time">7:05 PM</span> The Historic Pelada — 12 of 12</li>
+          <li><span class="time">9 PM</span> Party at Oasis</li>
+        </ul>
+      </div>
+
+      <div class="overview-day fade-in fade-in-delay-2">
+        <div class="overview-day-header">
+          <div class="overview-day-emoji">🥩</div>
+          <div class="overview-day-label">Saturday</div>
+          <div class="overview-day-date">Jun 20</div>
+        </div>
+        <ul class="overview-day-items">
+          <li><span class="time">1 PM</span> Brazilian BBQ at Mamas' house</li>
+        </ul>
+      </div>
+
+      <div class="overview-day fade-in fade-in-delay-2">
+        <div class="overview-day-header">
+          <div class="overview-day-emoji">🚴</div>
+          <div class="overview-day-label">Sunday</div>
+          <div class="overview-day-date">Jun 21</div>
+        </div>
+        <ul class="overview-day-items">
+          <li><span class="time">11 AM*</span> Bike Ride — Lake Sammamish Loop</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== DIVIDER ===== -->
+  <div class="divider"><div class="divider-label">Full Schedule</div></div>
+
+  <!-- ================================================================== -->
+  <!-- DAY 1 — THURSDAY -->
+  <!-- ================================================================== -->
+  <div class="day-section">
+    <div class="day-header fade-in">
+      <div class="day-number">DAY 1</div>
+      <div class="day-name">Thursday</div>
+      <div class="day-date">June 18, 2026</div>
+    </div>
+
+    <!-- Opening Show -->
+    <div class="event-card fade-in">
+      <div class="event-emoji">🎸</div>
+      <span class="event-time">7:00 PM — 9:00 PM</span>
+      <div class="event-name">Opening Ceremony</div>
+      <div class="event-subtitle">"Eu Quero é Rocky" Night</div>
+      <div class="event-desc">
+        The opening ceremony of our 25th anniversary, powered by our very own bands. Because Woodenlegs doesn't just have soccer players — we have <strong>musicians</strong>.
+      </div>
+      <ul class="event-bands">
+        <li>Projeto Bê <span>— 5 Brazilians + 1 honorary</span></li>
+        <li>The Grownups <span>— 2 Brazilians</span></li>
+      </ul>
+      <div class="event-location">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div><strong>NW Brewing</strong><br><a href="https://maps.app.goo.gl/Xud3MY7yQejXW4hw6" target="_blank" rel="noopener">View on map</a></div>
+      </div>
+      <a class="btn-whatsapp" href="https://chat.whatsapp.com/Dfcn6G41w4HA37HMlJw5SS" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Get your free ticket
+      </a>
+    </div>
+
+    <!-- Game Night -->
+    <div class="event-card fade-in fade-in-delay">
+      <div class="event-emoji">🃏</div>
+      <span class="event-time">8:30 PM</span>
+      <div class="event-name">Game Night</div>
+      <div class="event-subtitle">Cards, Poker &amp; Good Times</div>
+      <div class="event-desc">
+        The first Olympic event of our celebration. We'll meet at the café owned by our very own Woodenleg, the world-renowned <strong>Vini "Bucket Handle"</strong>. 20 people already signed up.
+      </div>
+      <div class="event-location">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div><strong>Bequest Coffee</strong><br>2200 E Madison St, Seattle, WA 98112</div>
+      </div>
+      <a class="btn-whatsapp" href="https://chat.whatsapp.com/HR7ZJEtFR32GpmuKPFul2k" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Join the group
+      </a>
+    </div>
+  </div>
+
+  <!-- ================================================================== -->
+  <!-- DAY 2 — FRIDAY -->
+  <!-- ================================================================== -->
+  <div class="divider"><div class="divider-label">⚽</div></div>
+
+  <div class="day-section">
+    <div class="day-header fade-in">
+      <div class="day-number">DAY 2</div>
+      <div class="day-name">Friday</div>
+      <div class="day-date">June 19, 2026</div>
+    </div>
+
+    <div class="motivational fade-in">
+      <p>Yes, it's a workday. But we're hoping you can take a <span class="gold">day off</span>. Because this day will be unforgettable.</p>
+    </div>
+
+    <!-- Tennis Tournament -->
+    <div class="event-card fade-in">
+      <div class="event-emoji">🎾</div>
+      <span class="event-time">3:00 PM</span>
+      <div class="event-name">Tennis Tournament</div>
+      <div class="event-subtitle">Woodenlegs Olympics</div>
+      <div class="event-desc">
+        For <strong>everyone</strong>. Adults, kids, moms, dads — anyone who wants to experience the thrill and fall in love with this beautiful sport. More details about rules in the group.
+      </div>
+      <div class="event-location">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div><strong>Kingsgate 5 Courts</strong></div>
+      </div>
+      <a class="btn-whatsapp" href="https://chat.whatsapp.com/B8T37JaV1fM8vs8LjgPSoi" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Join the group
+      </a>
+    </div>
+
+    <!-- World Cup Watch Party -->
+    <div class="event-card fade-in">
+      <div class="event-emoji">🇧🇷</div>
+      <span class="event-time">5:00 PM — Kickoff at 5:30 PM</span>
+      <div class="event-name">World Cup — Brazil vs Haiti</div>
+      <div class="event-subtitle">Heart-pounding emotions!</div>
+      <div class="event-desc">
+        Two beloved teams on the pitch and us cheering from the stands. This group is for those who <strong>won't be playing in the pelada</strong> but are coming to watch the Brazil game and then catch the historic pelada — the one that's given us so many stories and so much laughter.
+      </div>
+      <a class="btn-whatsapp" href="https://chat.whatsapp.com/E9VPremYlxO0QNNOSUfli9" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Join the group
+      </a>
+    </div>
+
+    <!-- Historic Pelada -->
+    <div class="event-card fade-in">
+      <div class="event-emoji">⚽</div>
+      <span class="event-time">7:05 PM — 8:30 PM</span>
+      <div class="event-name">Pelada "Best Day of My Life"</div>
+      <div class="event-subtitle">Pelada 12 of 12 — Live!</div>
+      <div class="event-desc">
+        Where <strong>it all began</strong> in October 2000. A true tribute. This historic pelada is a call to everyone who has ever played with us on this beautiful journey — and also to our beloved kids, who stand at the threshold of our next chapter.
+      </div>
+      <div class="event-detail">We'd like to present Arena Sports with a token of appreciation, so they'll always remember Woodenlegs.</div>
+      <div class="event-location">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div><strong>Arena Sports</strong><br>9040 Willows Rd NE, Redmond, WA 98052<br><em style="font-size:0.8rem; opacity:0.6;">Where Woodenlegs was born — October 2000</em></div>
+      </div>
+      <a class="btn-whatsapp" href="https://chat.whatsapp.com/BcVFoXSYFkw87HB3SDI0KM" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Join the group
+      </a>
+    </div>
+
+    <!-- Party at Oasis -->
+    <div class="event-card fade-in">
+      <div class="event-emoji">🎶</div>
+      <span class="event-time">9:00 PM</span>
+      <div class="event-name">"Best Day of My Life" Party</div>
+      <div class="event-subtitle">Oasis is ours!</div>
+      <div class="event-desc">
+        We're taking over Oasis Brazilian Steakhouse. The world's most famous DJ — who has moved crowds across the globe — plus performances by our <strong>Woodenlegs Musicians</strong>. So much talent in this crew.
+      </div>
+      <div class="event-detail">Everyone orders their own food and drinks and pays their own tab. Special menu provided by Oasis.</div>
+      <div class="event-location">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div><strong>Oasis Brazilian Steakhouse</strong><br>14338 124th Ave NE, Kirkland, WA 98034</div>
+      </div>
+      <div class="no-signup">No sign-up needed — just show up.</div>
+    </div>
+  </div>
+
+  <!-- ================================================================== -->
+  <!-- DAY 3 — SATURDAY -->
+  <!-- ================================================================== -->
+  <div class="divider"><div class="divider-label">🥩</div></div>
+
+  <div class="day-section">
+    <div class="day-header fade-in">
+      <div class="day-number">DAY 3</div>
+      <div class="day-name">Saturday</div>
+      <div class="day-date">June 20, 2026</div>
+    </div>
+
+    <div class="event-card fade-in">
+      <div class="event-emoji">🔥</div>
+      <span class="event-time">1:00 PM</span>
+      <div class="event-name">"Best Day of My Life" BBQ</div>
+      <div class="event-subtitle">At Mamas' house — Heart of a Mother</div>
+      <div class="event-desc">
+        The classic Woodenlegs Brazilian barbecue. Family, food, music, and the kind of conversation that only happens when we get together with nowhere to rush to.
+      </div>
+      <div class="event-location">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div><strong>Parking:</strong> Kingsgate 3 &amp; 4 Pool Park, Kirkland</div>
+      </div>
+      <a class="btn-whatsapp" href="https://chat.whatsapp.com/GLhyqI3hF1BInnxxWjAba6" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Join the group
+      </a>
+    </div>
+  </div>
+
+  <!-- ================================================================== -->
+  <!-- DAY 4 — SUNDAY -->
+  <!-- ================================================================== -->
+  <div class="divider"><div class="divider-label">🚴</div></div>
+
+  <div class="day-section">
+    <div class="day-header fade-in">
+      <div class="day-number">DAY 4</div>
+      <div class="day-name">Sunday</div>
+      <div class="day-date">June 21, 2026</div>
+    </div>
+
+    <div class="event-card fade-in">
+      <div class="event-emoji">🚴‍♂️</div>
+      <span class="event-time">11:00 AM *time to be confirmed</span>
+      <div class="event-name">"Best Day of My Life" Bike Ride</div>
+      <div class="event-subtitle">Lake Sammamish Loop</div>
+      <div class="event-desc">
+        This ride is for everyone. Get your bikes ready — e-bikes are absolutely welcome. We have a semi-professional cycling crew and may offer a <strong>parallel challenging route</strong> with plenty of hills for those who want to suffer. Something for every taste.
+      </div>
+      <div class="event-detail">If anyone still has energy, dignity, or a functioning knee available.</div>
+      <a class="btn-whatsapp" href="https://chat.whatsapp.com/IdFgQu8FBtUJrM8Yjyk84s" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Join the group
+      </a>
+    </div>
+  </div>
+
+  <!-- ===== CLOSING ===== -->
+  <div class="motivational fade-in" style="padding-bottom: 1rem;">
+    <p>Each WhatsApp group is temporary — it exists to organize the activity and make sure nobody gets lost.<br><br>
+    <span class="gold">Join the groups for the activities you're interested in.</span><br>
+    That's how we know who's coming, organize everything, and make it happen.</p>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <section class="footer">
+    <div class="footer-brand">WOODENLEGS</div>
+    <div class="footer-year">25 years — 2000 to 2026</div>
+    <div class="footer-updated">Last updated: June 2, 2026</div>
+    <div class="footer-live">This is a living document and will always have the latest information.</div>
+  </section>
+
+  <!-- ===== JS: SCROLL ANIMATION ===== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    });
+  </script>
+
+</body>
+</html>
