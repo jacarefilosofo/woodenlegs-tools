@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Woodenlegs 25 Anos — Playlist da Festa</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);color:#fff;min-height:100vh}
+.container{max-width:600px;margin:0 auto;padding:16px}
+
+/* Header */
+.header{text-align:center;padding:32px 16px 24px}
+.header-emoji{font-size:48px;margin-bottom:8px}
+.header h1{font-size:28px;font-weight:900;color:#ffd700;text-shadow:0 2px 12px rgba(255,215,0,0.3)}
+.header .subtitle{font-size:14px;color:#e8b931;font-weight:600;margin-top:4px;letter-spacing:1px}
+
+/* Intro */
+.intro{background:rgba(255,255,255,0.08);border-radius:16px;padding:20px;margin-bottom:24px;line-height:1.7;font-size:15px;color:#ddd;border:1px solid rgba(255,215,0,0.15)}
+.intro em{color:#ffd700;font-style:normal;font-weight:600}
+
+/* Form */
+.form-card{background:rgba(255,255,255,0.95);border-radius:16px;padding:20px;margin-bottom:24px;color:#222;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.form-card label{display:block;font-size:13px;font-weight:700;color:#555;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px}
+.form-card input[type="text"]{width:100%;padding:12px;border:2px solid #e0e0e0;border-radius:10px;font-size:16px;font-family:inherit;transition:border-color 0.2s}
+.form-card input[type="text"]:focus{outline:none;border-color:#ffd700}
+.song-header{display:flex;justify-content:space-between;align-items:center;margin-top:20px;margin-bottom:10px}
+.song-header label{margin:0}
+.btn-add{background:#006400;color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px}
+.btn-add:active{background:#004d00}
+.song-list{list-style:none}
+.song-item{display:flex;align-items:center;gap:8px;margin-bottom:8px;animation:fadeIn 0.2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.song-num{width:24px;height:24px;background:#ffd700;color:#1a1a2e;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;flex-shrink:0}
+.song-item input{flex:1;padding:10px;border:2px solid #e0e0e0;border-radius:8px;font-size:15px;font-family:inherit}
+.song-item input:focus{outline:none;border-color:#ffd700}
+.btn-remove{width:32px;height:32px;background:#ff4444;color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:900;cursor:pointer;flex-shrink:0}
+.btn-remove:active{background:#cc0000}
+.hint{font-size:12px;color:#999;margin-top:4px;line-height:1.4}
+.btn-submit{width:100%;padding:14px;background:linear-gradient(135deg,#ffd700,#e8b931);color:#1a1a2e;border:none;border-radius:12px;font-size:16px;font-weight:900;cursor:pointer;margin-top:20px;text-transform:uppercase;letter-spacing:1px;box-shadow:0 4px 16px rgba(255,215,0,0.3);transition:transform 0.1s}
+.btn-submit:active{transform:scale(0.97)}
+.btn-submit:disabled{opacity:0.5;cursor:not-allowed}
+
+/* Submissions */
+.submissions{margin-bottom:32px}
+.submissions-title{text-align:center;font-size:18px;font-weight:800;color:#ffd700;margin-bottom:16px}
+.submissions-count{text-align:center;font-size:13px;color:#888;margin-bottom:12px}
+.person-card{background:rgba(255,255,255,0.08);border-radius:12px;padding:14px;margin-bottom:10px;border:1px solid rgba(255,255,255,0.1)}
+.person-name{font-size:14px;font-weight:800;color:#ffd700;margin-bottom:8px}
+.person-songs{list-style:none;font-size:14px;color:#ddd;line-height:1.8}
+.person-songs li::before{content:"♪ ";color:#ffd700}
+.loading{text-align:center;color:#888;padding:20px;font-size:14px}
+.empty{text-align:center;color:#666;padding:32px;font-size:14px}
+
+/* Toast */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:#222;color:#fff;padding:12px 24px;border-radius:12px;font-size:14px;font-weight:600;transition:transform 0.3s ease;z-index:100;box-shadow:0 4px 16px rgba(0,0,0,0.3)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.error{background:#cc0000}
+.toast.success{background:#006400}
+
+/* Footer */
+.footer{text-align:center;padding:16px;font-size:11px;color:#555}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="header">
+    <div class="header-emoji">⚽🎶🎉</div>
+    <h1>Woodenlegs 25 Anos</h1>
+    <div class="subtitle">Playlist da Festa</div>
+</div>
+
+<div class="intro">
+    Sugira suas musicas para que possamos <em>cantar</em>, <em>brincar</em>, <em>pular</em>, 
+    <em>sorrir</em>, <em>rir muito</em> e quem sabe <em>chorar</em>.<br><br>
+    Mas aquelas musicas que nos fazem <em>dancar</em> e <em>abracar</em> e <em>comemorar</em>.<br><br>
+    Se voce for escolher muitas musicas, coloque-as na sua ordem de preferencia 
+    caso tenhamos que selecionar apenas algumas.<br><br>
+    Vale tudo. Rock, Samba, Sertanejo, Hip Hop, Americana, ate Sweet Caroline 😉
+</div>
+
+<div class="form-card">
+    <label for="nome">Seu nome</label>
+    <input type="text" id="nome" placeholder="Como te conhecem na pelada">
+    
+    <div class="song-header">
+        <label>Musicas (em ordem de preferencia)</label>
+        <button class="btn-add" onclick="addSong()">+ Mais</button>
+    </div>
+    <ul class="song-list" id="song-list">
+        <li class="song-item">
+            <span class="song-num">1</span>
+            <input type="text" placeholder="Musica ou artista">
+        </li>
+        <li class="song-item">
+            <span class="song-num">2</span>
+            <input type="text" placeholder="Musica ou artista">
+        </li>
+        <li class="song-item">
+            <span class="song-num">3</span>
+            <input type="text" placeholder="Musica ou artista">
+        </li>
+    </ul>
+    <div class="hint">Clique "+ Mais" para adicionar mais musicas. A ordem indica sua preferencia.</div>
+    
+    <button class="btn-submit" id="btn-submit" onclick="submitSongs()">Enviar Sugestoes</button>
+</div>
+
+<div class="submissions">
+    <div class="submissions-title">Sugestoes da Galera</div>
+    <div id="submissions-list"><div class="loading">Carregando...</div></div>
+</div>
+
+<div class="footer">Woodenlegs FC — 25 anos de pelada, amizade e gol contra do Moro</div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ╔═══════════════════════════════════════════════════════════╗
+// ║  CONFIG — Cole aqui a URL do Google Apps Script          ║
+// ╚═══════════════════════════════════════════════════════════╝
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz-6aUZHhYDEhAuSUe6U3nEuur-K6NmYBEHPdGfNpGKQ8ii0AJLLZekRGCWjDJ52Ucj/exec";
+
+// ── Toast ──
+function showToast(msg, type=''){
+    const t=document.getElementById('toast');
+    t.textContent=msg;
+    t.className='toast '+(type||'');
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ── Song list management ──
+function addSong(){
+    const list=document.getElementById('song-list');
+    const n=list.children.length+1;
+    const li=document.createElement('li');
+    li.className='song-item';
+    li.innerHTML=`<span class="song-num">${n}</span><input type="text" placeholder="Musica ou artista"><button class="btn-remove" onclick="removeSong(this)">×</button>`;
+    list.appendChild(li);
+    li.querySelector('input').focus();
+}
+
+function removeSong(btn){
+    const li=btn.parentElement;
+    const list=document.getElementById('song-list');
+    if(list.children.length<=1){showToast('Pelo menos uma musica!','error');return;}
+    li.remove();
+    renumber();
+}
+
+function renumber(){
+    const items=document.querySelectorAll('.song-item');
+    items.forEach((item,i)=>{item.querySelector('.song-num').textContent=i+1;});
+}
+
+// ── Submit ──
+async function submitSongs(){
+    const nome=document.getElementById('nome').value.trim();
+    if(!nome){showToast('Coloca teu nome!','error');return;}
+    
+    const inputs=document.querySelectorAll('.song-item input');
+    const musicas=[];
+    inputs.forEach(inp=>{const v=inp.value.trim();if(v)musicas.push(v);});
+    
+    if(musicas.length===0){showToast('Sugere pelo menos uma musica!','error');return;}
+    
+    const btn=document.getElementById('btn-submit');
+    btn.disabled=true;
+    btn.textContent='Enviando...';
+    
+    try{
+        if(SCRIPT_URL.includes('COLE_A_URL')){
+            showToast('URL do Apps Script nao configurada!','error');
+            btn.disabled=false;btn.textContent='Enviar Sugestoes';
+            return;
+        }
+        
+        await fetch(SCRIPT_URL,{
+            method:'POST',
+            mode:'no-cors',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({nome,musicas})
+        });
+        
+        showToast('Sugestoes enviadas! Valeu, '+nome+'!','success');
+        
+        // Clear form
+        document.getElementById('nome').value='';
+        document.querySelectorAll('.song-item input').forEach(inp=>inp.value='');
+        
+        // Reload submissions after short delay (Apps Script needs time to write)
+        setTimeout(loadSubmissions,2000);
+    }catch(err){
+        showToast('Erro ao enviar. Tenta de novo!','error');
+        console.error(err);
+    }finally{
+        btn.disabled=false;btn.textContent='Enviar Sugestoes';
+    }
+}
+
+// ── Load submissions ──
+async function loadSubmissions(){
+    const container=document.getElementById('submissions-list');
+    try{
+        if(SCRIPT_URL.includes('COLE_A_URL')){
+            container.innerHTML='<div class="empty">Configure a URL do Apps Script para ver as sugestoes.</div>';
+            return;
+        }
+        
+        const res=await fetch(SCRIPT_URL);
+        const rows=await res.json();
+        
+        if(!rows||rows.length===0){
+            container.innerHTML='<div class="empty">Nenhuma sugestao ainda. Seja o primeiro!</div>';
+            return;
+        }
+        
+        // Group by name
+        const byPerson={};
+        rows.forEach(r=>{
+            if(!byPerson[r.nome])byPerson[r.nome]=[];
+            byPerson[r.nome].push(r.musica);
+        });
+        
+        const names=Object.keys(byPerson);
+        const totalSongs=rows.length;
+        
+        let html=`<div class="submissions-count">${totalSongs} musica${totalSongs!==1?'s':''} sugerida${totalSongs!==1?'s':''} por ${names.length} pessoa${names.length!==1?'s':''}</div>`;
+        
+        names.forEach(name=>{
+            const songs=byPerson[name];
+            html+=`<div class="person-card"><div class="person-name">${escHtml(name)}</div><ol class="person-songs">`;
+            songs.forEach(s=>{html+=`<li>${escHtml(s)}</li>`;});
+            html+=`</ol></div>`;
+        });
+        
+        container.innerHTML=html;
+    }catch(err){
+        container.innerHTML='<div class="empty">Erro ao carregar sugestoes.</div>';
+        console.error(err);
+    }
+}
+
+function escHtml(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+
+// Load on page open
+loadSubmissions();
+</script>
+
+</body>
+</html>
