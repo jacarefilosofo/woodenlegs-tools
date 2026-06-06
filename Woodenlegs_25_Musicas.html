@@ -73,12 +73,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </div>
 
 <div class="intro">
-    Sugira suas musicas para que possamos <em>cantar</em>, <em>brincar</em>, <em>pular</em>, 
+    Sugira suas músicas para que possamos <em>cantar</em>, <em>brincar</em>, <em>pular</em>, 
     <em>sorrir</em>, <em>rir muito</em> e quem sabe <em>chorar</em>.<br><br>
-    Mas aquelas musicas que nos fazem <em>dancar</em> e <em>abracar</em> e <em>comemorar</em>.<br><br>
-    Se voce for escolher muitas musicas, coloque-as na sua ordem de preferencia 
+    Mas aquelas músicas que nos fazem <em>dançar</em> e <em>abraçar</em> e <em>comemorar</em>.<br><br>
+    Se você for escolher muitas músicas, coloque-as na sua ordem de preferência 
     caso tenhamos que selecionar apenas algumas.<br><br>
-    Vale tudo. Rock, Samba, Sertanejo, Hip Hop, Americana, ate Sweet Caroline 😉
+    Vale tudo. Rock, Samba, Sertanejo, Hip Hop, Americana, até Sweet Caroline 😉
 </div>
 
 <div class="form-card">
@@ -86,30 +86,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <input type="text" id="nome" placeholder="Como te conhecem na pelada">
     
     <div class="song-header">
-        <label>Musicas (em ordem de preferencia)</label>
+        <label>Músicas (em ordem de preferência)</label>
         <button class="btn-add" onclick="addSong()">+ Mais</button>
     </div>
     <ul class="song-list" id="song-list">
         <li class="song-item">
             <span class="song-num">1</span>
-            <input type="text" placeholder="Musica ou artista">
+            <input type="text" placeholder="Música ou artista">
         </li>
         <li class="song-item">
             <span class="song-num">2</span>
-            <input type="text" placeholder="Musica ou artista">
+            <input type="text" placeholder="Música ou artista">
         </li>
         <li class="song-item">
             <span class="song-num">3</span>
-            <input type="text" placeholder="Musica ou artista">
+            <input type="text" placeholder="Música ou artista">
         </li>
     </ul>
-    <div class="hint">Clique "+ Mais" para adicionar mais musicas. A ordem indica sua preferencia.</div>
+    <div class="hint">Clique "+ Mais" para adicionar mais músicas. A ordem indica sua preferência.</div>
     
-    <button class="btn-submit" id="btn-submit" onclick="submitSongs()">Enviar Sugestoes</button>
+    <button class="btn-submit" id="btn-submit" onclick="submitSongs()">Enviar Sugestões</button>
 </div>
 
 <div class="submissions">
-    <div class="submissions-title">Sugestoes da Galera</div>
+    <div class="submissions-title">Sugestões da Galera</div>
     <div id="submissions-list"><div class="loading">Carregando...</div></div>
 </div>
 
@@ -140,7 +140,7 @@ function addSong(){
     const n=list.children.length+1;
     const li=document.createElement('li');
     li.className='song-item';
-    li.innerHTML=`<span class="song-num">${n}</span><input type="text" placeholder="Musica ou artista"><button class="btn-remove" onclick="removeSong(this)">×</button>`;
+    li.innerHTML=`<span class="song-num">${n}</span><input type="text" placeholder="Música ou artista"><button class="btn-remove" onclick="removeSong(this)">×</button>`;
     list.appendChild(li);
     li.querySelector('input').focus();
 }
@@ -148,7 +148,7 @@ function addSong(){
 function removeSong(btn){
     const li=btn.parentElement;
     const list=document.getElementById('song-list');
-    if(list.children.length<=1){showToast('Pelo menos uma musica!','error');return;}
+    if(list.children.length<=1){showToast('Pelo menos uma música!','error');return;}
     li.remove();
     renumber();
 }
@@ -167,7 +167,7 @@ async function submitSongs(){
     const musicas=[];
     inputs.forEach(inp=>{const v=inp.value.trim();if(v)musicas.push(v);});
     
-    if(musicas.length===0){showToast('Sugere pelo menos uma musica!','error');return;}
+    if(musicas.length===0){showToast('Sugere pelo menos uma música!','error');return;}
     
     const btn=document.getElementById('btn-submit');
     btn.disabled=true;
@@ -175,8 +175,8 @@ async function submitSongs(){
     
     try{
         if(SCRIPT_URL.includes('COLE_A_URL')){
-            showToast('URL do Apps Script nao configurada!','error');
-            btn.disabled=false;btn.textContent='Enviar Sugestoes';
+            showToast('URL do Apps Script não configurada!','error');
+            btn.disabled=false;btn.textContent='Enviar Sugestões';
             return;
         }
         
@@ -187,7 +187,7 @@ async function submitSongs(){
             body:JSON.stringify({nome,musicas})
         });
         
-        showToast('Sugestoes enviadas! Valeu, '+nome+'!','success');
+        showToast('Sugestões enviadas! Valeu, '+nome+'!','success');
         
         // Clear form
         document.getElementById('nome').value='';
@@ -199,7 +199,7 @@ async function submitSongs(){
         showToast('Erro ao enviar. Tenta de novo!','error');
         console.error(err);
     }finally{
-        btn.disabled=false;btn.textContent='Enviar Sugestoes';
+        btn.disabled=false;btn.textContent='Enviar Sugestões';
     }
 }
 
@@ -208,7 +208,7 @@ async function loadSubmissions(){
     const container=document.getElementById('submissions-list');
     try{
         if(SCRIPT_URL.includes('COLE_A_URL')){
-            container.innerHTML='<div class="empty">Configure a URL do Apps Script para ver as sugestoes.</div>';
+            container.innerHTML='<div class="empty">Configure a URL do Apps Script para ver as sugestões.</div>';
             return;
         }
         
@@ -216,7 +216,7 @@ async function loadSubmissions(){
         const rows=await res.json();
         
         if(!rows||rows.length===0){
-            container.innerHTML='<div class="empty">Nenhuma sugestao ainda. Seja o primeiro!</div>';
+            container.innerHTML='<div class="empty">Nenhuma sugestão ainda. Seja o primeiro!</div>';
             return;
         }
         
@@ -230,7 +230,7 @@ async function loadSubmissions(){
         const names=Object.keys(byPerson);
         const totalSongs=rows.length;
         
-        let html=`<div class="submissions-count">${totalSongs} musica${totalSongs!==1?'s':''} sugerida${totalSongs!==1?'s':''} por ${names.length} pessoa${names.length!==1?'s':''}</div>`;
+        let html=`<div class="submissions-count">${totalSongs} música${totalSongs!==1?'s':''} sugerida${totalSongs!==1?'s':''} por ${names.length} pessoa${names.length!==1?'s':''}</div>`;
         
         names.forEach(name=>{
             const songs=byPerson[name];
@@ -241,7 +241,7 @@ async function loadSubmissions(){
         
         container.innerHTML=html;
     }catch(err){
-        container.innerHTML='<div class="empty">Erro ao carregar sugestoes.</div>';
+        container.innerHTML='<div class="empty">Erro ao carregar sugestões.</div>';
         console.error(err);
     }
 }
