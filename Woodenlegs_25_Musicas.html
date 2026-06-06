@@ -9,11 +9,21 @@
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);color:#fff;min-height:100vh}
 .container{max-width:600px;margin:0 auto;padding:16px}
 
+/* Language toggle */
+.lang-toggle{display:flex;justify-content:center;gap:0;margin-bottom:8px}
+.lang-btn{padding:8px 20px;border:2px solid rgba(255,215,0,0.4);background:transparent;color:#aaa;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s}
+.lang-btn:first-child{border-radius:20px 0 0 20px;border-right:1px solid rgba(255,215,0,0.4)}
+.lang-btn:last-child{border-radius:0 20px 20px 0;border-left:1px solid rgba(255,215,0,0.4)}
+.lang-btn.active{background:rgba(255,215,0,0.2);color:#ffd700;border-color:#ffd700}
+
 /* Header */
-.header{text-align:center;padding:32px 16px 24px}
+.header{text-align:center;padding:24px 16px 20px}
 .header-emoji{font-size:48px;margin-bottom:8px}
 .header h1{font-size:28px;font-weight:900;color:#ffd700;text-shadow:0 2px 12px rgba(255,215,0,0.3)}
 .header .subtitle{font-size:14px;color:#e8b931;font-weight:600;margin-top:4px;letter-spacing:1px}
+
+/* Open note */
+.open-note{text-align:center;background:rgba(255,215,0,0.12);border:1px solid rgba(255,215,0,0.25);border-radius:12px;padding:12px 16px;margin-bottom:24px;font-size:14px;font-weight:600;color:#ffd700}
 
 /* Intro */
 .intro{background:rgba(255,255,255,0.08);border-radius:16px;padding:20px;margin-bottom:24px;line-height:1.7;font-size:15px;color:#ddd;border:1px solid rgba(255,215,0,0.15)}
@@ -60,82 +70,80 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 /* Footer */
 .footer{text-align:center;padding:16px;font-size:11px;color:#555}
-
-/* Language sections */
-.lang-divider{text-align:center;color:#666;font-size:12px;margin:16px 0;display:flex;align-items:center;gap:12px}
-.lang-divider::before,.lang-divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.15)}
-.lang-flag{font-size:14px;font-weight:700;color:#ffd700}
-.open-note{text-align:center;background:rgba(255,215,0,0.12);border:1px solid rgba(255,215,0,0.25);border-radius:12px;padding:12px 16px;margin-bottom:24px;font-size:14px;font-weight:600;color:#ffd700}
 </style>
 </head>
 <body>
 
 <div class="container">
 
+<div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('pt')">🇧🇷 Português</button>
+    <button class="lang-btn" onclick="setLang('en')">🇺🇸 English</button>
+</div>
+
 <div class="header">
     <div class="header-emoji">⚽🎶🎉</div>
     <h1>Woodenlegs 25 Anos</h1>
-    <div class="subtitle">Playlist da Festa / Party Playlist</div>
+    <div class="subtitle" data-pt="Playlist da Festa" data-en="Party Playlist">Playlist da Festa</div>
 </div>
 
-<div class="open-note">
-    🌟 Aberto a todos — jogadores, família e amigos!<br>
-    Open to everyone — players, family & friends!
-</div>
+<div class="open-note" data-pt="🌟 Aberto a todos — jogadores, família e amigos!" data-en="🌟 Open to everyone — players, family & friends!">🌟 Aberto a todos — jogadores, família e amigos!</div>
 
 <div class="intro">
-    <div class="lang-flag">🇧🇷 Português</div><br>
+    <span class="i18n-pt">
     Sugira suas músicas para que possamos <em>cantar</em>, <em>brincar</em>, <em>pular</em>, 
     <em>sorrir</em>, <em>rir muito</em> e quem sabe <em>chorar</em>.<br><br>
     Mas aquelas músicas que nos fazem <em>dançar</em> e <em>abraçar</em> e <em>comemorar</em>.<br><br>
     Se você for escolher muitas músicas, coloque-as na sua ordem de preferência 
     caso tenhamos que selecionar apenas algumas.<br><br>
     Vale tudo. Rock, Samba, Sertanejo, Hip Hop, Americana, até Sweet Caroline 😉
-
-    <div class="lang-divider"></div>
-
-    <div class="lang-flag">🇺🇸 English</div><br>
+    </span>
+    <span class="i18n-en" style="display:none">
     Suggest your songs so we can <em>sing</em>, <em>play</em>, <em>jump</em>, 
     <em>smile</em>, <em>laugh hard</em> and maybe even <em>cry</em>.<br><br>
     Those songs that make us <em>dance</em>, <em>hug</em> and <em>celebrate</em>.<br><br>
     If you pick a lot of songs, list them in order of preference 
     in case we need to select just a few.<br><br>
     Anything goes. Rock, Samba, Country, Hip Hop, Pop, even Sweet Caroline 😉
+    </span>
 </div>
 
 <div class="form-card">
-    <label for="nome">Seu nome / Your name</label>
-    <input type="text" id="nome" placeholder="Como te conhecem / Your name">
+    <label for="nome" data-pt="Seu nome" data-en="Your name">Seu nome</label>
+    <input type="text" id="nome" data-pt-ph="Como te conhecem na pelada" data-en-ph="Your name / nickname" placeholder="Como te conhecem na pelada">
     
     <div class="song-header">
-        <label>Músicas / Songs (preferência / preference order)</label>
-        <button class="btn-add" onclick="addSong()">+ More</button>
+        <label data-pt="Músicas (ordem de preferência)" data-en="Songs (preference order)">Músicas (ordem de preferência)</label>
+        <button class="btn-add" onclick="addSong()" data-pt="+ Mais" data-en="+ More">+ Mais</button>
     </div>
     <ul class="song-list" id="song-list">
         <li class="song-item">
             <span class="song-num">1</span>
-            <input type="text" placeholder="Música ou artista">
+            <input type="text" data-pt-ph="Música ou artista" data-en-ph="Song or artist" placeholder="Música ou artista">
         </li>
         <li class="song-item">
             <span class="song-num">2</span>
-            <input type="text" placeholder="Música ou artista">
+            <input type="text" data-pt-ph="Música ou artista" data-en-ph="Song or artist" placeholder="Música ou artista">
         </li>
         <li class="song-item">
             <span class="song-num">3</span>
-            <input type="text" placeholder="Música ou artista">
+            <input type="text" data-pt-ph="Música ou artista" data-en-ph="Song or artist" placeholder="Música ou artista">
         </li>
     </ul>
-    <div class="hint">Clique "+ More" para adicionar mais músicas / Click "+ More" to add more songs.</div>
+    <div class="hint" data-pt='Clique "+ Mais" para adicionar mais músicas. A ordem indica sua preferência.' data-en='Click "+ More" to add more songs. Order indicates your preference.'>Clique "+ Mais" para adicionar mais músicas. A ordem indica sua preferência.</div>
     
-    <button class="btn-submit" id="btn-submit" onclick="submitSongs()">Enviar / Submit</button>
+    <button class="btn-submit" id="btn-submit" onclick="submitSongs()" data-pt="Enviar Sugestões" data-en="Submit">Enviar Sugestões</button>
 </div>
 
 <div class="submissions">
-    <div class="submissions-title">Sugestões da Galera / Everyone's Picks</div>
-    <div id="submissions-list"><div class="loading">Carregando...</div></div>
+    <div class="submissions-title" data-pt="Sugestões da Galera" data-en="Everyone's Picks">Sugestões da Galera</div>
+    <div id="submissions-list"><div class="loading" data-pt="Carregando..." data-en="Loading...">Carregando...</div></div>
 </div>
 
-<div class="footer">Woodenlegs FC — 25 anos de pelada, amizade e gol contra do Moro<br>25 years of pickup soccer, friendship & own goals by Moro</div>
+<div class="footer">
+    <span class="i18n-pt">Woodenlegs FC — 25 anos de pelada, amizade e gol contra do Moro</span>
+    <span class="i18n-en" style="display:none">Woodenlegs FC — 25 years of pickup soccer, friendship & own goals by Moro</span>
+</div>
 
 </div>
 
@@ -143,9 +151,78 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 <script>
 // ╔═══════════════════════════════════════════════════════════╗
-// ║  CONFIG — Cole aqui a URL do Google Apps Script          ║
+// ║  CONFIG                                                   ║
 // ╚═══════════════════════════════════════════════════════════╝
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz-6aUZHhYDEhAuSUe6U3nEuur-K6NmYBEHPdGfNpGKQ8ii0AJLLZekRGCWjDJ52Ucj/exec";
+
+// ── i18n ──
+let currentLang = localStorage.getItem('wl25lang') || 'pt';
+
+const T = {
+    pt: {
+        noName: 'Coloca teu nome!',
+        noSong: 'Sugere pelo menos uma música!',
+        sending: 'Enviando...',
+        submitted: (n) => `Valeu, ${n}! Sugestões enviadas!`,
+        error: 'Erro ao enviar. Tenta de novo!',
+        btnSubmit: 'Enviar Sugestões',
+        btnAdd: '+ Mais',
+        noResults: 'Nenhuma sugestão ainda. Seja o primeiro!',
+        loadError: 'Erro ao carregar sugestões.',
+        songPh: 'Música ou artista',
+        minSong: 'Pelo menos uma música!',
+        count: (s,p) => `${s} música${s!==1?'s':''} sugerida${s!==1?'s':''} por ${p} pessoa${p!==1?'s':''}`,
+    },
+    en: {
+        noName: 'Enter your name!',
+        noSong: 'Add at least one song!',
+        sending: 'Sending...',
+        submitted: (n) => `Thanks, ${n}! Songs submitted!`,
+        error: 'Error sending. Try again!',
+        btnSubmit: 'Submit',
+        btnAdd: '+ More',
+        noResults: 'No suggestions yet. Be the first!',
+        loadError: 'Error loading suggestions.',
+        songPh: 'Song or artist',
+        minSong: 'At least one song!',
+        count: (s,p) => `${s} song${s!==1?'s':''} suggested by ${p} ${p!==1?'people':'person'}`,
+    }
+};
+
+function setLang(lang){
+    currentLang = lang;
+    localStorage.setItem('wl25lang', lang);
+    
+    // Toggle buttons
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+    
+    // Swap data-pt / data-en text
+    document.querySelectorAll('[data-pt]').forEach(el => {
+        if(el.dataset[lang]) el.textContent = el.dataset[lang];
+    });
+    
+    // Swap placeholders
+    document.querySelectorAll('[data-pt-ph]').forEach(el => {
+        el.placeholder = el.dataset[lang+'Ph'] || el.placeholder;
+    });
+    
+    // Show/hide i18n blocks
+    document.querySelectorAll('.i18n-pt').forEach(el => el.style.display = lang==='pt'?'':'none');
+    document.querySelectorAll('.i18n-en').forEach(el => el.style.display = lang==='en'?'':'none');
+    
+    // Update dynamic song input placeholders
+    document.querySelectorAll('.song-item input').forEach(inp => {
+        inp.placeholder = T[lang].songPh;
+    });
+    
+    // Update submit button (if not in "sending" state)
+    const btn = document.getElementById('btn-submit');
+    if(!btn.disabled) btn.textContent = T[lang].btnSubmit;
+    
+    // Reload submissions to update count text
+    loadSubmissions();
+}
 
 // ── Toast ──
 function showToast(msg, type=''){
@@ -162,7 +239,8 @@ function addSong(){
     const n=list.children.length+1;
     const li=document.createElement('li');
     li.className='song-item';
-    li.innerHTML=`<span class="song-num">${n}</span><input type="text" placeholder="Música ou artista"><button class="btn-remove" onclick="removeSong(this)">×</button>`;
+    const ph=T[currentLang].songPh;
+    li.innerHTML=`<span class="song-num">${n}</span><input type="text" data-pt-ph="Música ou artista" data-en-ph="Song or artist" placeholder="${ph}"><button class="btn-remove" onclick="removeSong(this)">×</button>`;
     list.appendChild(li);
     li.querySelector('input').focus();
 }
@@ -170,7 +248,7 @@ function addSong(){
 function removeSong(btn){
     const li=btn.parentElement;
     const list=document.getElementById('song-list');
-    if(list.children.length<=1){showToast('Pelo menos uma música!','error');return;}
+    if(list.children.length<=1){showToast(T[currentLang].minSong,'error');return;}
     li.remove();
     renumber();
 }
@@ -183,25 +261,19 @@ function renumber(){
 // ── Submit ──
 async function submitSongs(){
     const nome=document.getElementById('nome').value.trim();
-    if(!nome){showToast('Coloca teu nome! / Enter your name!','error');return;}
+    if(!nome){showToast(T[currentLang].noName,'error');return;}
     
     const inputs=document.querySelectorAll('.song-item input');
     const musicas=[];
     inputs.forEach(inp=>{const v=inp.value.trim();if(v)musicas.push(v);});
     
-    if(musicas.length===0){showToast('Sugere pelo menos uma música! / Add at least one song!','error');return;}
+    if(musicas.length===0){showToast(T[currentLang].noSong,'error');return;}
     
     const btn=document.getElementById('btn-submit');
     btn.disabled=true;
-        btn.textContent='Enviando / Sending...';
+    btn.textContent=T[currentLang].sending;
     
     try{
-        if(SCRIPT_URL.includes('COLE_A_URL')){
-            showToast('URL do Apps Script não configurada!','error');
-            btn.disabled=false;btn.textContent='Enviar / Submit';
-            return;
-        }
-        
         await fetch(SCRIPT_URL,{
             method:'POST',
             mode:'no-cors',
@@ -209,19 +281,19 @@ async function submitSongs(){
             body:JSON.stringify({nome,musicas})
         });
         
-        showToast('Valeu, '+nome+'! Sugestões enviadas! / Submitted!','success');
+        showToast(T[currentLang].submitted(nome),'success');
         
         // Clear form
         document.getElementById('nome').value='';
         document.querySelectorAll('.song-item input').forEach(inp=>inp.value='');
         
-        // Reload submissions after short delay (Apps Script needs time to write)
+        // Reload submissions after short delay
         setTimeout(loadSubmissions,2000);
     }catch(err){
-        showToast('Erro ao enviar / Error sending. Tenta de novo!','error');
+        showToast(T[currentLang].error,'error');
         console.error(err);
     }finally{
-        btn.disabled=false;btn.textContent='Enviar / Submit';
+        btn.disabled=false;btn.textContent=T[currentLang].btnSubmit;
     }
 }
 
@@ -229,16 +301,11 @@ async function submitSongs(){
 async function loadSubmissions(){
     const container=document.getElementById('submissions-list');
     try{
-        if(SCRIPT_URL.includes('COLE_A_URL')){
-            container.innerHTML='<div class="empty">Configure a URL do Apps Script para ver as sugestões.</div>';
-            return;
-        }
-        
         const res=await fetch(SCRIPT_URL);
         const rows=await res.json();
         
         if(!rows||rows.length===0){
-            container.innerHTML='<div class="empty">Nenhuma sugestão ainda. Seja o primeiro! / No suggestions yet. Be the first!</div>';
+            container.innerHTML=`<div class="empty">${T[currentLang].noResults}</div>`;
             return;
         }
         
@@ -252,7 +319,7 @@ async function loadSubmissions(){
         const names=Object.keys(byPerson);
         const totalSongs=rows.length;
         
-        let html=`<div class="submissions-count">${totalSongs} música${totalSongs!==1?'s':''} sugerida${totalSongs!==1?'s':''} por ${names.length} pessoa${names.length!==1?'s':''}</div>`;
+        let html=`<div class="submissions-count">${T[currentLang].count(totalSongs,names.length)}</div>`;
         
         names.forEach(name=>{
             const songs=byPerson[name];
@@ -263,15 +330,15 @@ async function loadSubmissions(){
         
         container.innerHTML=html;
     }catch(err){
-        container.innerHTML='<div class="empty">Erro ao carregar sugestões.</div>';
+        container.innerHTML=`<div class="empty">${T[currentLang].loadError}</div>`;
         console.error(err);
     }
 }
 
 function escHtml(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
 
-// Load on page open
-loadSubmissions();
+// Init
+setLang(currentLang);
 </script>
 
 </body>
