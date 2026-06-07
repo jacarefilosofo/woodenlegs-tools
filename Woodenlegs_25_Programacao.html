@@ -608,6 +608,20 @@
   .btn-signup:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(201,168,76,0.4)}
   .btn-view{color:var(--gold-light);font-size:0.8rem;text-decoration:none;font-weight:600;opacity:0.7;transition:opacity 0.2s;padding:0.4rem 0;display:inline-flex;align-items:center;gap:0.3rem}
   .btn-view:hover{opacity:1;text-decoration:underline}
+
+  /* ===== WEATHER ===== */
+  .weather-card{background:linear-gradient(135deg,rgba(45,90,63,0.4),rgba(26,58,42,0.6));border:1px solid rgba(201,168,76,0.15);border-radius:16px;padding:1.5rem;margin-top:1.5rem}
+  .weather-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);text-align:center;margin-bottom:1rem}
+  .weather-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0.5rem}
+  .weather-day{text-align:center;padding:0.8rem 0.3rem;border-radius:10px;background:rgba(255,255,255,0.04)}
+  .weather-day-name{font-size:0.75rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:0.05em}
+  .weather-day-date{font-size:0.65rem;color:var(--cream);opacity:0.6;margin-top:0.1rem}
+  .weather-icon{font-size:1.8rem;margin:0.4rem 0}
+  .weather-temp{font-size:0.85rem;color:var(--cream);font-weight:600}
+  .weather-temp .lo{opacity:0.5;font-weight:400}
+  .weather-rain{font-size:0.7rem;color:var(--gold-light);opacity:0.7;margin-top:0.2rem}
+  .weather-loading{text-align:center;color:var(--cream);opacity:0.5;font-size:0.85rem;padding:1rem}
+  .weather-note{text-align:center;font-size:0.7rem;color:var(--cream);opacity:0.4;margin-top:0.8rem;font-style:italic}
   .event-buttons{display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;margin-top:0.5rem}
 
   /* ===== EVENT BADGES ===== */
@@ -725,6 +739,15 @@
         </ul>
       </div>
 
+    </div>
+  </div>
+
+  <!-- ===== WEATHER FORECAST ===== -->
+  <div class="overview-section" style="padding-top:0">
+    <div class="weather-card fade-in">
+      <div class="weather-title">☀️ <span class="i18n-pt">Previsão do Tempo — Kirkland/Redmond</span><span class="i18n-en">Weather Forecast — Kirkland/Redmond</span></div>
+      <div id="weather-content"><div class="weather-loading"><span class="i18n-pt">Carregando previsão...</span><span class="i18n-en">Loading forecast...</span></div></div>
+      <div class="weather-note"><span class="i18n-pt">Fonte: Open-Meteo.com — atualizado em tempo real</span><span class="i18n-en">Source: Open-Meteo.com — updated in real time</span></div>
     </div>
   </div>
 
@@ -1013,6 +1036,53 @@
     document.querySelectorAll('.i18n-en').forEach(el=>el.style.display='none');
     const savedLang=localStorage.getItem('wl25lang');
     if(savedLang)setLang(savedLang);
+
+    // ── Weather Forecast (Open-Meteo API) ──
+    async function loadWeather(){
+      const container=document.getElementById('weather-content');
+      const EVENT_DATES=['2026-06-18','2026-06-19','2026-06-20','2026-06-21'];
+      const DAY_NAMES_PT=['Qui','Sex','Sáb','Dom'];
+      const DAY_NAMES_EN=['Thu','Fri','Sat','Sun'];
+      const DAY_DATES=['18 Jun','19 Jun','20 Jun','21 Jun'];
+      const WMO_ICONS={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌧️',55:'🌧️',56:'🌨️',57:'🌨️',61:'🌧️',63:'🌧️',65:'🌧️',66:'🌨️',67:'🌨️',71:'🌨️',73:'🌨️',75:'❄️',77:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',85:'🌨️',86:'🌨️',95:'⛈️',96:'⛈️',99:'⛈️'};
+      try{
+        const url='https://api.open-meteo.com/v1/forecast?latitude=47.68&longitude=-122.19&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weather_code&temperature_unit=celsius&timezone=America/Los_Angeles&start_date=2026-06-18&end_date=2026-06-21';
+        const res=await fetch(url);
+        const data=await res.json();
+        if(!data.daily||!data.daily.time||data.daily.time.length===0){
+          container.innerHTML='<div class="weather-loading"><span class="i18n-pt">Previsão ainda não disponível — volte mais perto do evento.</span><span class="i18n-en">Forecast not yet available — check back closer to the event.</span></div>';
+          const cl=localStorage.getItem('wl25lang');
+          if(cl)setLang(cl);
+          return;
+        }
+        let html='<div class="weather-grid">';
+        for(let i=0;i<data.daily.time.length;i++){
+          const hi=Math.round(data.daily.temperature_2m_max[i]);
+          const lo=Math.round(data.daily.temperature_2m_min[i]);
+          const hiF=Math.round(hi*9/5+32);
+          const loF=Math.round(lo*9/5+32);
+          const rain=data.daily.precipitation_probability_max[i]||0;
+          const code=data.daily.weather_code[i];
+          const icon=WMO_ICONS[code]||'🌤️';
+          html+=`<div class="weather-day">
+            <div class="weather-day-name"><span class="i18n-pt">${DAY_NAMES_PT[i]}</span><span class="i18n-en">${DAY_NAMES_EN[i]}</span></div>
+            <div class="weather-day-date">${DAY_DATES[i]}</div>
+            <div class="weather-icon">${icon}</div>
+            <div class="weather-temp"><span class="i18n-pt">${hi}°/${lo}°</span><span class="i18n-en">${hiF}°/${loF}°F</span></div>
+            <div class="weather-rain">${rain>0?'💧 '+rain+'%':''}</div>
+          </div>`;
+        }
+        html+='</div>';
+        container.innerHTML=html;
+        const cl=localStorage.getItem('wl25lang');
+        if(cl)setLang(cl);
+      }catch(e){
+        container.innerHTML='<div class="weather-loading"><span class="i18n-pt">Previsão indisponível no momento.</span><span class="i18n-en">Forecast currently unavailable.</span></div>';
+        const cl=localStorage.getItem('wl25lang');
+        if(cl)setLang(cl);
+      }
+    }
+    loadWeather();
   </script>
 
 </body>
