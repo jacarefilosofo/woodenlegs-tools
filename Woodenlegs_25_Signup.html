@@ -319,7 +319,8 @@ async function loadRegistered(){
         rows.forEach(r => {
             html += `<li class="registered-item"><span class="name">${escHtml(r.nome)}</span>`;
             if(activity === 'oasis' && r.ticket) html += `<span class="ticket-badge">#${String(r.ticket).padStart(3,'0')}</span>`;
-            if((activity === 'churrasco' || activity === 'brasil') && r.contribuicao) html += `<span class="extra">${escHtml(r.contribuicao)}</span>`;
+            if(activity === 'brasil' && r.contribuicao) html += `<span class="extra">🍕 ${escHtml(r.contribuicao)}</span>`;
+            if(activity === 'churrasco' && r.contribuicao) html += `<span class="extra">${escHtml(r.contribuicao)}</span>`;
             html += `</li>`;
         });
         html += `</ul>`;
