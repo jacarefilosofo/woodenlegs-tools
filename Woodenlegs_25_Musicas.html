@@ -278,7 +278,7 @@ async function submitSongs(){
             method:'POST',
             mode:'no-cors',
             headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({nome,musicas})
+            body:JSON.stringify({activity:'musicas',nome,musicas})
         });
         
         showToast(T[currentLang].submitted(nome),'success');
@@ -301,7 +301,7 @@ async function submitSongs(){
 async function loadSubmissions(){
     const container=document.getElementById('submissions-list');
     try{
-        const res=await fetch(SCRIPT_URL);
+        const res=await fetch(SCRIPT_URL+'?activity=musicas');
         const rows=await res.json();
         
         if(!rows||rows.length===0){

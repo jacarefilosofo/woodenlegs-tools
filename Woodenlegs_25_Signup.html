@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Woodenlegs 25 Anos — Inscrição</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);color:#fff;min-height:100vh}
+.container{max-width:600px;margin:0 auto;padding:16px}
+
+/* Language toggle */
+.lang-toggle{display:flex;justify-content:center;gap:0;margin-bottom:8px}
+.lang-btn{padding:8px 20px;border:2px solid rgba(255,215,0,0.4);background:transparent;color:#aaa;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s}
+.lang-btn:first-child{border-radius:20px 0 0 20px;border-right:1px solid rgba(255,215,0,0.4)}
+.lang-btn:last-child{border-radius:0 20px 20px 0;border-left:1px solid rgba(255,215,0,0.4)}
+.lang-btn.active{background:rgba(255,215,0,0.2);color:#ffd700;border-color:#ffd700}
+
+/* Header */
+.header{text-align:center;padding:24px 16px 20px}
+.header-emoji{font-size:56px;margin-bottom:8px}
+.header h1{font-size:22px;font-weight:900;color:#ffd700;text-shadow:0 2px 12px rgba(255,215,0,0.3)}
+.header .subtitle{font-size:14px;color:#e8b931;font-weight:600;margin-top:4px;letter-spacing:1px}
+.header .event-date{font-size:13px;color:#aaa;margin-top:8px}
+
+/* Form */
+.form-card{background:rgba(255,255,255,0.95);border-radius:16px;padding:20px;margin-bottom:24px;color:#222;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.form-card label{display:block;font-size:13px;font-weight:700;color:#555;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px}
+.form-card input[type="text"],.form-card select{width:100%;padding:12px;border:2px solid #e0e0e0;border-radius:10px;font-size:16px;font-family:inherit;transition:border-color 0.2s}
+.form-card input[type="text"]:focus,.form-card select:focus{outline:none;border-color:#ffd700}
+.field-group{margin-top:16px}
+.hint{font-size:12px;color:#999;margin-top:4px;line-height:1.4}
+.btn-submit{width:100%;padding:14px;background:linear-gradient(135deg,#ffd700,#e8b931);color:#1a1a2e;border:none;border-radius:12px;font-size:16px;font-weight:900;cursor:pointer;margin-top:20px;text-transform:uppercase;letter-spacing:1px;box-shadow:0 4px 16px rgba(255,215,0,0.3);transition:transform 0.1s}
+.btn-submit:active{transform:scale(0.97)}
+.btn-submit:disabled{opacity:0.5;cursor:not-allowed}
+
+/* Event note */
+.event-note{background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.2);border-radius:12px;padding:12px 16px;margin-bottom:20px;font-size:13px;color:#ddd;line-height:1.6;text-align:center}
+
+/* Ticket */
+.ticket{display:none;background:linear-gradient(135deg,#1a1a2e,#0f3460);border:3px solid #ffd700;border-radius:20px;padding:24px;margin:24px 0;text-align:center;position:relative;overflow:hidden}
+.ticket::before{content:'';position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:20px;height:20px;background:#0f3460;border:3px solid #ffd700;border-radius:50%}
+.ticket::after{content:'';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:20px;height:20px;background:#0f3460;border:3px solid #ffd700;border-radius:50%}
+.ticket-label{font-size:11px;letter-spacing:3px;color:#ffd700;text-transform:uppercase;margin-bottom:4px}
+.ticket-number{font-size:48px;font-weight:900;color:#ffd700;text-shadow:0 2px 20px rgba(255,215,0,0.4);line-height:1}
+.ticket-name{font-size:18px;font-weight:700;color:#fff;margin-top:8px}
+.ticket-event{font-size:12px;color:#aaa;margin-top:8px;line-height:1.5}
+.ticket-hint{font-size:11px;color:#888;margin-top:12px;font-style:italic}
+.ticket.show{display:block;animation:ticketIn 0.5s ease}
+@keyframes ticketIn{from{opacity:0;transform:scale(0.8) rotateX(20deg)}to{opacity:1;transform:scale(1) rotateX(0)}}
+
+/* Registered list */
+.registered{margin-bottom:32px}
+.registered-title{text-align:center;font-size:18px;font-weight:800;color:#ffd700;margin-bottom:16px}
+.registered-count{text-align:center;font-size:13px;color:#888;margin-bottom:12px}
+.registered-list{list-style:none;background:rgba(255,255,255,0.06);border-radius:12px;padding:12px 16px;border:1px solid rgba(255,255,255,0.08)}
+.registered-item{padding:6px 0;font-size:14px;color:#ddd;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center}
+.registered-item:last-child{border-bottom:none}
+.registered-item .name{font-weight:600}
+.registered-item .extra{font-size:12px;color:#aaa;font-style:italic}
+.registered-item .ticket-badge{background:#ffd700;color:#1a1a2e;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:800}
+.empty{text-align:center;color:#666;padding:24px;font-size:14px}
+.loading{text-align:center;color:#888;padding:20px;font-size:14px}
+
+/* Toast */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:#222;color:#fff;padding:12px 24px;border-radius:12px;font-size:14px;font-weight:600;transition:transform 0.3s ease;z-index:100;box-shadow:0 4px 16px rgba(0,0,0,0.3)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.error{background:#cc0000}
+.toast.success{background:#006400}
+
+/* Back link */
+.back-link{text-align:center;margin-bottom:16px}
+.back-link a{color:#ffd700;font-size:13px;text-decoration:none;opacity:0.7}
+.back-link a:hover{opacity:1}
+
+.footer{text-align:center;padding:16px;font-size:11px;color:#555}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('pt')">🇧🇷 Português</button>
+    <button class="lang-btn" onclick="setLang('en')">🇺🇸 English</button>
+</div>
+
+<div class="back-link"><a href="Woodenlegs_25_Programacao.html" data-pt="← Voltar à Programação" data-en="← Back to Schedule">← Voltar à Programação</a></div>
+
+<div class="header">
+    <div class="header-emoji" id="header-emoji">⚽</div>
+    <h1 id="header-title">Woodenlegs 25 Anos</h1>
+    <div class="subtitle" id="header-subtitle"></div>
+    <div class="event-date" id="header-date"></div>
+</div>
+
+<div class="event-note" id="event-note" style="display:none"></div>
+
+<div class="form-card">
+    <label for="nome" data-pt="Seu nome" data-en="Your name">Seu nome</label>
+    <input type="text" id="nome" data-pt-ph="Como te conhecem" data-en-ph="Your name / nickname" placeholder="Como te conhecem">
+    
+    <div class="field-group" id="extra-field" style="display:none">
+        <label for="extra" id="extra-label"></label>
+        <input type="text" id="extra" placeholder="">
+    </div>
+    
+    <button class="btn-submit" id="btn-submit" onclick="submitSignup()" data-pt="Inscrever-se" data-en="Sign Up">Inscrever-se</button>
+</div>
+
+<div class="ticket" id="ticket">
+    <div class="ticket-label">WOODENLEGS 25 ANOS</div>
+    <div class="ticket-number" id="ticket-number">#001</div>
+    <div class="ticket-name" id="ticket-name"></div>
+    <div class="ticket-event" id="ticket-event"></div>
+    <div class="ticket-hint" data-pt="📸 Faça um screenshot do seu ticket!" data-en="📸 Screenshot your ticket!">📸 Faça um screenshot do seu ticket!</div>
+</div>
+
+<div class="registered">
+    <div class="registered-title" data-pt="Inscritos" data-en="Signed Up">Inscritos</div>
+    <div id="registered-list"><div class="loading" data-pt="Carregando..." data-en="Loading...">Carregando...</div></div>
+</div>
+
+<div class="footer">
+    <span class="i18n-pt">Woodenlegs FC — 25 anos de pelada e amizade</span>
+    <span class="i18n-en" style="display:none">Woodenlegs FC — 25 years of pickup soccer & friendship</span>
+</div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz-6aUZHhYDEhAuSUe6U3nEuur-K6NmYBEHPdGfNpGKQ8ii0AJLLZekRGCWjDJ52Ucj/exec";
+
+// Activity config
+const ACTIVITIES = {
+    poker: {
+        emoji: "🃏",
+        pt: { title: "Noite de Poker, Truco & Resenha", date: "Quinta, 18 Jun — 20h30", note: "" },
+        en: { title: "Poker, Truco & Hangout Night", date: "Thursday, Jun 18 — 8:30 PM", note: "" }
+    },
+    show: {
+        emoji: "🎸",
+        pt: { title: "Show dos Woodenlegs Músicos", date: "Quinta, 18 Jun — 19h", note: "Convite especial — nossos amigos tocam no NW Brewing!" },
+        en: { title: "Woodenlegs Musicians Show", date: "Thursday, Jun 18 — 7 PM", note: "Special invite — our friends play at NW Brewing!" }
+    },
+    tenis: {
+        emoji: "🎾",
+        pt: { title: "Torneio de Tênis", date: "Sexta, 19 Jun — 15h", note: "" },
+        en: { title: "Tennis Tournament", date: "Friday, Jun 19 — 3 PM", note: "" }
+    },
+    brasil: {
+        emoji: "🇧🇷",
+        pt: { title: "Copa do Mundo — Brasil vs Haiti", date: "Sexta, 19 Jun — 17h", note: "" },
+        en: { title: "World Cup — Brazil vs Haiti", date: "Friday, Jun 19 — 5 PM", note: "" }
+    },
+    pelada: {
+        emoji: "⚽",
+        pt: { title: "Pelada Histórica — 12 de 12", date: "Sexta, 19 Jun — 19h05", note: "" },
+        en: { title: "Historic Match — 12 of 12", date: "Friday, Jun 19 — 7:05 PM", note: "" }
+    },
+    oasis: {
+        emoji: "🎶", ticket: true,
+        pt: { title: "Festa no Oasis", date: "Sexta, 19 Jun — 21h", note: "Cozinha fecha às 22h. Evento até aproximadamente 1h da manhã.\nCada um pede e paga sua conta." },
+        en: { title: "Oasis Party", date: "Friday, Jun 19 — 9 PM", note: "Kitchen closes at 10 PM. Event until approximately 1 AM.\nEach person orders and pays their own tab." }
+    },
+    churrasco: {
+        emoji: "🔥", extraField: true,
+        pt: { title: "Churrasco na casa do Mamas", date: "Sábado, 20 Jun — 13h", note: "", extraLabel: "Como vai ajudar no churrasco?", extraPh: "Carne, acompanhamento, bebida, sobremesa..." },
+        en: { title: "BBQ at Mamas' House", date: "Saturday, Jun 20 — 1 PM", note: "", extraLabel: "How will you help with the BBQ?", extraPh: "Meat, sides, drinks, dessert..." }
+    },
+    pedalada: {
+        emoji: "🚴",
+        pt: { title: "Pedalada — Volta no Lago Sammamish", date: "Domingo, 21 Jun — 11h*", note: "" },
+        en: { title: "Bike Ride — Lake Sammamish Loop", date: "Sunday, Jun 21 — 11 AM*", note: "" }
+    }
+};
+
+// Get activity from URL
+const params = new URLSearchParams(window.location.search);
+const activity = params.get('activity') || 'poker';
+const config = ACTIVITIES[activity];
+
+let currentLang = localStorage.getItem('wl25lang') || 'pt';
+
+// i18n strings
+const T = {
+    pt: {
+        noName: 'Coloca teu nome!',
+        sending: 'Inscrevendo...',
+        submitted: (n) => `Valeu, ${n}! Inscrição confirmada!`,
+        ticketMsg: (n, num) => `Parabéns, ${n}! Seu ticket é o #${String(num).padStart(3,'0')}!`,
+        error: 'Erro. Tenta de novo!',
+        btnSubmit: 'Inscrever-se',
+        noResults: 'Nenhuma inscrição ainda. Seja o primeiro!',
+        loadError: 'Erro ao carregar.',
+        count: (n) => `${n} inscrito${n!==1?'s':''}`,
+    },
+    en: {
+        noName: 'Enter your name!',
+        sending: 'Signing up...',
+        submitted: (n) => `Thanks, ${n}! You're signed up!`,
+        ticketMsg: (n, num) => `Congrats, ${n}! Your ticket is #${String(num).padStart(3,'0')}!`,
+        error: 'Error. Try again!',
+        btnSubmit: 'Sign Up',
+        noResults: 'No signups yet. Be the first!',
+        loadError: 'Error loading.',
+        count: (n) => `${n} signed up`,
+    }
+};
+
+function setLang(lang){
+    currentLang = lang;
+    localStorage.setItem('wl25lang', lang);
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+    document.querySelectorAll('[data-pt]').forEach(el => { if(el.dataset[lang]) el.textContent = el.dataset[lang]; });
+    document.querySelectorAll('[data-pt-ph]').forEach(el => { el.placeholder = el.dataset[lang+'Ph'] || el.placeholder; });
+    document.querySelectorAll('.i18n-pt').forEach(el => el.style.display = lang==='pt'?'':'none');
+    document.querySelectorAll('.i18n-en').forEach(el => el.style.display = lang==='en'?'':'none');
+    const btn = document.getElementById('btn-submit');
+    if(!btn.disabled) btn.textContent = T[lang].btnSubmit;
+    applyConfig();
+    loadRegistered();
+}
+
+function applyConfig(){
+    if(!config) return;
+    const c = config[currentLang];
+    document.getElementById('header-emoji').textContent = config.emoji;
+    document.getElementById('header-title').textContent = c.title;
+    document.getElementById('header-subtitle').textContent = 'Woodenlegs 25 Anos';
+    document.getElementById('header-date').textContent = c.date;
+    document.title = `${c.title} — Woodenlegs 25 Anos`;
+    
+    const noteEl = document.getElementById('event-note');
+    if(c.note){ noteEl.textContent = c.note; noteEl.style.display = ''; }
+    else { noteEl.style.display = 'none'; }
+    
+    const extraEl = document.getElementById('extra-field');
+    if(config.extraField){
+        extraEl.style.display = '';
+        document.getElementById('extra-label').textContent = c.extraLabel;
+        document.getElementById('extra').placeholder = c.extraPh;
+    } else {
+        extraEl.style.display = 'none';
+    }
+}
+
+function showToast(msg, type=''){
+    const t=document.getElementById('toast');
+    t.textContent=msg;
+    t.className='toast '+(type||'');
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+async function submitSignup(){
+    const nome = document.getElementById('nome').value.trim();
+    if(!nome){ showToast(T[currentLang].noName,'error'); return; }
+    
+    const btn = document.getElementById('btn-submit');
+    btn.disabled = true;
+    btn.textContent = T[currentLang].sending;
+    
+    const body = { activity, nome };
+    if(config.extraField){
+        body.contribuicao = document.getElementById('extra').value.trim();
+    }
+    
+    try{
+        const res = await fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: config.ticket ? 'cors' : 'no-cors',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(body)
+        });
+        
+        if(config.ticket){
+            try {
+                const data = await res.json();
+                showTicket(nome, data.ticket || 1);
+            } catch(e) {
+                // If CORS blocks json parsing, generate client-side ticket
+                showTicket(nome, Math.floor(Math.random()*900)+100);
+            }
+            showToast(T[currentLang].submitted(nome),'success');
+        } else {
+            showToast(T[currentLang].submitted(nome),'success');
+        }
+        
+        document.getElementById('nome').value = '';
+        if(config.extraField) document.getElementById('extra').value = '';
+        setTimeout(loadRegistered, 2000);
+    } catch(err){
+        showToast(T[currentLang].error,'error');
+    } finally {
+        btn.disabled = false;
+        btn.textContent = T[currentLang].btnSubmit;
+    }
+}
+
+function showTicket(nome, num){
+    const ticket = document.getElementById('ticket');
+    document.getElementById('ticket-number').textContent = `#${String(num).padStart(3,'0')}`;
+    document.getElementById('ticket-name').textContent = nome;
+    const c = config[currentLang];
+    document.getElementById('ticket-event').innerHTML = `${c.title}<br>${c.date}`;
+    ticket.className = 'ticket show';
+}
+
+async function loadRegistered(){
+    const container = document.getElementById('registered-list');
+    try{
+        const res = await fetch(`${SCRIPT_URL}?activity=${activity}`);
+        const rows = await res.json();
+        
+        if(!rows || rows.length===0){
+            container.innerHTML = `<div class="empty">${T[currentLang].noResults}</div>`;
+            return;
+        }
+        
+        let html = `<div class="registered-count">${T[currentLang].count(rows.length)}</div><ul class="registered-list">`;
+        rows.forEach(r => {
+            html += `<li class="registered-item"><span class="name">${escHtml(r.nome)}</span>`;
+            if(activity === 'oasis' && r.ticket) html += `<span class="ticket-badge">#${String(r.ticket).padStart(3,'0')}</span>`;
+            if(activity === 'churrasco' && r.contribuicao) html += `<span class="extra">${escHtml(r.contribuicao)}</span>`;
+            html += `</li>`;
+        });
+        html += `</ul>`;
+        container.innerHTML = html;
+    } catch(err){
+        container.innerHTML = `<div class="empty">${T[currentLang].loadError}</div>`;
+    }
+}
+
+function escHtml(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+
+// Init
+if(!config){
+    document.querySelector('.container').innerHTML = '<div style="text-align:center;padding:60px;color:#ffd700;font-size:18px">Atividade não encontrada.<br><a href="Woodenlegs_25_Programacao.html" style="color:#ffd700">Voltar à Programação</a></div>';
+} else {
+    setLang(currentLang);
+}
+</script>
+
+</body>
+</html>
