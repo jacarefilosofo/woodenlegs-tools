@@ -602,7 +602,6 @@
   .lang-btn:first-child{border-radius:16px 0 0 16px}
   .lang-btn:last-child{border-radius:0 16px 16px 0}
   .lang-btn.active{background:rgba(201,168,76,0.25);color:var(--gold-light);border-color:var(--gold)}
-  .i18n-en{display:none}
 
   /* ===== SIGNUP BUTTON ===== */
   .btn-signup{display:inline-flex;align-items:center;gap:0.5rem;background:var(--gold);color:var(--green-dark);padding:0.65rem 1.4rem;border-radius:50px;text-decoration:none;font-weight:700;font-size:0.85rem;transition:transform 0.2s ease,box-shadow 0.2s ease;box-shadow:0 4px 15px rgba(201,168,76,0.25);margin-left:0.5rem}
@@ -999,6 +998,8 @@
       document.querySelectorAll('.i18n-pt').forEach(el=>el.style.display=lang==='pt'?'':'none');
       document.querySelectorAll('.i18n-en').forEach(el=>el.style.display=lang==='en'?'':'none');
     }
+    // Hide EN by default, then restore saved preference
+    document.querySelectorAll('.i18n-en').forEach(el=>el.style.display='none');
     const savedLang=localStorage.getItem('wl25lang');
     if(savedLang)setLang(savedLang);
   </script>
