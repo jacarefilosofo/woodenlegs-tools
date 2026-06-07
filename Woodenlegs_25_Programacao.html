@@ -595,18 +595,54 @@
     .overview-day-header { flex-wrap: wrap; }
     .overview-day-date { margin-left: 3rem; }
   }
+
+  /* ===== LANGUAGE TOGGLE ===== */
+  .lang-toggle{display:flex;justify-content:center;gap:0;position:fixed;top:12px;right:12px;z-index:100}
+  .lang-btn{padding:6px 14px;border:1px solid rgba(201,168,76,0.4);background:rgba(13,31,23,0.9);color:#aaa;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;backdrop-filter:blur(8px)}
+  .lang-btn:first-child{border-radius:16px 0 0 16px}
+  .lang-btn:last-child{border-radius:0 16px 16px 0}
+  .lang-btn.active{background:rgba(201,168,76,0.25);color:var(--gold-light);border-color:var(--gold)}
+  .i18n-en{display:none}
+
+  /* ===== SIGNUP BUTTON ===== */
+  .btn-signup{display:inline-flex;align-items:center;gap:0.5rem;background:var(--gold);color:var(--green-dark);padding:0.65rem 1.4rem;border-radius:50px;text-decoration:none;font-weight:700;font-size:0.85rem;transition:transform 0.2s ease,box-shadow 0.2s ease;box-shadow:0 4px 15px rgba(201,168,76,0.25);margin-left:0.5rem}
+  .btn-signup:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(201,168,76,0.4)}
+  .event-buttons{display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;margin-top:0.5rem}
+
+  /* ===== EVENT BADGES ===== */
+  .event-badge{display:inline-block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.2rem 0.7rem;border-radius:50px;margin-bottom:0.6rem}
+  .badge-official{background:rgba(201,168,76,0.2);color:var(--gold-light);border:1px solid rgba(201,168,76,0.4)}
+  .badge-alternative{background:rgba(255,255,255,0.08);color:var(--cream);border:1px solid rgba(255,255,255,0.15)}
 </style>
 </head>
 <body>
 
+  <!-- ===== LANG TOGGLE ===== -->
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('pt')">PT</button>
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
+  </div>
+
   <!-- ===== HERO ===== -->
   <section class="hero">
     <div class="hero-number">25</div>
-    <div class="hero-subtitle">anos de história</div>
+    <div class="hero-subtitle">
+      <span class="i18n-pt">anos de história</span>
+      <span class="i18n-en">years of history</span>
+    </div>
     <div class="hero-brand">WOODENLEGS</div>
-    <div class="hero-tagline">"Hoje eu vou ter o melhor dia da minha vida."</div>
-    <div class="hero-dates">18 — 21 de Junho de 2026</div>
-    <div class="hero-updated">Última atualização: 2 de Junho de 2026</div>
+    <div class="hero-tagline">
+      <span class="i18n-pt">“Hoje eu vou ter o melhor dia da minha vida.”</span>
+      <span class="i18n-en">“Today I will have the best day of my life.”</span>
+    </div>
+    <div class="hero-dates">
+      <span class="i18n-pt">18 — 21 de Junho de 2026</span>
+      <span class="i18n-en">June 18 — 21, 2026</span>
+    </div>
+    <div class="hero-updated">
+      <span class="i18n-pt">Última atualização: 6 de Junho de 2026</span>
+      <span class="i18n-en">Last updated: June 6, 2026</span>
+    </div>
     <div class="hero-scroll">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M7 13l5 5 5-5"/><path d="M7 6l5 5 5-5"/>
@@ -616,16 +652,26 @@
 
   <!-- ===== INTRO ===== -->
   <div class="intro fade-in">
+    <span class="i18n-pt">
     <p>Quatro dias. Muitas atividades. Uma só comunidade.</p>
     <p>Preparamos uma celebração no estilo <strong style="color: var(--gold-light);">Olimpíadas de Verão</strong> — com shows, jogos, esportes, churrasco e pedalada. Cada dia é uma chance de viver mais um <em>melhor dia da sua vida</em>.</p>
     <div class="emphasis">
-      "Melhor dia da minha vida" não é o melhor dia que já existiu.<br>É o dia que está por vir. É hoje. E amanhã será outro.<br>E depois, outro. Porque quando estamos juntos, cada dia é o melhor.
+      “Melhor dia da minha vida” não é o melhor dia que já existiu.<br>É o dia que está por vir. É hoje. E amanhã será outro.<br>E depois, outro. Porque quando estamos juntos, cada dia é o melhor.
     </div>
     <p style="font-size: 0.85rem; opacity: 0.7;">Este documento é vivo — sempre terá as informações mais recentes.<br>As atividades estão sujeitas a ajustes de última hora.</p>
+    </span>
+    <span class="i18n-en">
+    <p>Four days. Many activities. One community.</p>
+    <p>We’ve prepared a celebration in the style of a <strong style="color: var(--gold-light);">Summer Olympics</strong> — with live music, games, sports, BBQ and a bike ride. Each day is a chance to live another <em>best day of your life</em>.</p>
+    <div class="emphasis">
+      “Best day of my life” isn’t the best day that ever was.<br>It’s the day that’s coming. It’s today. And tomorrow will be another.<br>And the next. Because when we’re together, every day is the best.
+    </div>
+    <p style="font-size: 0.85rem; opacity: 0.7;">This is a living document — always up to date.<br>Activities are subject to last-minute changes.</p>
+    </span>
   </div>
 
   <!-- ===== QUICK OVERVIEW ===== -->
-  <div class="divider"><div class="divider-label">Visão Geral</div></div>
+  <div class="divider"><div class="divider-label"><span class="i18n-pt">Visão Geral</span><span class="i18n-en">Overview</span></div></div>
 
   <div class="overview-section">
     <div class="overview-grid">
@@ -633,48 +679,48 @@
       <div class="overview-day fade-in">
         <div class="overview-day-header">
           <div class="overview-day-emoji">�</div>
-          <div class="overview-day-label">Quinta-feira</div>
+          <div class="overview-day-label"><span class="i18n-pt">Quinta-feira</span><span class="i18n-en">Thursday</span></div>
           <div class="overview-day-date">18 Jun</div>
         </div>
         <ul class="overview-day-items">
-          <li><span class="time">20h30</span> Noite de Poker, Truco &amp; Resenha <em style="opacity:0.6;font-size:0.8rem">(Capitol Hill)</em></li>
-          <li><span class="time">19h</span> Show dos WL Músicos <em style="opacity:0.6;font-size:0.8rem">(DT Redmond)</em></li>
+          <li><span class="time">20h30</span> <span class="i18n-pt">Noite de Poker, Truco &amp; Resenha</span><span class="i18n-en">Poker, Truco &amp; Hangout Night</span> <em style="opacity:0.6;font-size:0.8rem">(Capitol Hill)</em></li>
+          <li><span class="time">19h</span> <span class="i18n-pt">Show dos WL Músicos</span><span class="i18n-en">WL Musicians Show</span> <em style="opacity:0.6;font-size:0.8rem">(DT Redmond)</em></li>
         </ul>
       </div>
 
       <div class="overview-day fade-in fade-in-delay">
         <div class="overview-day-header">
           <div class="overview-day-emoji">🏆</div>
-          <div class="overview-day-label">Sexta-feira</div>
+          <div class="overview-day-label"><span class="i18n-pt">Sexta-feira</span><span class="i18n-en">Friday</span></div>
           <div class="overview-day-date">19 Jun</div>
         </div>
         <ul class="overview-day-items">
-          <li><span class="time">15h</span> Torneio de Tênis</li>
-          <li><span class="time">17h</span> Copa do Mundo — Brasil vs Haiti</li>
-          <li><span class="time">19h05</span> Pelada Histórica — 12 de 12</li>
-          <li><span class="time">21h</span> Festa no Oasis</li>
+          <li><span class="time">15h</span> <span class="i18n-pt">Torneio de Tênis</span><span class="i18n-en">Tennis Tournament</span></li>
+          <li><span class="time">17h</span> <span class="i18n-pt">Copa do Mundo — Brasil vs Haiti</span><span class="i18n-en">World Cup — Brazil vs Haiti</span></li>
+          <li><span class="time">19h05</span> <span class="i18n-pt">Pelada Histórica — 12 de 12</span><span class="i18n-en">Historic Match — 12 of 12</span></li>
+          <li><span class="time">21h</span> <span class="i18n-pt">Festa no Oasis</span><span class="i18n-en">Oasis Party</span></li>
         </ul>
       </div>
 
       <div class="overview-day fade-in fade-in-delay-2">
         <div class="overview-day-header">
           <div class="overview-day-emoji">🥩</div>
-          <div class="overview-day-label">Sábado</div>
+          <div class="overview-day-label"><span class="i18n-pt">Sábado</span><span class="i18n-en">Saturday</span></div>
           <div class="overview-day-date">20 Jun</div>
         </div>
         <ul class="overview-day-items">
-          <li><span class="time">13h</span> Churrasco na casa do Mamas</li>
+          <li><span class="time">13h</span> <span class="i18n-pt">Churrasco na casa do Mamas</span><span class="i18n-en">BBQ at Mamas' House</span></li>
         </ul>
       </div>
 
       <div class="overview-day fade-in fade-in-delay-2">
         <div class="overview-day-header">
           <div class="overview-day-emoji">🚴</div>
-          <div class="overview-day-label">Domingo</div>
+          <div class="overview-day-label"><span class="i18n-pt">Domingo</span><span class="i18n-en">Sunday</span></div>
           <div class="overview-day-date">21 Jun</div>
         </div>
         <ul class="overview-day-items">
-          <li><span class="time">11h*</span> Pedalada — Volta no Lago Sammamish</li>
+          <li><span class="time">11h*</span> <span class="i18n-pt">Pedalada — Volta no Lago Sammamish</span><span class="i18n-en">Bike Ride — Lake Sammamish Loop</span></li>
         </ul>
       </div>
 
@@ -682,7 +728,7 @@
   </div>
 
   <!-- ===== DIVIDER ===== -->
-  <div class="divider"><div class="divider-label">Programação Completa</div></div>
+  <div class="divider"><div class="divider-label"><span class="i18n-pt">Programação Completa</span><span class="i18n-en">Full Schedule</span></div></div>
 
   <!-- ================================================================== -->
   <!-- DIA 1 — QUINTA-FEIRA -->
@@ -690,22 +736,26 @@
   <div class="day-section">
     <div class="day-header fade-in">
       <div class="day-number">DIA 1</div>
-      <div class="day-name">Quinta-feira</div>
-      <div class="day-date">18 de Junho de 2026</div>
+      <div class="day-name"><span class="i18n-pt">Quinta-feira</span><span class="i18n-en">Thursday</span></div>
+      <div class="day-date"><span class="i18n-pt">18 de Junho de 2026</span><span class="i18n-en">June 18, 2026</span></div>
     </div>
 
     <div class="motivational fade-in">
-      <p>A noite de abertura traz <span class="gold">dois eventos simultâneos</span> em lados opostos da cidade. Escolha o seu — ou quem sabe, passe por um e depois pelo outro.</p>
+      <p>
+        <span class="i18n-pt">A noite de abertura traz <span class="gold">dois eventos</span> em lados opostos da cidade. O <span class="gold">Poker</span> é o evento oficial de abertura dos 25 anos. O <span class="gold">Show</span> é uma alternativa — nossos amigos músicos já tocam nesse bar e nos convidaram. Escolha o seu, ou passe por um e depois pelo outro.</span>
+        <span class="i18n-en">Opening night brings <span class="gold">two events</span> on opposite sides of town. <span class="gold">Poker</span> is the official opening event for the 25th anniversary. The <span class="gold">Show</span> is an alternative — our musician friends already play at that bar and invited us all. Pick yours, or stop by both.</span>
+      </p>
     </div>
 
-    <!-- Noite de Poker (EVENTO PRINCIPAL) -->
     <div class="event-card fade-in">
+      <div class="event-badge badge-official"><span class="i18n-pt">Evento Oficial de Abertura</span><span class="i18n-en">Official Opening Event</span></div>
       <div class="event-emoji">🃏</div>
       <span class="event-time">20h30</span>
-      <div class="event-name">Noite de Poker, Truco &amp; Resenha</div>
+      <div class="event-name"><span class="i18n-pt">Noite de Poker, Truco &amp; Resenha</span><span class="i18n-en">Poker, Truco &amp; Hangout Night</span></div>
       <div class="event-subtitle">Truco, Poker &amp; Resenha</div>
       <div class="event-desc">
-        O primeiro evento olímpico da nossa celebração. Pra quem quer jogar, rir, conversar e relembrar histórias. Nos encontraremos no café do nosso querido Perna de Pau, mundialmente conhecido como <strong>Vini Alça de Balde</strong>. Já temos 20 confirmados.
+        <span class="i18n-pt">O primeiro evento olímpico da nossa celebração. Pra quem quer jogar, rir, conversar e relembrar histórias. Nos encontraremos no café do nosso querido Perna de Pau, mundialmente conhecido como <strong>Vini Alça de Balde</strong>. Já temos 20 confirmados.</span>
+        <span class="i18n-en">The first Olympic event of our celebration. For those who want to play cards, laugh, chat and reminisce. We’ll meet at the café of our beloved Perna de Pau, internationally known as <strong>Vini Alça de Balde</strong>. 20 already confirmed.</span>
       </div>
       <div class="event-location">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -715,16 +765,22 @@
         <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         Entrar no grupo
       </a>
+      <a class="btn-signup" href="Woodenlegs_25_Signup.html?activity=poker">
+        ✍️ <span class="i18n-pt">Inscrever-se</span><span class="i18n-en">Sign up</span>
+      </a>
+      </div>
     </div>
 
     <!-- Show dos Músicos -->
     <div class="event-card fade-in fade-in-delay">
+      <div class="event-badge badge-alternative"><span class="i18n-pt">Alternativa — Convite Especial</span><span class="i18n-en">Alternative — Special Invite</span></div>
       <div class="event-emoji">🎸</div>
       <span class="event-time">19h — 21h</span>
-      <div class="event-name">Show dos Woodenlegs Músicos</div>
+      <div class="event-name"><span class="i18n-pt">Show dos Woodenlegs Músicos</span><span class="i18n-en">Woodenlegs Musicians Show</span></div>
       <div class="event-subtitle">"Eu Quero é Rocky" Night</div>
       <div class="event-desc">
-        Pra quem quer prestigiar os nossos músicos e curtir uma noite de rock. Porque o Woodenlegs não tem só jogador — tem <strong>músico</strong>. Duas bandas formadas pelos nossos Pernas de Pau.
+        <span class="i18n-pt">Nossos amigos músicos já tocam nesse bar e convidaram toda a comunidade Woodenlegs. Se você <strong>não vai ao Poker</strong>, essa é uma ótima alternativa para curtir rock com a galera. Este não é o evento oficial de abertura — é um convite especial. Lembre-se: <strong>Capitol Hill e Redmond são lados opostos da cidade</strong>.</span>
+        <span class="i18n-en">Our musician friends already play at this bar and invited the whole Woodenlegs community. If you're <strong>not going to Poker</strong>, this is a great alternative to enjoy rock with the crew. This is not the official opening event — it's a special invite. Remember: <strong>Capitol Hill and Redmond are on opposite sides of town</strong>.</span>
       </div>
       <ul class="event-bands">
         <li>Projeto Bê <span>— 5 brasileiros + 1 honorário</span></li>
@@ -734,10 +790,13 @@
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
         <div><strong>NW Brewing</strong> — Downtown Redmond<br><a href="https://maps.app.goo.gl/Xud3MY7yQejXW4hw6" target="_blank" rel="noopener">Ver no mapa</a></div>
       </div>
+      <div class="event-buttons">
       <a class="btn-whatsapp" href="https://chat.whatsapp.com/Dfcn6G41w4HA37HMlJw5SS" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Garantir meu ticket
+        <span class="i18n-pt">Entrar no grupo</span><span class="i18n-en">Join group</span>
       </a>
+      <a class="btn-signup" href="Woodenlegs_25_Signup.html?activity=show">✍️ <span class="i18n-pt">Inscrever-se</span><span class="i18n-en">Sign up</span></a>
+      </div>
     </div>
   </div>
 
@@ -749,83 +808,93 @@
   <div class="day-section">
     <div class="day-header fade-in">
       <div class="day-number">DIA 2</div>
-      <div class="day-name">Sexta-feira</div>
-      <div class="day-date">19 de Junho de 2026</div>
+      <div class="day-name"><span class="i18n-pt">Sexta-feira</span><span class="i18n-en">Friday</span></div>
+      <div class="day-date"><span class="i18n-pt">19 de Junho de 2026</span><span class="i18n-en">June 19, 2026</span></div>
     </div>
 
     <div class="motivational fade-in">
-      <p>Sim, é dia de trabalho. Mas temos a esperança de que vocês consigam um <span class="gold">day off</span>. Porque esse dia vai ser inesquecível.</p>
+      <p><span class="i18n-pt">Sim, é dia de trabalho. Mas temos a esperança de que vocês consigam um <span class="gold">day off</span>. Porque esse dia vai ser inesquecível.</span><span class="i18n-en">Yes, it's a workday. But we hope you can get a <span class="gold">day off</span>. Because this day will be unforgettable.</span></p>
     </div>
 
     <!-- Torneio de Tênis -->
     <div class="event-card fade-in">
       <div class="event-emoji">🎾</div>
       <span class="event-time">15h</span>
-      <div class="event-name">Torneio de Tênis</div>
-      <div class="event-subtitle">Olimpíadas do Woodenlegs</div>
+      <div class="event-name"><span class="i18n-pt">Torneio de Tênis</span><span class="i18n-en">Tennis Tournament</span></div>
+      <div class="event-subtitle"><span class="i18n-pt">Olimpíadas do Woodenlegs</span><span class="i18n-en">Woodenlegs Olympics</span></div>
       <div class="event-desc">
-        Para <strong>todo mundo</strong>. Adulto, criança, mãe, pai — todos que queiram experimentar as emoções e se apaixonar por esse esporte lindo. Mais informações sobre regras no grupo.
+        <span class="i18n-pt">Para <strong>todo mundo</strong>. Adulto, criança, mãe, pai — todos que queiram experimentar as emoções e se apaixonar por esse esporte lindo. Mais informações sobre regras no grupo.</span><span class="i18n-en">For <strong>everyone</strong>. Adults, kids, moms, dads — anyone who wants to experience the thrill and fall in love with this beautiful sport. More info about rules in the group.</span>
       </div>
       <div class="event-location">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
         <div><strong>Quadras do Kingsgate 5</strong></div>
       </div>
+      <div class="event-buttons">
       <a class="btn-whatsapp" href="https://chat.whatsapp.com/B8T37JaV1fM8vs8LjgPSoi" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Entrar no grupo
+        <span class="i18n-pt">Entrar no grupo</span><span class="i18n-en">Join group</span>
       </a>
+      <a class="btn-signup" href="Woodenlegs_25_Signup.html?activity=tenis">✍️ <span class="i18n-pt">Inscrever-se</span><span class="i18n-en">Sign up</span></a>
+      </div>
     </div>
 
     <!-- Copa — Brasil vs Haiti -->
     <div class="event-card fade-in">
       <div class="event-emoji">🇧🇷</div>
       <span class="event-time">17h — Bola rolando às 17h30</span>
-      <div class="event-name">Copa do Mundo — Brasil vs Haiti</div>
-      <div class="event-subtitle">Haja coração!</div>
+      <div class="event-name"><span class="i18n-pt">Copa do Mundo — Brasil vs Haiti</span><span class="i18n-en">World Cup — Brazil vs Haiti</span></div>
+      <div class="event-subtitle"><span class="i18n-pt">Haja coração!</span><span class="i18n-en">Heart-pounding!</span></div>
       <div class="event-desc">
-        Grandes emoções. Dois times queridos em campo e a gente na torcida. Esse grupo é para quem <strong>não vai jogar na pelada</strong> mas vai pro jogo do Brasil e vai assistir a pelada — que deu tanta história e tanta risada.
+        <span class="i18n-pt">Grandes emoções. Dois times queridos em campo e a gente na torcida. Esse grupo é para quem <strong>não vai jogar na pelada</strong> mas vai pro jogo do Brasil e vai assistir a pelada — que deu tanta história e tanta risada.</span><span class="i18n-en">Big emotions. Two beloved teams on the field and us cheering them on. This group is for those who <strong>won't be playing in the pelada</strong> but are going to the Brazil match and will watch the pelada — which gave us so many stories and so much laughter.</span>
       </div>
+      <div class="event-buttons">
       <a class="btn-whatsapp" href="https://chat.whatsapp.com/E9VPremYlxO0QNNOSUfli9" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Entrar no grupo
+        <span class="i18n-pt">Entrar no grupo</span><span class="i18n-en">Join group</span>
       </a>
+      <a class="btn-signup" href="Woodenlegs_25_Signup.html?activity=brasil">✍️ <span class="i18n-pt">Inscrever-se</span><span class="i18n-en">Sign up</span></a>
+      </div>
     </div>
 
     <!-- Pelada Histórica -->
     <div class="event-card fade-in">
       <div class="event-emoji">⚽</div>
       <span class="event-time">19h05 — 20h30</span>
-      <div class="event-name">Pelada "Melhor Dia da Minha Vida"</div>
-      <div class="event-subtitle">Pelada 12 de 12 — Ao Vivo!</div>
+      <div class="event-name"><span class="i18n-pt">Pelada "Melhor Dia da Minha Vida"</span><span class="i18n-en">Historic Match — Best Day of My Life</span></div>
+      <div class="event-subtitle"><span class="i18n-pt">Pelada 12 de 12 — Ao Vivo!</span><span class="i18n-en">Match 12 of 12 — Live!</span></div>
       <div class="event-desc">
-        Onde <strong>tudo isso começou</strong> em outubro de 2000. Uma verdadeira homenagem. Essa pelada histórica é uma chamada a todos que já jogaram com a gente durante essa jornada linda — e também aos nossos filhos queridos, que estão às portas da nossa evolução.
+        <span class="i18n-pt">Onde <strong>tudo isso começou</strong> em outubro de 2000. Uma verdadeira homenagem. Essa pelada histórica é uma chamada a todos que já jogaram com a gente durante essa jornada linda — e também aos nossos filhos queridos, que estão às portas da nossa evolução.</span><span class="i18n-en">Where <strong>it all began</strong> in October 2000. A true tribute. This historic match is a call to everyone who has ever played with us on this beautiful journey — and also to our beloved children, who stand at the threshold of our evolution.</span>
       </div>
-      <div class="event-detail">Gostaríamos de entregar ao Arena Sports um token de apreciação, para que sempre se lembrem do Woodenlegs.</div>
+      <div class="event-detail"><span class="i18n-pt">Gostaríamos de entregar ao Arena Sports um token de apreciação, para que sempre se lembrem do Woodenlegs.</span><span class="i18n-en">We'd like to give Arena Sports a token of appreciation, so they always remember Woodenlegs.</span></div>
       <div class="event-location">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
         <div><strong>Arena Sports</strong><br>9040 Willows Rd NE, Redmond, WA 98052<br><em style="font-size:0.8rem; opacity:0.6;">Onde nasceu o Woodenlegs — Outubro de 2000</em></div>
       </div>
+      <div class="event-buttons">
       <a class="btn-whatsapp" href="https://chat.whatsapp.com/BcVFoXSYFkw87HB3SDI0KM" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Entrar no grupo
+        <span class="i18n-pt">Entrar no grupo</span><span class="i18n-en">Join group</span>
       </a>
+      <a class="btn-signup" href="Woodenlegs_25_Signup.html?activity=pelada">✍️ <span class="i18n-pt">Inscrever-se</span><span class="i18n-en">Sign up</span></a>
+      </div>
     </div>
 
     <!-- Festa no Oasis -->
     <div class="event-card fade-in">
       <div class="event-emoji">🎶</div>
       <span class="event-time">21h</span>
-      <div class="event-name">Festa "Melhor Dia da Minha Vida"</div>
-      <div class="event-subtitle">O Oasis é nosso!</div>
+      <div class="event-name"><span class="i18n-pt">Festa "Melhor Dia da Minha Vida"</span><span class="i18n-en">Party — Best Day of My Life</span></div>
+      <div class="event-subtitle"><span class="i18n-pt">O Oasis é nosso!</span><span class="i18n-en">The Oasis is ours!</span></div>
       <div class="event-desc">
-        Tomamos conta do Oasis Brazilian Steakhouse. DJ mais famoso do mundo — que já arrastou multidões — mais apresentação dos nossos <strong>Woodenlegs Músicos</strong>. Muito talento nessa turma.
+        <span class="i18n-pt">Tomamos conta do Oasis Brazilian Steakhouse. DJ mais famoso do mundo — que já arrastou multidões — mais apresentação dos nossos <strong>Woodenlegs Músicos</strong>. Muito talento nessa turma.</span><span class="i18n-en">We're taking over Oasis Brazilian Steakhouse. The world's most famous DJ — who has moved crowds — plus a performance by our <strong>Woodenlegs Musicians</strong>. So much talent in this crew.</span>
       </div>
-      <div class="event-detail">Cada um pede sua comida e bebida e paga sua conta. Cardápio especial disponibilizado pelo Oasis.</div>
+      <div class="event-detail"><span class="i18n-pt">Cada um pede sua comida e bebida e paga sua conta. Cardápio especial disponibilizado pelo Oasis.</span><span class="i18n-en">Everyone orders their own food and drinks and pays their own tab. Special menu provided by Oasis.</span></div>
+      <div class="event-detail"><span class="i18n-pt">Cozinha fecha às 22h. Evento até aproximadamente 1h da manhã.</span><span class="i18n-en">Kitchen closes at 10 PM. Event until approximately 1 AM.</span></div>
       <div class="event-location">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
         <div><strong>Oasis Brazilian Steakhouse</strong><br>14338 124th Ave NE, Kirkland, WA 98034</div>
       </div>
-      <div class="no-signup">Não precisa de inscrição — é só chegar.</div>
+      <div class="event-buttons"><a class="btn-signup" href="Woodenlegs_25_Signup.html?activity=oasis">🎟️ <span class="i18n-pt">Garantir meu ticket</span><span class="i18n-en">Get your ticket</span></a></div>
     </div>
   </div>
 
@@ -837,26 +906,29 @@
   <div class="day-section">
     <div class="day-header fade-in">
       <div class="day-number">DIA 3</div>
-      <div class="day-name">Sábado</div>
-      <div class="day-date">20 de Junho de 2026</div>
+      <div class="day-name"><span class="i18n-pt">Sábado</span><span class="i18n-en">Saturday</span></div>
+      <div class="day-date"><span class="i18n-pt">20 de Junho de 2026</span><span class="i18n-en">June 20, 2026</span></div>
     </div>
 
     <div class="event-card fade-in">
       <div class="event-emoji">🔥</div>
       <span class="event-time">13h</span>
-      <div class="event-name">Churrasco "Melhor Dia da Minha Vida"</div>
-      <div class="event-subtitle">Na casa do Mamas — Coração de Mãe</div>
+      <div class="event-name"><span class="i18n-pt">Churrasco "Melhor Dia da Minha Vida"</span><span class="i18n-en">BBQ — Best Day of My Life</span></div>
+      <div class="event-subtitle"><span class="i18n-pt">Na casa do Mamas — Coração de Mãe</span><span class="i18n-en">At Mamas' house — Heart of a Mother</span></div>
       <div class="event-desc">
-        O clássico churrasco Woodenlegs. Família, carne, música, e aquela conversa que só acontece quando a gente se reúne sem pressa.
+        <span class="i18n-pt">O clássico churrasco Woodenlegs. Família, carne, música, e aquela conversa que só acontece quando a gente se reúne sem pressa.</span><span class="i18n-en">The classic Woodenlegs BBQ. Family, meat, music, and the kind of conversation that only happens when we get together with no rush.</span>
       </div>
       <div class="event-location">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
         <div><strong>Estacionamento:</strong> Parque da Piscina do Kingsgate 3 &amp; 4, Kirkland</div>
       </div>
+      <div class="event-buttons">
       <a class="btn-whatsapp" href="https://chat.whatsapp.com/GLhyqI3hF1BInnxxWjAba6" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Entrar no grupo
+        <span class="i18n-pt">Entrar no grupo</span><span class="i18n-en">Join group</span>
       </a>
+      <a class="btn-signup" href="Woodenlegs_25_Signup.html?activity=churrasco">✍️ <span class="i18n-pt">Inscrever-se</span><span class="i18n-en">Sign up</span></a>
+      </div>
     </div>
   </div>
 
@@ -868,39 +940,44 @@
   <div class="day-section">
     <div class="day-header fade-in">
       <div class="day-number">DIA 4</div>
-      <div class="day-name">Domingo</div>
-      <div class="day-date">21 de Junho de 2026</div>
+      <div class="day-name"><span class="i18n-pt">Domingo</span><span class="i18n-en">Sunday</span></div>
+      <div class="day-date"><span class="i18n-pt">21 de Junho de 2026</span><span class="i18n-en">June 21, 2026</span></div>
     </div>
 
     <div class="event-card fade-in">
       <div class="event-emoji">🚴‍♂️</div>
       <span class="event-time">11h *horário a confirmar</span>
-      <div class="event-name">Pedalada "Melhor Dia da Minha Vida"</div>
-      <div class="event-subtitle">Volta no Lago Sammamish</div>
+      <div class="event-name"><span class="i18n-pt">Pedalada "Melhor Dia da Minha Vida"</span><span class="i18n-en">Bike Ride — Best Day of My Life</span></div>
+      <div class="event-subtitle"><span class="i18n-pt">Volta no Lago Sammamish</span><span class="i18n-en">Loop around Lake Sammamish</span></div>
       <div class="event-desc">
-        Essa pedalada é para todos. Arrumem suas bicicletas — elétricas também são muito bem-vindas. Temos um grupo semi-profissional de ciclistas e talvez uma <strong>rota paralela desafiadora</strong> com muitos morros para quem quiser sofrer. Teremos para qualquer gosto.
+        <span class="i18n-pt">Essa pedalada é para todos. Arrumem suas bicicletas — elétricas também são muito bem-vindas. Temos um grupo semi-profissional de ciclistas e talvez uma <strong>rota paralela desafiadora</strong> com muitos morros para quem quiser sofrer. Teremos para qualquer gosto.</span><span class="i18n-en">This bike ride is for everyone. Get your bikes ready — e-bikes are very welcome too. We have a semi-pro cycling group and maybe a <strong>challenging parallel route</strong> with lots of hills for those who want to suffer. Something for every taste.</span>
       </div>
-      <div class="event-detail">Se alguém ainda tiver energia, dignidade ou joelho disponível.</div>
+      <div class="event-detail"><span class="i18n-pt">Se alguém ainda tiver energia, dignidade ou joelho disponível.</span><span class="i18n-en">If anyone still has energy, dignity, or a functioning knee.</span></div>
+      <div class="event-buttons">
       <a class="btn-whatsapp" href="https://chat.whatsapp.com/IdFgQu8FBtUJrM8Yjyk84s" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Entrar no grupo
+        <span class="i18n-pt">Entrar no grupo</span><span class="i18n-en">Join group</span>
       </a>
+      <a class="btn-signup" href="Woodenlegs_25_Signup.html?activity=pedalada">✍️ <span class="i18n-pt">Inscrever-se</span><span class="i18n-en">Sign up</span></a>
+      </div>
     </div>
   </div>
 
   <!-- ===== CLOSING ===== -->
   <div class="motivational fade-in" style="padding-bottom: 1rem;">
-    <p>Cada grupo do WhatsApp é temporário — existe para organizar a atividade e garantir que ninguém se perca.<br><br>
+    <p><span class="i18n-pt">Cada grupo do WhatsApp é temporário — existe para organizar a atividade e garantir que ninguém se perca.<br><br>
     <span class="gold">Entre nos grupos das atividades que te interessam.</span><br>
-    É assim que a gente sabe quem vem, organiza tudo, e faz acontecer.</p>
+    É assim que a gente sabe quem vem, organiza tudo, e faz acontecer.</span><span class="i18n-en">Each WhatsApp group is temporary — it exists to organize the activity and make sure nobody gets lost.<br><br>
+    <span class="gold">Join the groups for activities that interest you.</span><br>
+    That's how we know who's coming, organize everything, and make it happen.</span></p>
   </div>
 
   <!-- ===== FOOTER ===== -->
   <section class="footer">
     <div class="footer-brand">WOODENLEGS</div>
-    <div class="footer-year">25 anos — 2000 a 2026</div>
-    <div class="footer-updated">Última atualização: 2 de Junho de 2026</div>
-    <div class="footer-live">Este documento é vivo e sempre terá as informações mais recentes.</div>
+    <div class="footer-year"><span class="i18n-pt">25 anos — 2000 a 2026</span><span class="i18n-en">25 years — 2000 to 2026</span></div>
+    <div class="footer-updated"><span class="i18n-pt">Última atualização: 6 de Junho de 2026</span><span class="i18n-en">Last updated: June 6, 2026</span></div>
+    <div class="footer-live"><span class="i18n-pt">Este documento é vivo e sempre terá as informações mais recentes.</span><span class="i18n-en">This is a living document and will always have the most up-to-date information.</span></div>
   </section>
 
   <!-- ===== JS: SCROLL ANIMATION ===== -->
@@ -915,6 +992,15 @@
       }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
       document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
     });
+    function setLang(lang){
+      localStorage.setItem('wl25lang',lang);
+      document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelector('.lang-btn[onclick="setLang(\''+lang+'\')"').classList.add('active');
+      document.querySelectorAll('.i18n-pt').forEach(el=>el.style.display=lang==='pt'?'':'none');
+      document.querySelectorAll('.i18n-en').forEach(el=>el.style.display=lang==='en'?'':'none');
+    }
+    const savedLang=localStorage.getItem('wl25lang');
+    if(savedLang)setLang(savedLang);
   </script>
 
 </body>
