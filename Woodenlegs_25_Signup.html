@@ -270,25 +270,19 @@ async function submitSignup(){
     }
     
     try{
-        const res = await fetch(SCRIPT_URL, {
+        await fetch(SCRIPT_URL, {
             method: 'POST',
-            mode: config.ticket ? 'cors' : 'no-cors',
+            mode: 'no-cors',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify(body)
         });
         
         if(config.ticket){
-            try {
-                const data = await res.json();
-                showTicket(nome, data.ticket || 1);
-            } catch(e) {
-                // If CORS blocks json parsing, generate client-side ticket
-                showTicket(nome, Math.floor(Math.random()*900)+100);
-            }
-            showToast(T[currentLang].submitted(nome),'success');
-        } else {
-            showToast(T[currentLang].submitted(nome),'success');
+            // Generate ticket number client-side (server also stores one)
+            const ticketNum = Date.now() % 1000;
+            showTicket(nome, ticketNum);
         }
+        showToast(T[currentLang].submitted(nome),'success');
         
         document.getElementById('nome').value = '';
         if(config.extraField) document.getElementById('extra').value = '';
