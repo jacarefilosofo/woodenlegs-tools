@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resenha Pelada 11 — 05 Jun 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0d1117;color:#e6edf3;max-width:600px;margin:0 auto;padding:16px}
+h1{text-align:center;font-size:18px;margin-bottom:4px;color:#f0f6fc}
+.subtitle{text-align:center;font-size:12px;color:#8b949e;margin-bottom:16px}
+
+.score-box{background:#161b22;border-radius:16px;padding:20px;text-align:center;margin-bottom:20px;border:1px solid #30363d}
+.standings{width:100%;border-collapse:collapse;margin:8px 0}
+.standings th{font-size:10px;color:#8b949e;text-align:center;padding:4px 6px;border-bottom:1px solid #30363d}
+.standings td{font-size:13px;text-align:center;padding:5px 6px}
+.standings td:first-child{text-align:left;font-weight:700}
+.standings tr:first-child td{color:#f0c040}
+.standings tr:nth-child(2) td{color:#ff6b6b}
+.standings tr:nth-child(3) td{color:#58a6ff}
+.winner-badge{display:inline-block;background:#f0c040;color:#0d1117;font-size:11px;font-weight:800;padding:3px 12px;border-radius:20px;margin-top:8px}
+.score-label{font-size:11px;color:#8b949e;margin-top:4px}
+
+.section{margin-bottom:20px}
+.section-title{font-size:13px;font-weight:800;color:#8b949e;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;padding-left:4px}
+
+.resenha{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:16px;font-size:13px;line-height:1.8;color:#c9d1d9}
+.resenha p{margin-top:12px}
+.resenha p:first-child{margin-top:0}
+
+.quote{background:#161b22;border-left:3px solid #f78166;padding:8px 12px;margin:12px 0 6px 0;border-radius:0 8px 8px 0;font-size:12px;color:#c9d1d9}
+.quote .author{color:#8b949e;font-size:10px;margin-top:2px}
+
+.art-row{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;margin-bottom:3px}
+.art-row:nth-child(1){background:#1a1f2b}
+.art-pos{width:20px;font-size:11px;font-weight:900;color:#484f58}
+.art-name{flex:1;font-size:13px;font-weight:600}
+.art-bar-bg{width:120px;height:14px;background:#21262d;border-radius:7px;overflow:hidden;flex-shrink:0}
+.art-bar{height:100%;border-radius:7px}
+.art-bar.portugal{background:#ff6b6b}
+.art-bar.brasil{background:#f0c040}
+.art-bar.italia{background:#58a6ff}
+.art-goals{width:28px;text-align:right;font-size:14px;font-weight:900}
+.art-crown{font-size:14px;width:20px}
+
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat-card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:12px;text-align:center}
+.stat-value{font-size:28px;font-weight:900;color:#f0f6fc}
+.stat-label{font-size:10px;color:#8b949e;margin-top:2px}
+
+.timeline{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:12px;margin-bottom:20px}
+.tl-row{display:flex;align-items:center;font-size:11px;padding:3px 0;border-bottom:1px solid #21262d}
+.tl-row:last-child{border-bottom:none}
+.tl-time{width:45px;color:#8b949e;font-weight:600;flex-shrink:0}
+.tl-score{width:55px;text-align:center;font-weight:900;font-size:12px;flex-shrink:0}
+.tl-player{flex:1;color:#c9d1d9}
+.tl-icon{width:20px;text-align:center;flex-shrink:0}
+.tl-brasil{color:#f0c040}.tl-italia{color:#58a6ff}.tl-portugal{color:#ff6b6b}
+.tl-drama{background:#1c1208;border:1px solid #f78166;border-radius:8px;padding:6px 10px;margin:6px 0;font-size:11px;color:#f78166;text-align:center;font-weight:700}
+.tl-break{background:#1a0a0a;border:1px solid #ff6b6b;border-radius:8px;padding:6px 10px;margin:6px 0;font-size:11px;color:#ff6b6b;text-align:center;font-weight:700}
+
+.game-header{font-size:10px;color:#484f58;font-weight:800;letter-spacing:1px;padding:6px 0 2px 0;text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<h1>O BARBA, A CALÇA DE YOGA, E O FILHO PRÓDIGO</h1>
+<div class="subtitle">Pelada 11/12 — Temporada da Primavera — 05 Jun 2026 — LAX Field</div>
+
+<!-- SCORE -->
+<div class="score-box">
+    <table class="standings">
+        <tr><th></th><th>J</th><th>V</th><th>E</th><th>D</th><th>GP</th><th>GC</th><th>Pts</th></tr>
+        <tr><td>🟡 Brasil</td><td>8</td><td>5</td><td>0</td><td>3</td><td>11</td><td>9</td><td style="font-weight:900;font-size:16px">15</td></tr>
+        <tr><td>🔴 Portugal</td><td>8</td><td>4</td><td>1</td><td>3</td><td>8</td><td>9</td><td style="font-weight:900;font-size:16px">13</td></tr>
+        <tr><td>🔵 Italia</td><td>8</td><td>2</td><td>1</td><td>5</td><td>8</td><td>9</td><td style="font-weight:900;font-size:16px">7</td></tr>
+    </table>
+    <div class="score-label">12 jogos · 3 times · 27 gols · 20 jogadores · 2 gols contra · 1 convidado · 1 calça de yoga · 1 app bugado</div>
+    <div class="winner-badge">🏆 Brasil Campeão — 15 pontos — Barba artilheiro (6 gols)</div>
+</div>
+
+<!-- RESENHA -->
+<div class="section">
+    <div class="section-title">Resenha</div>
+    <div class="resenha">
+
+        <p>Brasil campeão! Mas dessa vez sem massacre. Portugal chegou perto — tão perto que se o app não tivesse bugado, o Amador teria infartado acompanhando a diferença de 2 pontos na tabela.</p>
+
+        <p>O Barba chegou atrasado — 19:26, último a pisar no campo — e compensou fazendo 6 gols. Seis. Incluindo um gol contra tão bonito que ele mesmo aplaudiu. Lateral, bola mansa rolando pela área, ninguém toca, ninguém chuta, e o Barba resolve meter pra dentro. Do gol errado. Logo depois, pênalti pro Brasil. Barba vai lá, coloca 10% da força do chute anterior, e a bola entra no ângulo. O homem é uma montanha-russa emocional com chuteira.</p>
+
+        <p>O Luigi chegou de calça de yoga, boné virado pra trás, perfume e sapatênis. Disse que veio direto do trabalho. Mentira. A verdade saiu depois: o date do Tinder furou. Sem date, sem troca de roupa, sem dignidade — mas com 2 gols pela Italia. O Pinguim de Lycra mostrou que não precisa de calça adequada pra jogar bola. Só precisa de rejeição amorosa.</p>
+
+        <p>O Wesley jogou demais. 4 gols, mas reclamou demais também — o segundo maior artilheiro da noite. Mas a pelada cobrou o preço. Machucou forte o joelho, chorou, e saiu carregado e após um balde de gelo e uma água benta, se recuperou, para alívio do Luca que causou o show. O app, solidário ao sofrimento do Wesley, decidiu homenageá-lo marcando um dos gols dele como "gol contra" — erro que mudou o placar do Jogo 5 e inflou os pontos do Brasil de 18 pra 15. O VAR do WhatsApp corrigiu.</p>
+
+        <p>O Mão de Onça resolveu que ser goleiro era entediante e foi jogar na linha. Ficou ciscando na esquerda, segurando a bola com os pés como se fosse o Messi de Barbacena, até levar um carrinho e voltar pro gol com o rabo entre as pernas. Literalmente mão de onça, pé de gato.</p>
+
+        <p>O Marcone, por três segundos, esqueceu que era baiano. Ficou com pressa. Soltou a bola. A bola caiu no pé do Bruno, que chutou do meio de campo e encobriu o goleiro. Gol da Italia. O Marcone foi reclamar, mas aí lembrou que ele mesmo tinha ficado puto e entregou a bola de propósito. Ou não. Ninguém sabe. O VAR confirmou: gol válido.</p>
+
+        <p>E no meio de tudo isso, o Luca Abreu — convidado especial, filho do Amador — fez seu gol de estreia pela Italia. A genética funcionou. O pai narra, o filho marca. Tradição familiar.</p>
+
+        <p>O Vini, solidário como sempre, chutou a bola na cara do Aiziro — seu próprio companheiro de time. O Aiziro ficou se queixando da dor no queixo. A essa altura, bolada no queixo já virou tradição semanal do Woodenlegs. Estamos pensando em criar um troféu.</p>
+
+        <div class="quote">
+            "Jogo 5 foi 2 x 1 o gol do Wesley não foi contra."
+            <div class="author">— Amador, corrigindo o VAR digital pelo WhatsApp, 19:45</div>
+        </div>
+
+        <div class="quote">
+            "Eles estavam ali conversando entre eles. O Marcone ficou puto que tava demorando muito e me deu a bola. Eu peguei e chutei. Fiz o gol."
+            <div class="author">— Bruno Stuani, sobre o gol do meio de campo, com a frieza de quem rouba bala de criança</div>
+        </div>
+
+    </div>
+</div>
+
+<!-- TIMELINE DOS GOLS -->
+<div class="section">
+    <div class="section-title">Timeline — 27 gols, 12 jogos, 2 gols contra</div>
+    <div class="timeline">
+        <div class="game-header">Jogo 1 — Brasil x Italia (jogado por último)</div>
+        <div class="tl-row"><div class="tl-time">20:31</div><div class="tl-icon">⚽</div><div class="tl-player tl-brasil">Rodrigo Estrada (Brasil)</div><div class="tl-score">1-0</div></div>
+
+        <div class="game-header">Jogo 2 — Brasil x Portugal</div>
+        <div class="tl-row"><div class="tl-time">19:15</div><div class="tl-icon">⚽</div><div class="tl-player tl-portugal">Paulinho de Souza (Portugal)</div><div class="tl-score">0-1</div></div>
+        <div class="tl-row"><div class="tl-time">19:18</div><div class="tl-icon">⚽</div><div class="tl-player tl-portugal">Paulinho de Souza (Portugal)</div><div class="tl-score">0-2</div></div>
+        <div class="tl-row"><div class="tl-time">19:20</div><div class="tl-icon">⚽</div><div class="tl-player tl-portugal">Wesley da Silva (Portugal)</div><div class="tl-score">0-3</div></div>
+        <div class="tl-drama">Portugal atropela o Brasil logo de cara! 3 x 0!</div>
+
+        <div class="game-header">Jogo 3 — Italia x Portugal</div>
+        <div class="tl-drama">0 x 0. O jogo mais sonolento da temporada.</div>
+
+        <div class="game-header">Jogo 4 — Italia x Brasil</div>
+        <div class="tl-row"><div class="tl-time">19:26</div><div class="tl-icon">⚽</div><div class="tl-player tl-brasil">Arthur Mendes (Brasil)</div><div class="tl-score">0-1</div></div>
+
+        <div class="game-header">Jogo 5 — Portugal x Brasil ⚡ (corrigido)</div>
+        <div class="tl-row"><div class="tl-time">19:39</div><div class="tl-icon">⚽</div><div class="tl-player tl-brasil">Rodrigo Estrada (Brasil)</div><div class="tl-score">0-1</div></div>
+        <div class="tl-row"><div class="tl-time">19:39</div><div class="tl-icon">🔴</div><div class="tl-player" style="color:#f78166">Rodrigo Estrada (GOL CONTRA → Portugal)</div><div class="tl-score">1-1</div></div>
+        <div class="tl-row"><div class="tl-time">19:44</div><div class="tl-icon">⚽</div><div class="tl-player tl-portugal">Wesley da Silva (Portugal)</div><div class="tl-score">2-1</div></div>
+        <div class="tl-drama">App bugou! Marcou Wesley como gol contra. VAR do WhatsApp corrigiu: Portugal 2 x 1 Brasil.</div>
+
+        <div class="game-header">Jogo 6 — Portugal x Italia</div>
+        <div class="tl-row"><div class="tl-time">19:33</div><div class="tl-icon">⚽</div><div class="tl-player tl-portugal">Wesley da Silva (Portugal)</div><div class="tl-score">1-0</div></div>
+
+        <div class="game-header">Jogo 7 — Brasil x Italia</div>
+        <div class="tl-row"><div class="tl-time">19:45</div><div class="tl-icon">⚽</div><div class="tl-player tl-brasil">Rodrigo Estrada (Brasil)</div><div class="tl-score">1-0</div></div>
+        <div class="tl-row"><div class="tl-time">19:47</div><div class="tl-icon">⚽</div><div class="tl-player tl-brasil">Eduardo Fernandes (Brasil)</div><div class="tl-score">2-0</div></div>
+        <div class="tl-row"><div class="tl-time">19:48</div><div class="tl-icon">⚽</div><div class="tl-player tl-italia">Luigi Tedesco (Italia)</div><div class="tl-score">2-1</div></div>
+        <div class="tl-row"><div class="tl-time">19:49</div><div class="tl-icon">⚽</div><div class="tl-player tl-brasil">Rodrigo Estrada (Brasil)</div><div class="tl-score">3-1</div></div>
+        <div class="tl-drama">Barba não para! 4 gols em 2 jogos seguidos!</div>
+
+        <div class="game-header">Jogo 8 — Brasil x Portugal</div>
+        <div class="tl-row"><div class="tl-time">20:02</div><div class="tl-icon">⚽</div><div class="tl-player tl-brasil">Glaydston Brito (Brasil)</div><div class="tl-score">1-0</div></div>
+
+        <div class="game-header">Jogo 9 — Italia x Portugal</div>
+        <div class="tl-row"><div class="tl-time">19:54</div><div class="tl-icon">⚽</div><div class="tl-player tl-portugal">Roger Stanev (Portugal)</div><div class="tl-score">0-1</div></div>
+        <div class="tl-row"><div class="tl-time">19:55</div><div class="tl-icon">⚽</div><div class="tl-player tl-italia">Leonardo Facci (Italia)</div><div class="tl-score">1-1</div></div>
+        <div class="tl-row"><div class="tl-time">19:57</div><div class="tl-icon">⚽</div><div class="tl-player tl-portugal">Wesley da Silva (Portugal)</div><div class="tl-score">1-2</div></div>
+
+        <div class="game-header">Jogo 10 — Italia x Brasil ⚡</div>
+        <div class="tl-row"><div class="tl-time">20:08</div><div class="tl-icon">⚽</div><div class="tl-player tl-italia">Mac McClain (Italia)</div><div class="tl-score">1-0</div></div>
+        <div class="tl-row"><div class="tl-time">20:08</div><div class="tl-icon">🔴</div><div class="tl-player" style="color:#f78166">Guilherme Souza (GOL CONTRA → Brasil)</div><div class="tl-score">1-1</div></div>
+        <div class="tl-row"><div class="tl-time">20:09</div><div class="tl-icon">⚽</div><div class="tl-player tl-italia">Luigi Tedesco (Italia)</div><div class="tl-score">2-1</div></div>
+        <div class="tl-row"><div class="tl-time">20:09</div><div class="tl-icon">⚽</div><div class="tl-player tl-italia">Mac McClain (Italia)</div><div class="tl-score">3-1</div></div>
+        <div class="tl-drama">Italia acorda! 3 x 1 no Brasil! Mac e Luigi destroem!</div>
+
+        <div class="game-header">Jogo 11 — Portugal x Brasil</div>
+        <div class="tl-row"><div class="tl-time">20:21</div><div class="tl-icon">⚽</div><div class="tl-player tl-brasil">Leeman Abdulai (Brasil)</div><div class="tl-score">0-1</div></div>
+        <div class="tl-row"><div class="tl-time">20:22</div><div class="tl-icon">⚽</div><div class="tl-player tl-brasil">Rodrigo Estrada (Brasil)</div><div class="tl-score">0-2</div></div>
+        <div class="tl-row"><div class="tl-time">20:24</div><div class="tl-icon">⚽</div><div class="tl-player tl-brasil">Rodrigo Estrada (Brasil)</div><div class="tl-score">0-3</div></div>
+        <div class="tl-drama">Barba fecha a conta! 6 gols na noite!</div>
+
+        <div class="game-header">Jogo 12 — Portugal x Italia</div>
+        <div class="tl-row"><div class="tl-time">20:12</div><div class="tl-icon">⚽</div><div class="tl-player tl-italia">Bruno Stuani (Italia)</div><div class="tl-score">0-1</div></div>
+        <div class="tl-row"><div class="tl-time">20:12</div><div class="tl-icon">⚽</div><div class="tl-player tl-italia">Luca Abreu (Italia) ⭐</div><div class="tl-score">0-2</div></div>
+        <div class="tl-row"><div class="tl-time">20:16</div><div class="tl-icon">⚽</div><div class="tl-player tl-italia">Bruno Stuani (Italia)</div><div class="tl-score">0-3</div></div>
+        <div class="tl-drama">Luca Abreu (convidado, filho do Amador) marca na estreia! O pai narra, o filho marca!</div>
+
+        <div class="tl-break">🏆 FIM! BRASIL CAMPEÃO! 15 pontos!</div>
+    </div>
+</div>
+
+<!-- STATS -->
+<div class="section">
+    <div class="section-title">Números</div>
+    <div class="stats-grid">
+        <div class="stat-card"><div class="stat-value">27</div><div class="stat-label">Gols totais</div></div>
+        <div class="stat-card"><div class="stat-value">20</div><div class="stat-label">Jogadores presentes</div></div>
+        <div class="stat-card"><div class="stat-value">6</div><div class="stat-label">Gols do Barba (artilheiro)</div></div>
+        <div class="stat-card"><div class="stat-value">2</div><div class="stat-label">Gols contra</div></div>
+        <div class="stat-card"><div class="stat-value">1</div><div class="stat-label">Convidado (Luca Abreu)</div></div>
+        <div class="stat-card"><div class="stat-value">1</div><div class="stat-label">Calça de yoga (Luigi)</div></div>
+        <div class="stat-card"><div class="stat-value">1</div><div class="stat-label">App bugado (gol contra fantasma)</div></div>
+        <div class="stat-card"><div class="stat-value">0</div><div class="stat-label">Dates do Tinder que deram certo (Luigi)</div></div>
+    </div>
+</div>
+
+<!-- ARTILHARIA -->
+<div class="section">
+    <div class="section-title">Artilharia</div>
+    <div>
+        <div class="art-row"><div class="art-pos">1</div><div class="art-crown">🔥</div><div class="art-name" style="color:#f0c040">Rodrigo Estrada</div><div class="art-bar-bg"><div class="art-bar brasil" style="width:100%"></div></div><div class="art-goals">6</div></div>
+        <div class="art-row"><div class="art-pos">2</div><div class="art-crown">💪</div><div class="art-name" style="color:#ff6b6b">Wesley da Silva</div><div class="art-bar-bg"><div class="art-bar portugal" style="width:66%"></div></div><div class="art-goals">4</div></div>
+        <div class="art-row"><div class="art-pos">3</div><div class="art-crown">💇</div><div class="art-name" style="color:#ff6b6b">Paulinho de Souza</div><div class="art-bar-bg"><div class="art-bar portugal" style="width:33%"></div></div><div class="art-goals">2</div></div>
+        <div class="art-row"><div class="art-pos">3</div><div class="art-crown">🧘</div><div class="art-name" style="color:#58a6ff">Luigi Tedesco</div><div class="art-bar-bg"><div class="art-bar italia" style="width:33%"></div></div><div class="art-goals">2</div></div>
+        <div class="art-row"><div class="art-pos">3</div><div class="art-crown">🍔</div><div class="art-name" style="color:#58a6ff">Mac McClain</div><div class="art-bar-bg"><div class="art-bar italia" style="width:33%"></div></div><div class="art-goals">2</div></div>
+        <div class="art-row"><div class="art-pos">3</div><div class="art-crown">🎤</div><div class="art-name" style="color:#58a6ff">Bruno Stuani</div><div class="art-bar-bg"><div class="art-bar italia" style="width:33%"></div></div><div class="art-goals">2</div></div>
+        <div class="art-row"><div class="art-pos">7</div><div class="art-crown"></div><div class="art-name" style="color:#f0c040">Arthur Mendes</div><div class="art-bar-bg"><div class="art-bar brasil" style="width:16%"></div></div><div class="art-goals">1</div></div>
+        <div class="art-row"><div class="art-pos">7</div><div class="art-crown"></div><div class="art-name" style="color:#f0c040">Eduardo Fernandes</div><div class="art-bar-bg"><div class="art-bar brasil" style="width:16%"></div></div><div class="art-goals">1</div></div>
+        <div class="art-row"><div class="art-pos">7</div><div class="art-crown"></div><div class="art-name" style="color:#ff6b6b">Roger Stanev</div><div class="art-bar-bg"><div class="art-bar portugal" style="width:16%"></div></div><div class="art-goals">1</div></div>
+        <div class="art-row"><div class="art-pos">7</div><div class="art-crown"></div><div class="art-name" style="color:#58a6ff">Leonardo Facci</div><div class="art-bar-bg"><div class="art-bar italia" style="width:16%"></div></div><div class="art-goals">1</div></div>
+        <div class="art-row"><div class="art-pos">7</div><div class="art-crown"></div><div class="art-name" style="color:#f0c040">Glaydston Brito</div><div class="art-bar-bg"><div class="art-bar brasil" style="width:16%"></div></div><div class="art-goals">1</div></div>
+        <div class="art-row"><div class="art-pos">7</div><div class="art-crown">⭐</div><div class="art-name" style="color:#58a6ff">Luca Abreu (convidado)</div><div class="art-bar-bg"><div class="art-bar italia" style="width:16%"></div></div><div class="art-goals">1</div></div>
+        <div class="art-row"><div class="art-pos">7</div><div class="art-crown"></div><div class="art-name" style="color:#f0c040">Leeman Abdulai</div><div class="art-bar-bg"><div class="art-bar brasil" style="width:16%"></div></div><div class="art-goals">1</div></div>
+    </div>
+</div>
+
+<!-- JOGOS -->
+<div class="section">
+    <div class="section-title">Resultados</div>
+    <div class="timeline">
+        <div class="tl-row"><div class="tl-time">J1</div><div class="tl-player"><span class="tl-brasil">Brasil</span> 1 x 0 <span class="tl-italia">Italia</span></div></div>
+        <div class="tl-row"><div class="tl-time">J2</div><div class="tl-player"><span class="tl-brasil">Brasil</span> 0 x 3 <span class="tl-portugal">Portugal</span></div></div>
+        <div class="tl-row"><div class="tl-time">J3</div><div class="tl-player"><span class="tl-italia">Italia</span> 0 x 0 <span class="tl-portugal">Portugal</span></div></div>
+        <div class="tl-row"><div class="tl-time">J4</div><div class="tl-player"><span class="tl-italia">Italia</span> 0 x 1 <span class="tl-brasil">Brasil</span></div></div>
+        <div class="tl-row"><div class="tl-time">J5</div><div class="tl-player"><span class="tl-portugal">Portugal</span> 2 x 1 <span class="tl-brasil">Brasil</span> ✏️</div></div>
+        <div class="tl-row"><div class="tl-time">J6</div><div class="tl-player"><span class="tl-portugal">Portugal</span> 1 x 0 <span class="tl-italia">Italia</span></div></div>
+        <div class="tl-row"><div class="tl-time">J7</div><div class="tl-player"><span class="tl-brasil">Brasil</span> 3 x 1 <span class="tl-italia">Italia</span></div></div>
+        <div class="tl-row"><div class="tl-time">J8</div><div class="tl-player"><span class="tl-brasil">Brasil</span> 1 x 0 <span class="tl-portugal">Portugal</span></div></div>
+        <div class="tl-row"><div class="tl-time">J9</div><div class="tl-player"><span class="tl-italia">Italia</span> 1 x 2 <span class="tl-portugal">Portugal</span></div></div>
+        <div class="tl-row"><div class="tl-time">J10</div><div class="tl-player"><span class="tl-italia">Italia</span> 3 x 1 <span class="tl-brasil">Brasil</span></div></div>
+        <div class="tl-row"><div class="tl-time">J11</div><div class="tl-player"><span class="tl-portugal">Portugal</span> 0 x 3 <span class="tl-brasil">Brasil</span></div></div>
+        <div class="tl-row"><div class="tl-time">J12</div><div class="tl-player"><span class="tl-portugal">Portugal</span> 0 x 3 <span class="tl-italia">Italia</span></div></div>
+    </div>
+</div>
+
+<!-- TIMES -->
+<div class="section">
+    <div class="section-title">Escalação</div>
+    <div class="timeline">
+        <div class="game-header">🟡 Brasil (Amarelo)</div>
+        <div class="tl-row"><div class="tl-player">ATK: Rodrigo Estrada (Barba) · MID: Arthur Mendes, Glaydston Brito, Eric Van Thorre · DEF: Eduardo Fernandes, Leeman Abdulai</div></div>
+        <div class="game-header">🔵 Italia (Azul)</div>
+        <div class="tl-row"><div class="tl-player">ATK: Luca Abreu (convidado), Luigi Tedesco · MID: Bruno Stuani, Mac McClain · DEF: Guilherme Souza, Leonardo Facci</div></div>
+        <div class="game-header">🔴 Portugal (Vermelho)</div>
+        <div class="tl-row"><div class="tl-player">ATK: Vini Cristenson · MID: Paulinho de Souza, Marcone Oliveira, Roger Stanev · DEF: Wesley da Silva, Anderson Aiziro</div></div>
+        <div class="game-header">🧤 Goleiros fixos</div>
+        <div class="tl-row"><div class="tl-player">Adilson Macena (Mão de Onça / Dida) · Joel Pereira</div></div>
+    </div>
+</div>
+
+<div style="text-align:center;margin-top:20px;font-size:10px;color:#484f58">Woodenlegs — Temporada da Primavera — Season 23 — Pelada 11/12</div>
+
+</body>
+</html>
