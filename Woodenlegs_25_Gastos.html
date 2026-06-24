@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Woodenlegs 25 Anos — Controle de Gastos</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:linear-gradient(135deg,#14251d 0%,#1f3f2e 45%,#111814 100%);color:#fff;min-height:100vh}
+.container{max-width:680px;margin:0 auto;padding:16px}
+.lang-toggle{display:flex;justify-content:center;gap:0;margin-bottom:8px}
+.lang-btn{padding:8px 20px;border:2px solid rgba(232,212,139,0.4);background:transparent;color:#cfc7b4;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s}
+.lang-btn:first-child{border-radius:20px 0 0 20px;border-right:1px solid rgba(232,212,139,0.4)}
+.lang-btn:last-child{border-radius:0 20px 20px 0;border-left:1px solid rgba(232,212,139,0.4)}
+.lang-btn.active{background:rgba(201,168,76,0.22);color:#ffe49a;border-color:#c9a84c}
+.back-link{text-align:center;margin-bottom:16px}.back-link a{color:#e8d48b;font-size:13px;text-decoration:none;opacity:0.8}.back-link a:hover{opacity:1}
+.header{text-align:center;padding:22px 16px 18px}.header-emoji{font-size:48px;margin-bottom:8px}.header h1{font-size:25px;font-weight:900;color:#e8d48b;text-shadow:0 2px 12px rgba(201,168,76,0.25)}.subtitle{font-size:14px;color:#d7c16b;font-weight:700;margin-top:4px;letter-spacing:1px}.event-date{font-size:13px;color:#c9c0ad;margin-top:8px}
+.note{background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.24);border-radius:14px;padding:14px 16px;margin-bottom:20px;font-size:14px;color:#eee3c8;line-height:1.6;text-align:center}
+.form-card{background:rgba(255,253,248,0.97);border-radius:16px;padding:20px;margin-bottom:24px;color:#1b1b1b;box-shadow:0 8px 32px rgba(0,0,0,0.32)}
+.form-card label{display:block;font-size:12px;font-weight:800;color:#555;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px}.form-card input,.form-card select,.form-card textarea{width:100%;padding:12px;border:2px solid #dfd8c8;border-radius:10px;font-size:16px;font-family:inherit;transition:border-color 0.2s;background:#fff}.form-card input:focus,.form-card select:focus,.form-card textarea:focus{outline:none;border-color:#c9a84c}.field-group{margin-top:15px}.row{display:grid;grid-template-columns:1fr 0.8fr;gap:12px}.hint{font-size:12px;color:#777;margin-top:4px;line-height:1.4}.btn-submit{width:100%;padding:14px;background:linear-gradient(135deg,#e8d48b,#c9a84c);color:#111814;border:none;border-radius:12px;font-size:16px;font-weight:900;cursor:pointer;margin-top:20px;text-transform:uppercase;letter-spacing:1px;box-shadow:0 4px 16px rgba(201,168,76,0.3);transition:transform 0.1s}.btn-submit:active{transform:scale(0.97)}.btn-submit:disabled{opacity:0.55;cursor:not-allowed}
+.summary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}.summary-card{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:14px;text-align:center}.summary-label{font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:#d7c16b}.summary-value{font-size:24px;font-weight:900;color:#fff;margin-top:4px}
+.expenses{margin-bottom:32px}.expenses-title{text-align:center;font-size:18px;font-weight:800;color:#e8d48b;margin-bottom:16px}.expense-list{list-style:none;background:rgba(255,255,255,0.06);border-radius:12px;padding:10px 14px;border:1px solid rgba(255,255,255,0.08)}.expense-item{padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.07);display:grid;grid-template-columns:1fr auto;gap:10px}.expense-item:last-child{border-bottom:none}.expense-name{font-weight:800;color:#fff}.expense-meta{font-size:12px;color:#cfc7b4;line-height:1.5}.expense-desc{font-size:13px;color:#eee;margin-top:3px}.expense-amount{font-size:16px;font-weight:900;color:#e8d48b;white-space:nowrap}.empty,.loading{text-align:center;color:#a9a08d;padding:24px;font-size:14px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:#222;color:#fff;padding:12px 24px;border-radius:12px;font-size:14px;font-weight:600;transition:transform 0.3s ease;z-index:100;box-shadow:0 4px 16px rgba(0,0,0,0.3)}.toast.show{transform:translateX(-50%) translateY(0)}.toast.error{background:#a92727}.toast.success{background:#146c43}
+.footer{text-align:center;padding:16px;font-size:11px;color:#817965}
+@media(max-width:560px){.row,.summary{grid-template-columns:1fr}.expense-item{grid-template-columns:1fr}.expense-amount{margin-top:-4px}.container{padding:12px}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="lang-toggle">
+  <button class="lang-btn active" onclick="setLang('pt')">🇧🇷 Português</button>
+  <button class="lang-btn" onclick="setLang('en')">🇺🇸 English</button>
+</div>
+<div class="back-link"><a href="Woodenlegs_25_Programacao.html" data-pt="← Voltar à Programação" data-en="← Back to Schedule">← Voltar à Programação</a></div>
+<div class="header">
+  <div class="header-emoji">💸</div>
+  <h1 data-pt="Controle de Gastos" data-en="Spending Tracker">Controle de Gastos</h1>
+  <div class="subtitle">Woodenlegs 25 Anos</div>
+  <div class="event-date" data-pt="18 — 21 de Junho de 2026" data-en="June 18 — 21, 2026">18 — 21 de Junho de 2026</div>
+</div>
+<div class="note">
+  <span class="i18n-pt">Use esta página para registrar gastos que alguém adiantou para o evento: compras, comida, bebida, material, reserva ou qualquer despesa que precise entrar no acerto.</span>
+  <span class="i18n-en" style="display:none">Use this page to record expenses someone paid upfront for the event: groceries, food, drinks, supplies, reservations or anything that should be included in the settlement.</span>
+</div>
+<div class="form-card">
+  <label for="nome" data-pt="Quem pagou" data-en="Who paid">Quem pagou</label>
+  <input type="text" id="nome" data-pt-ph="Nome de quem teve o gasto" data-en-ph="Name of the person who paid" placeholder="Nome de quem teve o gasto">
+  <div class="row">
+    <div class="field-group">
+      <label for="atividade" data-pt="Atividade" data-en="Activity">Atividade</label>
+      <select id="atividade">
+        <option value="Geral" data-pt="Geral" data-en="General">Geral</option>
+        <option value="Poker">Poker</option>
+        <option value="Show">Show</option>
+        <option value="Brasil vs Haiti">Brasil vs Haiti</option>
+        <option value="Pelada">Pelada</option>
+        <option value="Oasis">Oasis</option>
+        <option value="Churrasco">Churrasco</option>
+        <option value="Pedalada">Pedalada</option>
+      </select>
+    </div>
+    <div class="field-group">
+      <label for="valor" data-pt="Valor" data-en="Amount">Valor</label>
+      <input type="text" id="valor" inputmode="decimal" data-pt-ph="Ex: 42.50" data-en-ph="Ex: 42.50" placeholder="Ex: 42.50">
+    </div>
+  </div>
+  <div class="field-group">
+    <label for="descricao" data-pt="O que foi comprado / pago" data-en="What was bought / paid">O que foi comprado / pago</label>
+    <input type="text" id="descricao" data-pt-ph="Ex: carvão, gelo, reserva, bebida..." data-en-ph="Ex: charcoal, ice, reservation, drinks..." placeholder="Ex: carvão, gelo, reserva, bebida...">
+  </div>
+  <div class="field-group">
+    <label for="observacao" data-pt="Observação" data-en="Note">Observação</label>
+    <textarea id="observacao" rows="3" data-pt-ph="Opcional: quem deve dividir, recibo, detalhe do pagamento..." data-en-ph="Optional: who should split it, receipt, payment detail..." placeholder="Opcional: quem deve dividir, recibo, detalhe do pagamento..."></textarea>
+    <div class="hint" data-pt="Dica: coloque só números no valor. Ex: 42.50" data-en="Tip: use numbers only for amount. Ex: 42.50">Dica: coloque só números no valor. Ex: 42.50</div>
+  </div>
+  <button class="btn-submit" id="btn-submit" onclick="submitExpense()" data-pt="Registrar Gasto" data-en="Save Expense">Registrar Gasto</button>
+</div>
+<div class="summary" id="summary" style="display:none"></div>
+<div class="expenses">
+  <div class="expenses-title" data-pt="Gastos Registrados" data-en="Recorded Expenses">Gastos Registrados</div>
+  <div id="expenses-list"><div class="loading" data-pt="Carregando..." data-en="Loading...">Carregando...</div></div>
+</div>
+<div class="footer">
+  <span class="i18n-pt">Woodenlegs FC — 25 anos de pelada, amizade e acerto honesto</span>
+  <span class="i18n-en" style="display:none">Woodenlegs FC — 25 years of pickup soccer, friendship and honest settlement</span>
+</div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwz0qPZeHBcWqP0KldVjsKWdyr_IuvdQ7kzx_xmbvhLygRkYOwCz3yrlAluq1yUNPJU/exec";
+const activity = 'gastos';
+let currentLang = localStorage.getItem('wl25lang') || 'pt';
+const T = {
+  pt: { noName:'Coloca o nome de quem pagou!', noDesc:'Descreve o gasto!', noAmount:'Coloca o valor!', invalidAmount:'Valor inválido. Usa algo como 42.50.', sending:'Registrando...', submitted:'Gasto registrado!', error:'Erro ao registrar. Tenta de novo!', btnSubmit:'Registrar Gasto', noResults:'Nenhum gasto registrado ainda.', loadError:'Erro ao carregar gastos.', total:'Total registrado', count:n=>`${n} gasto${n!==1?'s':''}` },
+  en: { noName:'Enter who paid!', noDesc:'Describe the expense!', noAmount:'Enter the amount!', invalidAmount:'Invalid amount. Use something like 42.50.', sending:'Saving...', submitted:'Expense saved!', error:'Error saving. Try again!', btnSubmit:'Save Expense', noResults:'No expenses recorded yet.', loadError:'Error loading expenses.', total:'Total recorded', count:n=>`${n} expense${n!==1?'s':''}` }
+};
+function setLang(lang){
+  currentLang=lang;localStorage.setItem('wl25lang',lang);
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+  document.querySelectorAll('[data-pt]').forEach(el=>{if(el.dataset[lang])el.textContent=el.dataset[lang];});
+  document.querySelectorAll('[data-pt-ph]').forEach(el=>{el.placeholder=el.dataset[lang+'Ph']||el.placeholder;});
+  document.querySelectorAll('.i18n-pt').forEach(el=>el.style.display=lang==='pt'?'':'none');
+  document.querySelectorAll('.i18n-en').forEach(el=>el.style.display=lang==='en'?'':'none');
+  const btn=document.getElementById('btn-submit');if(!btn.disabled)btn.textContent=T[lang].btnSubmit;
+  loadExpenses();
+}
+function showToast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+(type||'');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);}
+function parseAmount(value){
+  const normalized=value.replace(/\$/g,'').replace(/,/g,'').trim();
+  const amount=Number(normalized);
+  return Number.isFinite(amount)&&amount>0?amount:null;
+}
+async function submitExpense(){
+  const nome=document.getElementById('nome').value.trim();
+  const atividade=document.getElementById('atividade').value;
+  const descricao=document.getElementById('descricao').value.trim();
+  const amount=parseAmount(document.getElementById('valor').value);
+  const observacao=document.getElementById('observacao').value.trim();
+  if(!nome){showToast(T[currentLang].noName,'error');return;}
+  if(!descricao){showToast(T[currentLang].noDesc,'error');return;}
+  if(!document.getElementById('valor').value.trim()){showToast(T[currentLang].noAmount,'error');return;}
+  if(amount===null){showToast(T[currentLang].invalidAmount,'error');return;}
+  const btn=document.getElementById('btn-submit');btn.disabled=true;btn.textContent=T[currentLang].sending;
+  try{
+    await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({activity,nome,atividade,descricao,valor:amount.toFixed(2),observacao})});
+    showToast(T[currentLang].submitted,'success');
+    document.getElementById('descricao').value='';document.getElementById('valor').value='';document.getElementById('observacao').value='';
+    setTimeout(loadExpenses,1800);
+  }catch(err){showToast(T[currentLang].error,'error');}
+  finally{btn.disabled=false;btn.textContent=T[currentLang].btnSubmit;}
+}
+async function loadExpenses(){
+  const container=document.getElementById('expenses-list');
+  try{
+    const res=await fetch(`${SCRIPT_URL}?activity=${activity}`);
+    const rows=await res.json();
+    if(!rows||rows.length===0){document.getElementById('summary').style.display='none';container.innerHTML=`<div class="empty">${T[currentLang].noResults}</div>`;return;}
+    let total=0;
+    rows.forEach(r=>{const a=parseAmount(String(r.valor||''));if(a!==null)total+=a;});
+    document.getElementById('summary').style.display='grid';
+    document.getElementById('summary').innerHTML=`<div class="summary-card"><div class="summary-label">${T[currentLang].total}</div><div class="summary-value">$${total.toFixed(2)}</div></div><div class="summary-card"><div class="summary-label">${T[currentLang].count(rows.length)}</div><div class="summary-value">${rows.length}</div></div>`;
+    let html='<ul class="expense-list">';
+    rows.slice().reverse().forEach(r=>{
+      const amount=parseAmount(String(r.valor||''));
+      html+=`<li class="expense-item"><div><div class="expense-name">${escHtml(r.nome||'')}</div><div class="expense-meta">${escHtml(r.atividade||'Geral')} · ${escHtml(r.timestamp||'')}</div><div class="expense-desc">${escHtml(r.descricao||'')}${r.observacao?`<br><span class="expense-meta">${escHtml(r.observacao)}</span>`:''}</div></div><div class="expense-amount">${amount===null?escHtml(r.valor||''):'$'+amount.toFixed(2)}</div></li>`;
+    });
+    html+='</ul>';container.innerHTML=html;
+  }catch(err){container.innerHTML=`<div class="empty">${T[currentLang].loadError}</div>`;}
+}
+function escHtml(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+setLang(currentLang);
+</script>
+</body>
+</html>
