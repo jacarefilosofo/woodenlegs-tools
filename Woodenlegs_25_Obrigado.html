@@ -44,6 +44,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .calc .eq{font-size:20px;font-weight:900;color:#8a6d2c}
 .calc .total{font-size:30px;font-weight:900;color:#146c43}
 .calc .hint{font-size:12px;color:#777;margin-top:10px;line-height:1.5}
+.goal-box{background:rgba(20,108,67,0.12);border:1px solid rgba(201,168,76,0.35);border-radius:14px;padding:16px;margin:12px 0 16px}
+.goal-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.goal-row input{width:90px;padding:10px;border:2px solid rgba(232,212,139,0.4);border-radius:10px;font-size:20px;font-weight:900;text-align:center;background:rgba(255,255,255,0.95);color:#1b1b1b}
+.goal-status{font-size:16px;font-weight:900;color:#ffe49a}
+.goal-bar{margin-top:12px;height:12px;background:rgba(255,255,255,0.15);border-radius:999px;overflow:hidden}
+.goal-fill{height:100%;width:0%;background:linear-gradient(90deg,#d7c16b,#ffe49a,#43d08a);transition:width 0.2s}
 .pay-cta{display:block;text-align:center;background:linear-gradient(135deg,#e8d48b,#c9a84c);color:#111814;text-decoration:none;padding:16px;border-radius:14px;font-size:17px;font-weight:900;text-transform:uppercase;letter-spacing:1px;box-shadow:0 4px 16px rgba(201,168,76,0.3);margin-top:6px}
 .pay-methods{margin-top:14px;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.24);border-radius:12px;padding:14px 16px;font-size:14px;color:#eee3c8;line-height:1.8;text-align:center}
 .pay-methods .ph{color:#ff9c9c;font-weight:800}
@@ -59,8 +65,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .trofeu-item:last-child{border-bottom:none}
 .trofeu-medal{font-size:24px}
 .trofeu-name{font-weight:800;color:#fff}
-.trofeu-cat{font-size:12px;color:#c9c0ad}
+.trofeu-cat{display:block;font-size:12px;color:#c9c0ad}
 .trofeu-win{font-weight:900;color:#ffe49a;text-align:right;font-size:14px}
+.trofeu-story{margin-top:8px;font-size:13px;color:#efe6d0;line-height:1.6}
 .ph-box{background:rgba(169,39,39,0.14);border:1px dashed rgba(255,156,156,0.5);border-radius:12px;padding:14px 16px;color:#ffd7d7;font-size:13px;line-height:1.6;text-align:center}
 
 /* Payment methods */
@@ -139,6 +146,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <h2>💸 <span data-pt="A Vaquinha dos 25" data-en="The 25 Kitty">A Vaquinha dos 25</span></h2>
     <div class="vaq-hook" data-pt="25 anos, 25 pratas 🎉" data-en="25 years, 25 bucks 🎉">25 anos, 25 pratas 🎉</div>
 
+    <p class="i18n-pt"><span class="highlight">Meta oficial:</span> alcançar <span class="highlight">70 doadores</span>. Se batermos 70, cobrimos as despesas de toda a atividade. Missão: <span class="highlight">70 × $25 = $1750</span>.</p>
+    <p class="i18n-en" style="display:none"><span class="highlight">Official goal:</span> reach <span class="highlight">70 donors</span>. If we hit 70, we cover all event costs. Mission: <span class="highlight">70 × $25 = $1750</span>.</p>
+
+    <div class="goal-box">
+      <label data-pt="Quantos doadores já confirmaram?" data-en="How many donors are confirmed?">Quantos doadores já confirmaram?</label>
+      <div class="goal-row">
+        <input type="number" id="donors" min="0" step="1" value="0" inputmode="numeric" oninput="calcGoal()">
+        <span class="eq" data-pt="de 70" data-en="of 70">de 70</span>
+        <span class="goal-status" id="goal-status">Faltam 70 doadores</span>
+      </div>
+      <div class="goal-bar"><div class="goal-fill" id="goal-fill"></div></div>
+      <div class="hint" id="goal-money">$0 arrecadados de $1750</div>
+    </div>
+
     <p class="i18n-pt">Agora a parte chata, mas honesta (do jeito Woodenlegs, no talão aberto): pra fechar a conta de tudo isso, o combinado é <span class="highlight">$25 por pessoa que participou de qualquer evento</span>.</p>
     <p class="i18n-pt">E sim, vale por cabeça: se a sua família inteira apareceu — esposa, filhada, e aquele primo que só deu as caras no churrasco e comeu por três 🍖 — é $25 pra cada. Faz as contas com carinho (e honestidade de perna de pau):</p>
 
@@ -191,16 +212,90 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
   <div class="card">
     <h2>🏆 <span data-pt="Troféus & Resultados" data-en="Trophies & Results">Troféus &amp; Resultados</span></h2>
+    <p class="i18n-pt">Aqui não existe VAR, só criatividade, perseguição afetiva e ata oficial da Academia WoodenNobel.</p>
+    <p class="i18n-en" style="display:none">No VAR here, only creativity, affectionate trolling, and the official minutes of the WoodenNobel Academy.</p>
     <ul class="trofeu-list">
-      <li class="trofeu-item"><span class="trofeu-medal">🏆</span><span><span class="trofeu-name">Varejão</span><br><span class="trofeu-cat">Troféu Saci — o perneta mais famoso</span></span><span class="trofeu-win">🏆</span></li>
-      <li class="trofeu-item"><span class="trofeu-medal">🚿</span><span><span class="trofeu-name">Barba</span><br><span class="trofeu-cat">Troféu Paulo Banheira</span></span><span class="trofeu-win">🏆</span></li>
-      <li class="trofeu-item"><span class="trofeu-medal">👻</span><span><span class="trofeu-name">Ceará</span><br><span class="trofeu-cat">Troféu Ranca Toco — o Homem Invisível</span></span><span class="trofeu-win">🏆</span></li>
-      <li class="trofeu-item"><span class="trofeu-medal">🤒</span><span><span class="trofeu-name">Leeman</span><br><span class="trofeu-cat">Troféu Márcio Contagianti</span></span><span class="trofeu-win">🏆</span></li>
-      <li class="trofeu-item"><span class="trofeu-medal">🏅</span><span><span class="trofeu-name">GuSan</span><br><span class="trofeu-cat">Troféu Hiram</span></span><span class="trofeu-win">🏆</span></li>
-      <li class="trofeu-item"><span class="trofeu-medal">🎤</span><span><span class="trofeu-name">Bruno</span><br><span class="trofeu-cat">Troféu Marcone Celebrity Impersonator — Freddie Mercury</span></span><span class="trofeu-win">🏆</span></li>
-      <li class="trofeu-item"><span class="trofeu-medal">🍀</span><span><span class="trofeu-name">Jorge Santos</span><br><span class="trofeu-cat">Troféu Maldito — o sortudo</span></span><span class="trofeu-win">🏆</span></li>
-      <li class="trofeu-item"><span class="trofeu-medal">🇵🇹</span><span><span class="trofeu-name">Vincenzo</span><br><span class="trofeu-cat">Troféu Gustavo Varejão — Melhor Português</span></span><span class="trofeu-win">🏆</span></li>
-      <li class="trofeu-item"><span class="trofeu-medal">⚖️</span><span><span class="trofeu-name">Roger</span><br><span class="trofeu-cat">Troféu Isentão — não tem nem direita nem esquerda</span></span><span class="trofeu-win">🏆</span></li>
+      <li class="trofeu-item">
+        <span class="trofeu-medal">🏆</span>
+        <span>
+          <span class="trofeu-name">Varejão</span><br>
+          <span class="trofeu-cat">Troféu Saci — o perneta mais famoso</span>
+          <div class="trofeu-story i18n-pt">Esse troféu nasceu em homenagem ao nosso querido Saraiva, fenômeno do conhecimento humano: saiu do interior da Paraíba e chegou ao ápice das big techs. Diz a lenda que a biblioteca de Belém (sim, "onde Jesus nasceu") carrega o nome Edvaldo Saraiva em sua homenagem. Como o homenageado faltou em todos os eventos, a comissão WoodenNobel convocou às pressas o Varejão, famoso por tabela: nosso Emeril da QVC e parente de NBA no currículo. Resultado: fama hereditária validada com carimbo oficial.</div>
+        </span>
+        <span class="trofeu-win">🏆</span>
+      </li>
+      <li class="trofeu-item">
+        <span class="trofeu-medal">🚿</span>
+        <span>
+          <span class="trofeu-name">Barba</span><br>
+          <span class="trofeu-cat">Troféu Paulo Banheira</span>
+          <div class="trofeu-story i18n-pt">Prêmio histórico entregue ao perna de pau mais preguiçoso e eficiente do torneio. O atleta economiza passos, energia e compromisso defensivo: fica plantado na banheira, sempre em posição de impedimento, enquanto o time sofre. Mas como todo banheirista raiz, quando a bola chega, ele guarda. É o conceito de produtividade extrema com baixíssimo deslocamento.</div>
+        </span>
+        <span class="trofeu-win">🏆</span>
+      </li>
+      <li class="trofeu-item">
+        <span class="trofeu-medal">👻</span>
+        <span>
+          <span class="trofeu-name">Ceará</span><br>
+          <span class="trofeu-cat">Troféu Ranca Toco — o Homem Invisível</span>
+          <div class="trofeu-story i18n-pt">O Troféu Ranca Toco foi criado para o "Homem Invisível", aquele ser mitológico que derruba vários na pelada e some antes da perícia chegar. Nesta edição, o Ceará venceu por evidência forense: tomou umas cinco rasteiras dele, todas gravadas nos anais do Woodenlegs. É vítima, testemunha e documentarista do próprio prêmio.</div>
+        </span>
+        <span class="trofeu-win">🏆</span>
+      </li>
+      <li class="trofeu-item">
+        <span class="trofeu-medal">🤒</span>
+        <span>
+          <span class="trofeu-name">Leeman</span><br>
+          <span class="trofeu-cat">Troféu Márcio Contagianti</span>
+          <div class="trofeu-story i18n-pt">Márcio sempre foi a nossa referência de experiência, idade e virilidade de guerra. Só que em 2026 o Leeman completou 70 e realizou um feito nunca antes registrado: ultrapassou alguém em idade durante a própria vida. A comissão médica do Woodenlegs confirmou: é um marco científico e estatístico.</div>
+        </span>
+        <span class="trofeu-win">🏆</span>
+      </li>
+      <li class="trofeu-item">
+        <span class="trofeu-medal">🏅</span>
+        <span>
+          <span class="trofeu-name">GuSan</span><br>
+          <span class="trofeu-cat">Troféu Hiram</span>
+          <div class="trofeu-story i18n-pt">Com o mundo em crise e petróleo em alta, o planeta inteiro sofre. Menos o GuSan, que opera em matriz energética 100% álcool e, portanto, independe do barril internacional. Foi o competidor menos impactado pela geopolítica global. Resiliência estratégica em estado líquido.</div>
+        </span>
+        <span class="trofeu-win">🏆</span>
+      </li>
+      <li class="trofeu-item">
+        <span class="trofeu-medal">🎤</span>
+        <span>
+          <span class="trofeu-name">Bruno</span><br>
+          <span class="trofeu-cat">Troféu Marcone Celebrity Impersonator — Freddie Mercury</span>
+          <div class="trofeu-story i18n-pt">No halftime show de uma das peladas, Bruno encarnou Freddie Mercury com coragem cênica e zero vergonha no currículo. Todos nós vimos o show. E todos nós ainda estamos processando o trauma coletivo de ver o traje autêntico do líder do Queen em plena quadra de society.</div>
+        </span>
+        <span class="trofeu-win">🏆</span>
+      </li>
+      <li class="trofeu-item">
+        <span class="trofeu-medal">🍀</span>
+        <span>
+          <span class="trofeu-name">Jorge Santos</span><br>
+          <span class="trofeu-cat">Troféu Maldito — o sortudo</span>
+          <div class="trofeu-story i18n-pt">Nosso querido Malvado, guardião de lendas sobre riqueza infinita e sorte sem imposto, batiza este troféu. Desta vez, a sorte caiu no colo do Jorge Santos, que limpou geral na mesa de poker com aura de iniciante inocente. Teve gente que contestou, mas os mesmos jurados juram já ter visto o homem jogar contra Neymar em lives da Twitch.</div>
+        </span>
+        <span class="trofeu-win">🏆</span>
+      </li>
+      <li class="trofeu-item">
+        <span class="trofeu-medal">🇵🇹</span>
+        <span>
+          <span class="trofeu-name">Vincenzo</span><br>
+          <span class="trofeu-cat">Troféu Gustavo Varejão — Melhor Português</span>
+          <div class="trofeu-story i18n-pt">Gugu Varejão é o nosso Professor Pardal gramatical: aparece do nada até em grupo de WhatsApp onde ele nem está, só pra corrigir o português dos outros por telepatia. Nesta edição, Vincenzo ganhou o título de Melhor Português por falar um português bom demais da conta. E no clássico da viagem da F1 pra Bélgica, GuSan, completamente embriagado, olha pra ele e solta: "20, você fala português muito bem". O detalhe: o 20 é brasileiro. O problema, segundo ata oficial, é o sotaque de Piracicaba.</div>
+        </span>
+        <span class="trofeu-win">🏆</span>
+      </li>
+      <li class="trofeu-item">
+        <span class="trofeu-medal">⚖️</span>
+        <span>
+          <span class="trofeu-name">Roger</span><br>
+          <span class="trofeu-cat">Troféu Isentão — não tem nem direita nem esquerda</span>
+          <div class="trofeu-story i18n-pt">Roger tem um talento raro: transformar assunto de quinta série em debate geopolítico de três blocos e intervalo comercial. Ele provoca todo mundo com carinho intelectual, sem discriminar liberais, conservadores ou indecisos premium. Se você está em um grupo com ele, vai cair nas garras do comentário político inevitável. E vai responder, mesmo jurando que não iria. E no futebol ele também não tem direita nem esquerda na hora do chute: seus arremates são carinhosamente conhecidos como "Chute Peido de Velha".</div>
+        </span>
+        <span class="trofeu-win">🏆</span>
+      </li>
     </ul>
   </div>
 
@@ -213,9 +308,28 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 <script>
 const SHARE = 25;
+const GOAL_DONORS = 70;
 function calc(){
   const n = Math.max(0, parseInt(document.getElementById('ppl').value || '0', 10));
   document.getElementById('total').textContent = '$' + (n * SHARE);
+}
+function calcGoal(){
+  const n = Math.max(0, parseInt(document.getElementById('donors').value || '0', 10));
+  const capped = Math.min(n, GOAL_DONORS);
+  const remaining = Math.max(0, GOAL_DONORS - n);
+  const raised = n * SHARE;
+  const target = GOAL_DONORS * SHARE;
+  const done = n >= GOAL_DONORS;
+
+  document.getElementById('goal-fill').style.width = ((capped / GOAL_DONORS) * 100) + '%';
+
+  if(currentLang === 'en'){
+    document.getElementById('goal-status').textContent = done ? 'Goal reached! Costs are covered 🎯' : `Still need ${remaining} donors`;
+    document.getElementById('goal-money').textContent = `$${raised} raised of $${target}`;
+  } else {
+    document.getElementById('goal-status').textContent = done ? 'Meta batida! Despesas cobertas 🎯' : `Faltam ${remaining} doadores`;
+    document.getElementById('goal-money').textContent = `$${raised} arrecadados de $${target}`;
+  }
 }
 function copyKey(txt, btn){
   const done = () => { const o = btn.textContent; btn.textContent = 'Copiado!'; setTimeout(()=>btn.textContent=o, 1600); };
@@ -236,9 +350,11 @@ function setLang(lang){
   document.querySelectorAll('[data-pt]').forEach(el=>{ if(el.dataset[lang]) el.textContent = el.dataset[lang]; });
   document.querySelectorAll('.i18n-pt').forEach(el=>el.style.display = lang==='pt' ? '' : 'none');
   document.querySelectorAll('.i18n-en').forEach(el=>el.style.display = lang==='en' ? '' : 'none');
+  calcGoal();
 }
 setLang(currentLang);
 calc();
+calcGoal();
 </script>
 </body>
 </html>
