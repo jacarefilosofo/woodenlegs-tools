@@ -61,9 +61,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .player-btn .og-badge{background:#cc3300;color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900}
 .player-btn .pos{font-size:9px;color:#aaa;position:absolute;top:2px;right:5px}
 .player-btn .total-badge{font-size:9px;color:#888;position:absolute;bottom:2px;right:5px}
-.action-bar{display:flex;gap:4px;margin-top:6px;padding-bottom:12px;flex-wrap:wrap}
-.action-btn{flex:1;padding:13px;border:none;border-radius:10px;font-size:11px;font-weight:700;cursor:pointer;min-width:70px}
-.btn-undo{background:#ddd;color:#555}.btn-copy{background:#1e56a0;color:#fff}.btn-export{background:#2d7d2d;color:#fff}.btn-reset{background:#ffcccc;color:#cc0000}
+.action-bar{display:flex;flex-direction:column;gap:8px;margin-top:8px;padding-bottom:12px}
+.action-section{width:100%}
+.action-section-title{font-size:10px;font-weight:800;color:#777;margin-bottom:4px;text-transform:uppercase}
+.action-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
+.action-row .action-btn:last-child:nth-child(odd){grid-column:1/-1}
+.action-btn{min-height:46px;padding:9px 8px;border:none;border-radius:8px;font-size:12px;font-weight:700;line-height:1.2;cursor:pointer;white-space:normal}
+.btn-start{background:#006400;color:#fff}.btn-finish-game{background:#c76b00;color:#fff}.btn-finish-pelada{background:#4a0080;color:#fff}
+.btn-undo{background:#ddd;color:#555}.btn-copy{background:#1e56a0;color:#fff}.btn-export{background:#2d7d2d;color:#fff}.btn-narrative{background:#8b0000;color:#fff}.btn-reset{background:#ffcccc;color:#cc0000}
 .history{margin-top:4px;padding:6px;background:#fff;border-radius:7px;max-height:120px;overflow-y:auto;font-size:11px;color:#888;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
 .history-item{padding:2px 0;border-bottom:1px solid #eee}
 .toast{position:fixed;bottom:60px;left:50%;transform:translateX(-50%);background:#2d7d2d;color:#fff;padding:10px 20px;border-radius:20px;font-weight:700;font-size:13px;opacity:0;transition:opacity 0.3s;z-index:100}
@@ -108,14 +113,29 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="bottom-scroll">
 <div class="player-grid" id="player-grid"></div>
 <div class="action-bar">
-    <button class="action-btn" id="btn-start" style="background:#006400;color:#fff;font-size:13px" onclick="startGame()">🏟️ Iniciar</button>
-    <button class="action-btn btn-undo" onclick="undoLast()">↩️ Desfazer</button>
-    <button class="action-btn btn-copy" onclick="copyResults()">📋 Copiar</button>
-    <button class="action-btn btn-export" onclick="exportMD()">📄 Súmula</button>
-    <button class="action-btn" style="background:#ff9800;color:#fff" onclick="fimDeJogo()">📢 Fim</button>
-    <button class="action-btn" style="background:#4a0080;color:#fff" onclick="fimDaPelada()">🏁 Pelada</button>
-    <button class="action-btn" style="background:#8b0000;color:#fff" onclick="copyNarrative()">📖 Ao Vivo</button>
-    <button class="action-btn btn-reset" onclick="resetScores()">🔄 Zerar</button>
+    <div class="action-section">
+        <div class="action-section-title">Controle da pelada</div>
+        <div class="action-row">
+            <button class="action-btn btn-start" id="btn-start" onclick="startGame()">▶ Iniciar pelada</button>
+            <button class="action-btn btn-finish-game" onclick="fimDeJogo()">■ Encerrar jogo atual</button>
+            <button class="action-btn btn-finish-pelada" onclick="fimDaPelada()">🏁 Encerrar pelada</button>
+        </div>
+    </div>
+    <div class="action-section">
+        <div class="action-section-title">Resultados</div>
+        <div class="action-row">
+            <button class="action-btn btn-copy" onclick="copyResults()">📋 Copiar resultado final</button>
+            <button class="action-btn btn-export" onclick="exportMD()">📄 Copiar súmula em Markdown</button>
+            <button class="action-btn btn-narrative" onclick="copyNarrative()">📖 Copiar narração ao vivo</button>
+        </div>
+    </div>
+    <div class="action-section">
+        <div class="action-section-title">Correções</div>
+        <div class="action-row">
+            <button class="action-btn btn-undo" onclick="undoLast()">↩ Desfazer última ação</button>
+            <button class="action-btn btn-reset" onclick="resetScores()">↻ Zerar todos os dados</button>
+        </div>
+    </div>
 </div>
 <div class="history" id="history-log"><em>—</em></div>
 </div>
@@ -622,7 +642,7 @@ function copyResults(){
         }
     }
     const text=lines.join("\n");
-    navigator.clipboard.writeText(text).then(()=>showToast("Copiado!")).catch(()=>{const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);showToast("Copiado!");});
+    navigator.clipboard.writeText(text).then(()=>showToast("Resultado final copiado!")).catch(()=>{const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);showToast("Resultado final copiado!");});
 }
 
 // ── EXPORT MARKDOWN (Súmula) ──
@@ -733,8 +753,9 @@ function exportMD(){
     }
 
     const md=lines.join("\n");
-    navigator.clipboard.writeText(md).then(()=>showToast("📄 Súmula copiada!")).catch(()=>{
-        const ta=document.createElement("textarea");ta.value=md;document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);showToast("📄 Súmula copiada!");
+    navigator.clipboard.writeText(md).then(()=>showToast("Súmula em Markdown copiada!")).catch(()=>{
+        fallbackCopy(md);
+        showToast("Súmula em Markdown copiada!");
     });
 }
 
@@ -829,7 +850,7 @@ function renderCheckin(){
 
 // ── FIM DA PELADA ──
 function fimDaPelada(){
-    if(!confirm("Encerrar a pelada? Isso vai copiar o resumo final."))return;
+    if(!confirm("Encerrar a pelada e fechar o resultado final?"))return;
     // Finish last game if not already
     if(!finishedJogos.has(currentJogo)){
         finishedJogos.add(currentJogo);
@@ -875,10 +896,7 @@ function fimDaPelada(){
     }
 
     narrative.push(msg);
-    if(navigator.clipboard&&navigator.clipboard.writeText){
-        navigator.clipboard.writeText(msg).catch(()=>fallbackCopy(msg));
-    }else{fallbackCopy(msg);}
-    showToast("Pelada encerrada!");
+    showToast("Pelada encerrada. Resultado pronto para copiar.");
     saveState();
     render();
 }
