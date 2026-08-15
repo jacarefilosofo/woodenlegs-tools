@@ -117,6 +117,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <div class="action-section-title">Controle da pelada</div>
         <div class="action-row">
             <button class="action-btn btn-start" id="btn-start" onclick="startGame()">▶ Iniciar pelada</button>
+            <button class="action-btn btn-start" id="btn-start-current" onclick="startCurrentGame()">▶ Iniciar jogo atual</button>
             <button class="action-btn btn-finish-game" onclick="fimDeJogo()">■ Encerrar jogo atual</button>
             <button class="action-btn btn-finish-pelada" onclick="fimDaPelada()">🏁 Encerrar pelada</button>
         </div>
@@ -190,6 +191,8 @@ const isRodizio=CONFIG.format==="2times-rodizio";
 let events=[];
 let cancelledJogos=new Set();
 let finishedJogos=new Set();
+let startedJogos=new Set();
+let gameStartTimes={};
 let currentJogo=0, currentMode="goal", longPressTimer=null, isLongPress=false;
 let touchStartX=0, touchStartY=0, isTouchMoved=false;
 
@@ -392,6 +395,25 @@ function startGame(){
     render();
 }
 
+function startCurrentGame(){
+    if(startedJogos.has(currentJogo)){showToast(`Jogo ${currentJogo+1} já iniciou!`,true);return;}
+    const[h,a]=schedule[currentJogo];
+    const ht=CONFIG.teams[h],at=CONFIG.teams[a];
+    const now=new Date();
+    const hora=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+    const msg=`Começa agora o Jogo ${currentJogo+1}, às ${hora}: ${ht.name} x ${at.name}.`;
+    startedJogos.add(currentJogo);
+    gameStartTimes[currentJogo]=hora;
+    lastLiveJogo=currentJogo;
+    narrative.push(msg);
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(msg).catch(()=>{fallbackCopy(msg);});
+    }else{fallbackCopy(msg);}
+    showToast(`Jogo ${currentJogo+1} iniciado e anúncio copiado!`);
+    saveState();
+    render();
+}
+
 // ── ACTIONS ──
 function addGoal(p,tk){const now=new Date();const _t=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');events.push({player:p,type:"goal",ji:currentJogo,team:tk,time:_t,label:`⚽ J${currentJogo+1} ${p} → ${CONFIG.teams[tk].emoji}`});liveUpdate('goal',p,tk,null);showToast(`⚽ +1 ${p}`);vibrate();render();}
 function addOG(p,fromTk){
@@ -436,6 +458,14 @@ function render(){
     // Hide start button once game has started
     const startBtn=document.getElementById("btn-start");
     if(startBtn)startBtn.style.display=firstGoalSent?"none":"inline-block";
+    const startCurrentBtn=document.getElementById("btn-start-current");
+    if(startCurrentBtn){
+        const started=startedJogos.has(currentJogo);
+        startCurrentBtn.disabled=started;
+        const startTime=gameStartTimes[currentJogo];
+        startCurrentBtn.textContent=started?`✓ Jogo ${currentJogo+1} iniciado${startTime?` às ${startTime}`:""}`:`▶ Iniciar jogo ${currentJogo+1}`;
+        startCurrentBtn.style.opacity=started?"0.55":"1";
+    }
 
     // Aggregate score bar (rodízio / multi-match 2-team)
     const aggBar=document.getElementById("aggregate-bar");
@@ -584,7 +614,7 @@ function setMode(m){currentMode=m;document.querySelectorAll(".mode-btn").forEach
     document.getElementById("mode-desc").textContent=MODE_DESC[m];
     if(m==="checkin"){renderCheckin();}else{document.getElementById("player-grid").style.display="grid";render();}}
 function undoLast(){if(lastFimJogo>=0){undoFim();return;}if(events.length===0){if(firstGoalSent&&narrative.length>0){firstGoalSent=false;narrative.pop();render();showToast("↩️ Início desfeito");return;}return;}events.pop();if(narrative.length>0)narrative.pop();render();showToast("↩️");}
-function resetScores(){if(!confirm("Zerar todos os gols? (Jogadores continuam)"))return;events=[];cancelledJogos.clear();finishedJogos.clear();firstGoalSent=false;lastLiveJogo=-1;lastFimJogo=-1;currentJogo=0;narrative=[];checkins={};extraPlayers=[];clearSavedState();render();showToast("🔄 Zerado!");}
+function resetScores(){if(!confirm("Zerar todos os gols? (Jogadores continuam)"))return;events=[];cancelledJogos.clear();finishedJogos.clear();startedJogos.clear();gameStartTimes={};firstGoalSent=false;lastLiveJogo=-1;lastFimJogo=-1;currentJogo=0;narrative=[];checkins={};extraPlayers=[];clearSavedState();render();showToast("🔄 Zerado!");}
 
 // ── COPY (WhatsApp) ──
 function copyResults(){
@@ -905,7 +935,7 @@ function fimDaPelada(){
 const SAVE_KEY=`sumula_p${CONFIG.pelada||0}_${CONFIG.saveKey||CONFIG.date||""}`;
 function saveState(){
     try{
-        const state={events,cancelledJogos:[...cancelledJogos],finishedJogos:[...finishedJogos],currentJogo,lastLiveJogo,lastFimJogo,firstGoalSent,narrative,checkins,extraPlayers};
+        const state={events,cancelledJogos:[...cancelledJogos],finishedJogos:[...finishedJogos],startedJogos:[...startedJogos],gameStartTimes,currentJogo,lastLiveJogo,lastFimJogo,firstGoalSent,narrative,checkins,extraPlayers};
         localStorage.setItem(SAVE_KEY,JSON.stringify(state));
     }catch(e){}
 }
@@ -914,10 +944,12 @@ function restoreState(){
         const raw=localStorage.getItem(SAVE_KEY);
         if(!raw)return false;
         const state=JSON.parse(raw);
-        if(state.events&&state.events.length>0){
-            events=state.events;
+        if(state){
+            events=state.events||[];
             cancelledJogos=new Set(state.cancelledJogos||[]);
             finishedJogos=new Set(state.finishedJogos||[]);
+            startedJogos=new Set(state.startedJogos||[]);
+            gameStartTimes=state.gameStartTimes||{};
             currentJogo=state.currentJogo||0;
             lastLiveJogo=state.lastLiveJogo||-1;
             lastFimJogo=state.lastFimJogo||-1;
