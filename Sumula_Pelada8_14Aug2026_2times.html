@@ -15,9 +15,9 @@
 <title>Súmula ⚽</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f0f5;color:#222;height:100vh;overflow:hidden;display:flex;flex-direction:column;padding:0;-webkit-user-select:none;user-select:none}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f0f5;color:#222;height:100vh;height:100dvh;overflow:hidden;display:flex;flex-direction:column;padding:0;-webkit-user-select:none;user-select:none}
 .top-fixed{flex-shrink:0;padding:6px 6px 0 6px}
-.bottom-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 6px 6px 6px}
+.bottom-scroll{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 6px calc(120px + env(safe-area-inset-bottom,0px)) 6px;scroll-padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}
 .aggregate-bar{background:#222;color:#fff;border-radius:10px;padding:6px 12px;margin-bottom:6px;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:900;font-size:18px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
 .aggregate-bar .agg-emoji{font-size:16px}.aggregate-bar .agg-x{color:#888;font-size:14px}
 .standings{background:#fff;border-radius:12px;padding:8px;margin-bottom:6px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
