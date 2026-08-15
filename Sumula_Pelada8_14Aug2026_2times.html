@@ -463,7 +463,7 @@ function render(){
         const started=startedJogos.has(currentJogo);
         startCurrentBtn.disabled=started;
         const startTime=gameStartTimes[currentJogo];
-        startCurrentBtn.textContent=started?`✓ Jogo ${currentJogo+1} iniciado${startTime?` às ${startTime}`:""}`:`▶ Iniciar jogo ${currentJogo+1}`;
+        startCurrentBtn.textContent=started?`✓ Jogo atual iniciado${startTime?` às ${startTime}`:""}`:"▶ Iniciar jogo atual";
         startCurrentBtn.style.opacity=started?"0.55":"1";
     }
 
