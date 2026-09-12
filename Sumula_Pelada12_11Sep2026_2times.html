@@ -586,6 +586,8 @@ function render(){
 function addLabel(grid,text,cls){const d=document.createElement("div");d.className=`section-label ${cls}`;d.textContent=text;grid.appendChild(d);return d;}
 
 function mkBtn(name,pos,tk,css){
+    // Assigned keepers live in their team roster, but retain the keeper card style.
+    if(pos==="GK")css="btn-keeper";
     const btn=document.createElement("button");btn.className=`player-btn ${css}`;
     const dn=name.length>11?name.substring(0,10)+"…":name;
     const g=playerGoalsInJogo(name,tk,currentJogo);
