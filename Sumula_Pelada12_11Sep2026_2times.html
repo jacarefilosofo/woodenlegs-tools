@@ -200,6 +200,16 @@ let touchStartX=0, touchStartY=0, isTouchMoved=false;
 
 const MODE_DESC={goal:"⚽ Toque = +1 gol | Segure = -1",og:"🔴 Gol contra → crédito pro adversário",sub:"🔄 Jogadores de fora aparecem embaixo",checkin:"📋 Toque no nome = presente. Toque de novo = desfazer."};
 
+function getGameDateParts(titleCase=false){
+    // saveKey may include a unique suffix; only its YYYY-MM-DD prefix is a date.
+    const match=(CONFIG.saveKey||"").match(/^\d{4}-\d{2}-\d{2}/);
+    const dateObj=match?new Date(match[0]+"T12:00:00"):new Date(CONFIG.date||Date.now());
+    const months=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+    const weekdays=['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
+    const title=value=>titleCase?value.split('-').map(part=>part.charAt(0).toUpperCase()+part.slice(1)).join('-'):value;
+    return {dia:dateObj.getDate(),mes:title(months[dateObj.getMonth()]),ano:dateObj.getFullYear(),diaSemana:title(weekdays[dateObj.getDay()])};
+}
+
 // ── COMPUTE FROM EVENTS ──
 function jogoScore(idx){
     const[h,a]=schedule[idx]; let hg=0,ag=0;
@@ -269,13 +279,7 @@ function liveUpdate(eventType, player, scoringTeam, fromTeamKey){
     const isNewMatch=(lastLiveJogo<0||lastLiveJogo!==currentJogo);
     // First goal of the pelada — big announcement
     if(!firstGoalSent){
-        const dateObj=CONFIG.saveKey?new Date(CONFIG.saveKey+'T12:00:00'):new Date();
-        const dia=dateObj.getDate();
-        const meses=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
-        const mes=meses[dateObj.getMonth()];
-        const ano=dateObj.getFullYear();
-        const dow=['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
-        const diaSemana=dow[dateObj.getDay()];
+        const {dia,mes,ano,diaSemana}=getGameDateParts();
         msg+=`Atenção, Nação Woodenlegs!\nComeça agora a pelada ${CONFIG.pelada||''} de 12, nesta ${diaSemana}, ${dia} de ${mes} de ${ano}.\n\n`;
         msg+=`Jogo ${currentJogo+1}, ${ht.name} x ${at.name}, já começou — e já temos gol!! É bola no fundo da rede!\n\n`;
         firstGoalSent=true;
@@ -317,13 +321,7 @@ function fimDeJogo(){
     let msg="";
     // If first action of the pelada, include opening announcement
     if(!firstGoalSent){
-        const dateObj=CONFIG.saveKey?new Date(CONFIG.saveKey+'T12:00:00'):new Date();
-        const dia=dateObj.getDate();
-        const meses=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
-        const mes=meses[dateObj.getMonth()];
-        const ano=dateObj.getFullYear();
-        const dow=['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
-        const diaSemana=dow[dateObj.getDay()];
+        const {dia,mes,ano,diaSemana}=getGameDateParts();
         msg+=`Atenção, Nação Woodenlegs!\nComeça agora a pelada ${CONFIG.pelada||''} de 12, nesta ${diaSemana}, ${dia} de ${mes} de ${ano}.\n\n`;
         firstGoalSent=true;
     }
@@ -371,13 +369,7 @@ function startGame(){
     if(firstGoalSent){showToast("Já iniciou!",true);return;}
     const now=new Date();
     const hora=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
-    const dateObj=CONFIG.saveKey?new Date(CONFIG.saveKey+'T12:00:00'):new Date();
-    const dia=dateObj.getDate();
-    const meses=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
-    const mes=meses[dateObj.getMonth()];
-    const ano=dateObj.getFullYear();
-    const dow=['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
-    const diaSemana=dow[dateObj.getDay()];
+    const {dia,mes,ano,diaSemana}=getGameDateParts(true);
     const teamKeys=Object.keys(CONFIG.teams);
     const nTeams=teamKeys.length;
     const teamNames=teamKeys.map(k=>CONFIG.teams[k].name);
@@ -385,9 +377,9 @@ function startGame(){
     if(nTeams>=3){
         corpo=`Hoje temos ${nTeams} times num campeonato de grandes emoções e risadas.\n${teamNames.join(' x ')}.`;
     }else{
-        corpo=`Dois times fazem a grande final hoje. ${teamNames.join(' x ')} o que promete um jogo com grandes emoções e grandes risadas.`;
+        corpo=`Dois times fazem a grande final hoje.\n${teamNames.join(' x ')} o que promete um jogo com grandes emoções e grandes risadas.`;
     }
-    const msg=`Atenção, Nação Woodenlegs.\nDamos início agora (${hora}) a pelada ${CONFIG.pelada||''} de ${CONFIG.pelada_total||12} nessa ${diaSemana}, ${dia} de ${mes} de ${ano}.\n${corpo}`;
+    const msg=`Atenção, Nação Woodenlegs.\n\nDamos início agora (${hora}) a pelada ${CONFIG.pelada||''} de ${CONFIG.pelada_total||12} nessa ${diaSemana}, ${dia} de ${mes} de ${ano}.\n${corpo}`;
     firstGoalSent=true;
     narrative.push(msg);
     if(navigator.clipboard&&navigator.clipboard.writeText){
