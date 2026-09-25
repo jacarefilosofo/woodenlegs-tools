@@ -664,7 +664,8 @@ function copyResults(){
     const present=allNames.filter(n=>checkins[n]&&checkins[n].present);
     const absent=allNames.filter(n=>!checkins[n]||!checkins[n].present);
     if(present.length>0){
-        present.sort((a,b)=>(checkins[a].time||"").localeCompare(checkins[b].time||""));
+        sortNamesAlphabetically(present);
+        sortNamesAlphabetically(absent);
         lines.push(`Presenca (${present.length}):`);
         present.forEach(n=>lines.push(`  ${n} - ${checkins[n].time}`));
         lines.push(``);
@@ -772,7 +773,8 @@ function exportMD(){
     const present=allNames.filter(n=>checkins[n]&&checkins[n].present);
     const absent=allNames.filter(n=>!checkins[n]||!checkins[n].present);
     if(present.length>0){
-        present.sort((a,b)=>(checkins[a].time||"").localeCompare(checkins[b].time||""));
+        sortNamesAlphabetically(present);
+        sortNamesAlphabetically(absent);
         lines.push(`## Presenca`);
         lines.push(`| # | Jogador | Chegada |`);
         lines.push(`|---|---------|---------|`);
@@ -806,6 +808,10 @@ function getAllRosterNames(){
     (CONFIG.subs||[]).forEach(s=>names.push(s.name));
     extraPlayers.forEach(n=>names.push(n));
     return [...new Set(names)];
+}
+
+function sortNamesAlphabetically(names){
+    return names.sort((a,b)=>a.localeCompare(b,"pt-BR",{sensitivity:"base"}));
 }
 
 function toggleCheckin(name){
@@ -846,8 +852,9 @@ function renderCheckin(){
     const present=allNames.filter(n=>checkins[n]&&checkins[n].present);
     const absent=allNames.filter(n=>!checkins[n]||!checkins[n].present);
 
-    // Sort present by check-in time
-    present.sort((a,b)=>(checkins[a].time||"").localeCompare(checkins[b].time||""));
+    // Keep the check-in screen easy to scan while retaining each arrival time.
+    sortNamesAlphabetically(present);
+    sortNamesAlphabetically(absent);
 
     if(present.length>0){
         const sec=document.createElement("div");
