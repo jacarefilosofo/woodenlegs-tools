@@ -107,7 +107,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </div>
 <div class="jogo-list" id="jogo-list"></div>
 <div class="keeper-bar" id="keeper-bar"></div>
-<div style="text-align:center;font-size:11px;color:#555;padding:2px 0 5px">4 jogos de 22 min · Welington: Brasil J1/J3, Itália J2/J4</div>
+<div style="text-align:center;font-size:11px;color:#555;padding:2px 0 5px">4 jogos de 22 min · Goleiro compartilhado: Welington</div>
 <div class="mode-bar">
     <button class="mode-btn active-goal" id="mode-goal" onclick="setMode('goal')">⚽ Gol</button>
     <button class="mode-btn" id="mode-og" onclick="setMode('og')">🔴 GC</button>
@@ -170,25 +170,7 @@ const CONFIG = {
         "Welington"
     ],
     "subs": [],
-    "keeperRotation": [
-        {
-            "brasil": "Welington",
-            "italia": "Wesley"
-        },
-        {
-            "brasil": "Paulinho",
-            "italia": "Welington"
-        },
-        {
-            "brasil": "Welington",
-            "italia": "Wesley"
-        },
-        {
-            "brasil": "Paulinho",
-            "italia": "Welington"
-        }
-    ],
-    "notes": "Quatro jogos de 22 minutos. Welington: Brasil nos jogos 1 e 3, Italia nos jogos 2 e 4. Paulinho cobre o Brasil e Wesley cobre a Italia. Os cartoes GK do Welington aparecem nos dois lados para registrar gols pelo lado selecionado.",
+    "notes": "Quatro jogos de 22 minutos. Welington é o único goleiro compartilhado e aparece nos dois times de todos os jogos. Quando Welington joga em um lado, qualquer jogador de linha do outro time pode assumir o gol sem mudar sua posição no cadastro da súmula.",
     "teams": {
         "brasil": {
             "name": "Brasil",
@@ -577,8 +559,6 @@ function render(){
     const keeperNote=isRodizio?` 🧤${CONFIG.keepers[0]||""}`:"";
     document.getElementById("jogo-matchup").textContent=`${ht.emoji} ${ht.name}${keeperNote} vs ${at.name} ${at.emoji}`;
     document.getElementById("jogo-score").textContent=`${hg}  ✕  ${ag}`;
-    const assigned=CONFIG.keeperRotation?.[currentJogo];
-    document.getElementById("keeper-bar").textContent=assigned?`🧤 Brasil: ${assigned.brasil} · Itália: ${assigned.italia}`:"";
     document.getElementById("prev-jogo").disabled=currentJogo===0;
     document.getElementById("next-jogo").disabled=currentJogo===schedule.length-1;
 
@@ -614,13 +594,13 @@ function render(){
     // Home team
     const homeElems=[];
     const hl=addLabel(grid,`${ht.emoji} ${ht.name}`,`bg-${home}`);homeElems.push(hl);
-    ht.players.forEach(p=>{const pos=assigned?.[home]===p.name?"GK":p.pos;const b=mkBtn(p.name,pos,home,`btn-${home}`);grid.appendChild(b);homeElems.push(b);});
+    ht.players.forEach(p=>{const b=mkBtn(p.name,p.pos,home,`btn-${home}`);grid.appendChild(b);homeElems.push(b);});
     homeKeepers.forEach(k=>{const b=mkBtn(k,"GK",home,"btn-keeper");grid.appendChild(b);homeElems.push(b);});
 
     // Away team
     const awayElems=[];
     const al=addLabel(grid,`${at.emoji} ${at.name}`,`bg-${away}`);awayElems.push(al);
-    at.players.forEach(p=>{const pos=assigned?.[away]===p.name?"GK":p.pos;const b=mkBtn(p.name,pos,away,`btn-${away}`);grid.appendChild(b);awayElems.push(b);});
+    at.players.forEach(p=>{const b=mkBtn(p.name,p.pos,away,`btn-${away}`);grid.appendChild(b);awayElems.push(b);});
     awayKeepers.forEach(k=>{const b=mkBtn(k,"GK",away,"btn-keeper");grid.appendChild(b);awayElems.push(b);});
 
     // Hide team sections in sub mode
@@ -773,7 +753,6 @@ function exportMD(){
     lines.push(`## Config`);
     lines.push(`- Format: ${CONFIG.format}`);
     lines.push(`- Keepers: ${CONFIG.keepers.join(", ")}`);
-    if(CONFIG.keeperRotation)CONFIG.keeperRotation.forEach((k,i)=>lines.push(`- Jogo ${i+1} (${CONFIG.gameMinutes} min): Brasil ${k.brasil}; Itália ${k.italia}`));
     if(CONFIG.notes)lines.push(`- Notes: ${CONFIG.notes}`);
     if(CONFIG.subs&&CONFIG.subs.length)lines.push(`- Subs: ${CONFIG.subs.map(s=>s.name).join(", ")}`);
     lines.push(``);
